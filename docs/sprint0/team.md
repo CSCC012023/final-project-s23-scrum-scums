@@ -12,6 +12,8 @@
    </td>
    <td>Slack username
    </td>
+   <td>Emergency Contact Info
+   </td>
   </tr>
   <tr>
    <td>Harrick Cheong
@@ -25,6 +27,8 @@
    <td>Slack/Email
    </td>
    <td>Harrick Cheong
+   </td>
+   <td>(647) 702-6278
    </td>
   </tr>
   <tr>
@@ -40,6 +44,8 @@
    </td>
    <td>Arwin Fong
    </td>
+   <td>(647) 222-5557
+   </td>
   </tr>
   <tr>
    <td>Jason Xia
@@ -53,6 +59,8 @@
    <td>Slack/email
    </td>
    <td>Jason Xia
+   </td>
+   <td>(416) 574-0011
    </td>
   </tr>
   <tr>
@@ -68,6 +76,8 @@
    </td>
    <td>Eric Fan
    </td>
+   <td> (437) 994-8617
+   </td>
   </tr>
   <tr>
    <td>Arnav Priyadarshi
@@ -81,6 +91,8 @@
    <td>Slack/Discord
    </td>
    <td>Arnav Priyadarshi
+   </td>
+   <td>Discord: unanticipatedinflation#2404
    </td>
   </tr>
 </table>
