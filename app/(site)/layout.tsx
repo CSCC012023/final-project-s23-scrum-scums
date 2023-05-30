@@ -1,5 +1,6 @@
 import '@styles/globals.css'
 import Navbar from '@components/Navbar'
+import React from 'react'
 
 export const metadata = {
   title: 'Obelisk',
