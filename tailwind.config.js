@@ -11,6 +11,17 @@ module.exports = {
 				robotoslab: ["Roboto Slab", "sans-serif"],
 				inter: ["Inter", "sans-serif"]
 			},
+
+			colors: {
+				primary: "#D6DBDC",
+				secondary: "#e1ddcf",
+
+			},
+
+			transitionProperty: {
+				'height': 'height',
+				'width': 'width',
+			}
 		}
 	},
 	plugins: []

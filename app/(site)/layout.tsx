@@ -1,4 +1,5 @@
 import '@styles/globals.css'
+import Navbar from '@components/Navbar'
 
 export const metadata = {
   title: 'Obelisk',
@@ -10,8 +11,9 @@ const RootLayout = ({children}: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <body>
+        <Navbar />
         <main className="flex min-h-screen flex-col items-center justify-between p-24 app">
-        {children}
+          {children}
         </main>
       </body>
     </html>
