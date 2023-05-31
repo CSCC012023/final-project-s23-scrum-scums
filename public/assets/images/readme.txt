@@ -1,0 +1,1 @@
+store static images here to be served
