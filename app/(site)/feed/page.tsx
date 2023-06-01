@@ -9,9 +9,22 @@ import axios from "axios";
 const Feed = async () => {
 	const [posts, setPosts] = useState<InscriptionProps[]>([]);
 
+/*
+ 			<div className="m-16">
+				{posts.map((post) => (
+					<Inscription
+						key={post.id}
+						
 
+					/>
+				)}
+			</div>
+	
+ */
 	const fetchPosts = async () => {
+		console.log('here')
 		const { data } =  await axios.get("/api/trending");
+		console.log(data)
 		setPosts(data);
 	};
 
@@ -22,16 +35,8 @@ const Feed = async () => {
 	return (
 		<div>
 			<h1>
-				Feed Page {}
+				Feed Page
 			</h1>
-			<div className="m-16">
-				{posts.map((post) => (
-					<Inscription
-						key={post.id}
-
-					/>
-				)}
-			</div>
 		</div>
 	);
 };
