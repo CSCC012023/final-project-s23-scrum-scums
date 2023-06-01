@@ -2,29 +2,21 @@
 
 import Inscription from "@components/Inscription";
 import { InscriptionProps } from "@components/Inscription";
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const Feed = async () => {
+const Feed = () => {
 	const [posts, setPosts] = useState<InscriptionProps[]>([]);
-	const [postss, setPostss] = useState(4);
 
 	const fetchPosts = async () => {
 		const { data } =  await axios.get("/api/trending");
-		console.log('here');
-		console.log(data);
 		setPosts(data);
+		console.log(posts);
 	};
 
 	useEffect(() => {
 		fetchPosts();
 	}, []);
-
-	// useEffect(() => {
-	// 	console.log("post change it");
-	// 	console.log(posts);
-	// }, [posts]);
 
 	return (
 		<div>
