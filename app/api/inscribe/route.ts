@@ -8,22 +8,19 @@ const prisma = new PrismaClient();
 //   authorId  String
 //   createdAt DateTime @default(now())
 export const POST = async () => {
-
-	const id = Math.random().toString(64).substring(7);
-	const title = "title" + Math.random().toString(64).substring(7);
-	const content = "content" + Math.random().toString(64).substring(7);
-	const author = "0";
-	const authorID = "0" + Math.random().toString(64).substring(7);
-	const Inscribe = await prisma.user.create({
+	console.log("here");
+	const id = Math.random().toString(36).substring(7);
+	const title = "title" + Math.random().toString(36).substring(7);
+	const content = "content" + Math.random().toString(36).substring(7);
+	// const author = {connect: {id: 9,},};
+	const authorID = "46e1ce09-78e7-4d1b-ba49-8479de96ea76";
+	const inscribe = await prisma.inscribe.create({
 		data: {
 			id: id,
 			title: title,
 			content: content,
-			author: author,
-			authorID: authorID,
-
-
+			authorId: authorID
 		},
 	});
-	return new Response(JSON.stringify(user), { status: 201 });
+	return new Response(JSON.stringify(inscribe), { status: 201 });
 };
