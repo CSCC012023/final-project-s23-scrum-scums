@@ -9,10 +9,10 @@ interface User {
 	followers: number
 }
 
-interface InscriptionProps {
+export interface InscriptionProps {
 	id:        string,
-	title:     string,   
-	content:   string,   
+	title:     string,
+	content:   string,
 	author:    User,
 	authorId:  string,
 	createdAt: Date
