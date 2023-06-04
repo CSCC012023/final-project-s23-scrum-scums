@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 // import Image from "next/image";
 
@@ -28,14 +30,14 @@ const Inscription = ({
 }: InscriptionProps
 ) => {
 	return (
-		<section className="rounded-md bg-gray-200 flex flex-col w-1/4 h-1/4 justify-between">Inscription
-			<div className="header flex flex-col items-start gap-2">
-				<div className="h-2 place-self-center"> { title } </div>
-				<div className="text-sm">{ author.username }</div>
+		<section className="rounded-md  flex flex-col w-full h-full justify-between p-4">
+			<div className="header flex bg-gray-200 flex-col items-start gap-2 p-2">
+				<div className="h-2"> { title } </div>
+				<div className="text-sm">{ author?.username }</div>
 				<div className="text-xs">{ createdAt.toLocaleString() }</div>
 			</div>
 			{/* <Image src={} alt="user photo" /> */}
-			<div className="font-sans"> { content } </div>
+			<div className="font-sans mt-4"> { content } </div>
 		</section>
 	);
 };

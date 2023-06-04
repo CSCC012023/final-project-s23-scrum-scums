@@ -25,6 +25,18 @@ const Navbar = () => {
 				/>
 				<span className="flex flex-col h-full justify-end font-bold text-4xl font-robotoslab mb-1">Obelisk</span>
 			</Link>
+
+			<div className="p-2 flex flex-row justify-items-center gap-4">
+				<Link href="/inscribe" className="border-solid rounded-md border-rose-400 flex-1">
+					Inscribe
+				</Link>
+				<Link href="/feed" className="border-solid rounded-md border-rose-400 flex-1">
+					Feed
+				</Link>
+				<Link href="/login" className="border-solid rounded-md border-rose-400 flex-1">
+					Login
+				</Link>
+			</div>
 		</nav>
 	);
 };
