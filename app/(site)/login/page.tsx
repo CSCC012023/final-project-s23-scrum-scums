@@ -4,6 +4,7 @@ import React from "react";
 // import "@styles/globals.css";
 import axios from "axios";
 import { useState } from "react";
+import { GithubSignInButton, GoogleSignInButton } from "@components/signin";
 
 const Signup = () => {
 	const [username, setUsername] = useState("");
@@ -21,8 +22,23 @@ const Signup = () => {
 
 	return (
 		<div>
+			<p className="text-2xl font-bold flex flex-col items-center">Sign In</p>
+			<div className="flex flex-col space-y-4 pb-4 pt-8">
+				<GoogleSignInButton />
+				<GithubSignInButton	/>
+			</div>
+
+			{/* credits: https://stackoverflow.com/a/70203834 */}
+			<div className="relative py-4">
+				<div className="absolute inset-0 flex items-center">
+					<div className="w-full border-b border-gray-300"></div>
+				</div>
+				<div className="relative flex justify-center">
+					<span className="bg-white px-4 text-sm text-gray-500">Or</span>
+				</div>
+			</div>
 			<form onSubmit={handleSubmit} className="flex flex-col items-center justify-center">
-				<label className="text-3xl font-bold text-left px-2">Username</label>
+				<label className="text-lg text-left px-2">Username</label>
 				<input
 					className="border-2 border-black rounded-lg"
 					type="text"
@@ -31,7 +47,7 @@ const Signup = () => {
 					onChange={(e) => setUsername(e.target.value)}
 					required
 				/>
-				<label className="text-3xl font-bold text-left px-2">E-mail</label>
+				<label className="text-lg text-left px-2">E-mail</label>
 				<input
 					className="border-2 border-black rounded-lg"
 					type="text"
@@ -40,7 +56,7 @@ const Signup = () => {
 					onChange={(e) => setEmail(e.target.value)}
 					required
 				/>
-				<label className="text-3xl font-bold text-left px-2">Password</label>
+				<label className="text-lg text-left px-2">Password</label>
 				<input
 					className="border-2 border-black rounded-lg"
 					type="password"
