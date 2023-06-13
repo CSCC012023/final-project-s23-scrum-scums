@@ -15,6 +15,7 @@ model User {
   followers Int        @default(0)
   username  String?
   inscribes Inscribe[]
+  comments  Comment[]
 }
 
 model Inscribe {
@@ -24,4 +25,26 @@ model Inscribe {
   authorId  String
   createdAt DateTime @default(now())
   author    User     @relation(fields: [authorId], references: [id])
+  comments  Comment[]
+}
+
+model Comment {
+  id         String   @id @default(uuid())
+  likes      Int      @default(0)
+  content    String
+  authorId   String
+  inscribeId String
+  createdAt  DateTime   @default(now())
+  author     User       @relation(fields: [authorId], references: [id])
+  inscribe   Inscribe   @relation(fields: [inscribeId], references: [id])
+  parent     Reply[]  @relation("original")
+  reply      Reply[]  @relation("replying")
+}
+
+model Reply {
+  parent Comment @relation("original", fields: [parentId], references: [id])
+  parentId String
+  reply  Comment @relation("replying", fields: [replyId], references: [id])
+  replyId String
+  @@id([parentId, replyId])
 }
