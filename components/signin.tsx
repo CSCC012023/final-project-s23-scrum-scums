@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react";
 
 export function GoogleSignInButton() {
 	const handleClick = () => {
-		signIn("google");
+		signIn("google", { callbackUrl: "/feed" });
 	};
 
 	return (
@@ -20,7 +20,7 @@ export function GoogleSignInButton() {
 
 export function GithubSignInButton() {
 	const handleClick = () => {
-		signIn("github");
+		signIn("github", { callbackUrl: "/feed" });
 	};
 
 	return (

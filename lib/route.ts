@@ -13,4 +13,19 @@ export const authConfig: NextAuthOptions = {
 			clientSecret: process.env.GITHUB_CLIENT_SECRET as string
 		})
 	],
+	session: {
+		// Use JWT instead of database sessions
+		strategy: "jwt",
+	},
+	// cookies: {
+	// 	sessionToken: {
+	// 		name: "next-auth.session-token",
+	// 		options: {
+	// 			httpOnly: true,
+	// 			sameSite: "strict", // This can be lax or strict, you might want to change this to 'strict' for more security
+	// 			path: "/",
+	// 			secure: process.env.NODE_ENV === "production", // Ensures the cookie is only sent over HTTPS
+	// 		},
+	// 	},
+	// },
 };
