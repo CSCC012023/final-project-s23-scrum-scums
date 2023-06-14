@@ -1,6 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import prisma  from "@lib/prisma";
 
-const prisma = new PrismaClient();
 // 	 id        String   @id @default(uuid())
 //   title     String
 //   content   String
@@ -8,7 +7,6 @@ const prisma = new PrismaClient();
 //   authorId  String
 //   createdAt DateTime @default(now())
 export const POST = async () => {
-	console.log("here");
 	const id = Math.random().toString(36).substring(7);
 	const title = "title" + Math.random().toString(36).substring(7);
 	const content = "content" + Math.random().toString(36).substring(7);

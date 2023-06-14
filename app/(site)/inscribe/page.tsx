@@ -3,7 +3,6 @@
 import React from "react";
 // import "@styles/globals.css";
 import axios from "axios";
-import { useState } from "react";
 
 const Inscribe = () => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
