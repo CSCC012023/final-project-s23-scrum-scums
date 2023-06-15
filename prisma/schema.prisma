@@ -16,6 +16,7 @@ model User {
   username  String?
   inscribes Inscribe[]
   comments  Comment[]
+  likes Like[]
 }
 
 model Inscribe {
@@ -30,21 +31,24 @@ model Inscribe {
 
 model Comment {
   id         String   @id @default(uuid())
-  likes      Int      @default(0)
   content    String
   authorId   String
   inscribeId String
   createdAt  DateTime   @default(now())
-  author     User       @relation(fields: [authorId], references: [id])
-  inscribe   Inscribe   @relation(fields: [inscribeId], references: [id])
-  parent     Reply[]  @relation("original")
-  reply      Reply[]  @relation("replying")
+  updatedAt DateTime @updatedAt
+  author     User       @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  inscribe   Inscribe   @relation(fields: [inscribeId], references: [id], onDelete: Cascade)
+  parent     Comment? @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
+  parentId String?
+  children Comment[] @relation("ParentChild")
+  likes      Like[]
 }
 
-model Reply {
-  parent Comment @relation("original", fields: [parentId], references: [id])
-  parentId String
-  reply  Comment @relation("replying", fields: [replyId], references: [id])
-  replyId String
-  @@id([parentId, replyId])
+model Like {
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  userId String
+  commentId String
+
+  @@id([userId, commentId])
 }
