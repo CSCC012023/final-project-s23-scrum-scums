@@ -1,28 +1,50 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 // import "@styles/globals.css";
 import axios from "axios";
 import { useState } from "react";
 import { GithubSignInButton, GoogleSignInButton } from "@components/signin";
+// import { data } from "autoprefixer";
 
-const Signup = () => {
-	const [username, setUsername] = useState("");
+const Login = () => {
+	// const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [email, setEmail] = useState("");
 
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log("submitting", username, password, email);
-		const { data } = await axios.post("/api/signup", { username, password, email });
-		setUsername("");
-		setPassword("");
-		setEmail("");
+		console.log("submitting", email, password);
+		try {
+			const { data } =  await axios.get("/api/login", {
+				params: {
+					email: email,
+					password: password
+				}
+			});
+			// console.log(data);
+			if (data == null) {
+				console.log("User not found");
+			}
+			else {
+				if (data.password != password) {
+					console.log("wrong password");
+				}
+				else {
+					console.log("signed in");
+				}
+			}
+			setEmail("");
+			setPassword("");
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (
 		<div>
-			<p className="text-2xl font-bold flex flex-col items-center">Sign In</p>
+			<p className="text-2xl font-bold flex flex-col items-center">Login</p>
 			<div className="flex flex-col space-y-4 pb-4 pt-8">
 				<GoogleSignInButton />
 				<GithubSignInButton	/>
@@ -37,17 +59,8 @@ const Signup = () => {
 					<span className="bg-white px-4 text-sm text-gray-500">Or</span>
 				</div>
 			</div>
-			<form onSubmit={handleSubmit} className="flex flex-col items-center justify-center">
-				<label className="text-lg text-left px-2">Username</label>
-				<input
-					className="border-2 border-black rounded-lg"
-					type="text"
-					name="username"
-					value={username}
-					onChange={(e) => setUsername(e.target.value)}
-					required
-				/>
-				<label className="text-lg text-left px-2">E-mail</label>
+			<form onSubmit={handleLogin} className="flex flex-col items-center justify-center">
+				<label className="text-lg text-left px-2">Email</label>
 				<input
 					className="border-2 border-black rounded-lg"
 					type="text"
@@ -65,10 +78,14 @@ const Signup = () => {
 					onChange={(e) => setPassword(e.target.value)}
 					required
 				/>
-				<button type="submit" className="border-2 border-black rounded-lg" >Submit</button>
+				<button type="submit" className="flex mt-3 p-1 border-2 border-black rounded-lg " >Login</button>
+				<p><br></br>Don&apos;t have an account? </p>
+				<Link href="/signup" className="underline">
+					Sign up
+				</Link>
 			</form>
 		</div>
 	);
 };
 
-export default Signup;
+export default Login;
