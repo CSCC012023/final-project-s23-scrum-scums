@@ -1,4 +1,4 @@
-Obelisk
+## Obelisk
 
 ## Iteration 1 - Review & Retrospect
 
@@ -41,4 +41,4 @@ Going into the next iteration, our main insights are:
 
 To communicate any blockers clearly, and address common blockers that are considered urgent. This will allow us to implement each individual feature, and merge more efficiently as the most vital features will be finished first, so other features are not blocked.
 
-To Send standup messages and update eachothermore consistently. This will keep everyone in the group updated on what is happening with each feature and the status of them.
+To Send standup messages and update each other more consistently. This will keep everyone in the group updated on what is happening with each feature and the status of them.
