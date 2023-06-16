@@ -13,7 +13,7 @@ const RootLayout = ({children}: { children: React.ReactNode }) => {
 		<html lang="en">
 			<body>
 				<Navbar />
-				<main className="flex min-h-screen flex-col items-center justify-between p-24 app">
+				<main className="flex min-h-screen flex-col items-center justify-between px-24 py-6 app">
 					{children}
 				</main>
 			</body>
