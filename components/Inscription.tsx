@@ -1,5 +1,6 @@
 import ReactMarkdown  from "react-markdown";
 import React from "react";
+import remarkGfm from "remark-gfm";
 // import Image from "next/image";
 
 interface User {
@@ -36,7 +37,7 @@ const Inscription = ({
 				<div className="text-xs">{ createdAt.toLocaleString() }</div>
 			</div>
 			{/* <Image src={} alt="user photo" /> */}
-			<div className="font-robotoslab mt-4 font-normal p-2"> <ReactMarkdown children={content}/> </div>
+			<div className="font-robotoslab mt-4 font-normal p-2"> <ReactMarkdown remarkPlugins={[remarkGfm]} children={content}/> </div>
 		</section>
 	);
 };
