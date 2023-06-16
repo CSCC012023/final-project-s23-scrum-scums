@@ -1,7 +1,9 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
+import { FaReply, FaArrowDown, FaArrowUp } from "react-icons/fa";
+import { IconBtn } from "./Buttons";
 // import Image from "next/image";
 
 interface User {
@@ -44,17 +46,10 @@ const Inscription = ({
 			</div>
 			{/* <Image src={} alt="user photo" /> */}
 			<div className="font-sans mt-4"> { content } </div>
-			<div className="flex justify-between">
-				{/* Change buttons to icons */}
-				<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-					Like
-				</button>
-				<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-					Dislike
-				</button>
-				<button onClick={handleClick} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-					Comment
-				</button>
+			<div className="flex flex-auto flex-wrap">
+				<IconBtn className="mr-1" Icon={FaArrowUp} aria-label="Like" isActive={undefined} color="blue">6</IconBtn>
+				<IconBtn className="mr-4" Icon={FaArrowDown} aria-label="Dislike" isActive={undefined} color="danger"> </IconBtn>
+				<IconBtn onClick={handleClick} Icon={FaReply} aria-label="Comment" isActive={undefined} color="green"> </IconBtn>
 			</div>
 		</section>
 	);
