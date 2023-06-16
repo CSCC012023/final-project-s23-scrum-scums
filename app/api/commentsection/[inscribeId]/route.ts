@@ -7,8 +7,6 @@ const prisma = new PrismaClient();
 
 export const GET = async (req: NextRequest) => {
 	const id = req.nextUrl.pathname.replace("/api/commentsection/", "");
-	console.log(req.nextUrl.pathname)
-	console.log(id)
 	const trending = await prisma.comment.findMany({
         where: {
             inscribeId: id,
