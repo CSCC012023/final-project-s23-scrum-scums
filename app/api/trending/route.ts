@@ -1,7 +1,6 @@
 // Retrieves list of trending posts
-import { PrismaClient } from "@prisma/client";
+import prisma  from "@lib/prisma";
 
-const prisma = new PrismaClient();
 
 export const GET = async (res: Response) => {
 	// const { username, password, email } = await req.json();
@@ -11,5 +10,6 @@ export const GET = async (res: Response) => {
 			author: true,
 		},
 	});
+	console.log(trending);
 	return new Response(JSON.stringify(trending), { status: 200 });
 };
