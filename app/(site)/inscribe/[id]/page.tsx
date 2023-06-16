@@ -8,11 +8,14 @@ import React, { useState, useEffect } from "react";
 import {usePathname } from "next/navigation";
 import axios from "axios";
 
+const comments = `A paragraph with *emphasis* and **strong importance**.
+# Big header
+## Medium header`;
+
 const Comments = () => {
     const [posts, setPost] = useState<InscriptionProps[]>([]);
     const [comments, setComment] = useState<CommentProps[]>([]);
     const [content, setContent] = useState("");
-    const [loading, setLoading] = useState(true);
     // Find a better way to get dynamic route ids
     const inscribeId = usePathname().replace("/inscribe/", "");
     const fetchPost = async () => {
@@ -27,7 +30,6 @@ const Comments = () => {
 		try {
 			const { data } =  await axios.get(`/api/commentsection/${inscribeId}`);
             setComment(data);
-            setLoading(false);
 		} catch (err) {
 			console.log(err);
 		}
@@ -69,28 +71,24 @@ const Comments = () => {
 	};
 
     return (
-         <div className="h-full w-full">
-            {loading ? <h1>loading...</h1> : 
+        <div className="h-full w-full">
             <div>
-                <div>
-                    {postEls}
-                </div>
-                <form onSubmit={handleSubmit} className="flex flex-col">
-                    <textarea
-                        className="border-2 border-black"
-                        name="comment"
-                        autoComplete="off"
-                        value={content}
-                        onChange={(e) => setContent(e.target.value)}
-                        required
-                    />
-                    <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-1/6">Submit</button>
-                </form>
-                <div>
-                    {commentEls}
-                </div>
+                {postEls}
             </div>
-            }
+            <form onSubmit={handleSubmit} className="flex flex-col">
+                <textarea
+                    className="border-2 border-black"
+                    name="comment"
+                    autoComplete="off"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    required
+                />
+                <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-1/6">Submit</button>
+            </form>
+            <div>
+                {commentEls}
+            </div>
         </div>
     )
 };
