@@ -18,6 +18,8 @@ Implementing pull requests where two people were reviewing the changes to ensure
 
 We should've identified and prioritize tasks that other tasks are dependent on (e.g. user sessions). Without doing that, a lot of our tasks had to be done using hardcoded user IDs, making it difficult to integrate branches into the main branch
 
+Using slack for our standup meetings. Midway through the sprint, our trial version of slack expired and we were only allowed to start huddles with two people maximum. This meant that we could not use slack for any standup meetings, so in the future we will need to use discord as an alternative.
+
 ## Product - Review
 
 #### Goals and/or tasks that were met/completed:
