@@ -36,6 +36,3 @@ next-env.d.ts
 
 # github
 .github
-
-# env
-.env
