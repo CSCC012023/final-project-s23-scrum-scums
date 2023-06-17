@@ -22,7 +22,6 @@ const Editor = ({
 		<div className="flex flex-row items-center justify-center h-[80vh]">
 			<label className="flex flex-col items-center w-1/2 h-[80vh] mx-2">
 				<textarea spellCheck="false" name="editor" autoFocus onChange={(e) => inputChange(e)} defaultValue={text} maxLength={28000}
-					// eslint-disable-next-line react/jsx-no-duplicate-props
 					className="border-2 border-black rounded-lg w-full break-words font-mono px-2 h-full resize-none"
 				/>
 			</label>
