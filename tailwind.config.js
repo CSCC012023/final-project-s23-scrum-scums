@@ -14,17 +14,13 @@ module.exports = {
 
 			colors: {
 				primary: "#D6DBDC",
-				secondary: "#e1ddcf",
-
+				secondary: "#e1ddcf"
 			},
 
 			transitionProperty: {
-				'height': 'height',
-				'width': 'width',
+				height: "height",
+				width: "width"
 			}
 		}
 	},
-	plugins: [
-		require("@tailwindcss/typography"),
-	]
 };
