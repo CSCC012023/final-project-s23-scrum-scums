@@ -23,7 +23,7 @@ const Signup = () => {
 
 	return (
 		<div>
-			<p className="text-2xl font-bold flex flex-col items-center">Sign Up</p>
+			<p className="text-2xl mb-2 font-bold flex flex-col items-center">Sign Up</p>
 			<form onSubmit={handleSubmit} className="flex flex-col items-center justify-center">
 				<label className="text-lg text-left px-2">Username</label>
 				<input

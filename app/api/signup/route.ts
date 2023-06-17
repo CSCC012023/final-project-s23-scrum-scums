@@ -8,7 +8,7 @@ export const POST = async (req: Request) => {
 		data: {
 			username: username,
 			email: email,
-			password: password,     // TODO: encrypt password
+			password: password,     // TODO: encrypt password using bcrypt?
 			followers: 0,
 		},
 	});

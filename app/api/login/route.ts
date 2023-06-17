@@ -16,6 +16,6 @@ export const GET = async (req: NextRequest) => {
 			}
 		});
 	}
-	console.log(JSON.stringify(null));
+	console.log(user);
 	return new Response(JSON.stringify(user), { status: 200 });
 };
