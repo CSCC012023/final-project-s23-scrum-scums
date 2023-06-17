@@ -9,7 +9,7 @@
 
 #### Decisions that turned out well
 
-Good branch management on github, allocating one branch per user story. This allowed our team to collaborate with each other on a branch, previewing the changes on each feature first. Additionally it allowed us to revert any changes that were problematic, and it allowed us to locate any bugs more efficiently.
+Good branch management on Github, allocating one branch per user story. This allowed our team to collaborate with each other on a branch, previewing the changes on each feature first. Additionally it allowed us to revert any changes that were problematic, and it allowed us to locate any bugs more efficiently.
 
 Implementing pull requests where two people were reviewing the changes to ensure seamless merges. This enables us to peer evaluate each other's code, and provide feedback directly to each change. These pull requests also gave us an opportunity to document any changes made, leaving behind a history that we can check at a later date.
 
