@@ -107,7 +107,7 @@ List/describe the artifacts you will produce in order to present your project id
 
 ### Text-based posts
 ![TextPosts](/docs/sprint1/artifacts/textpost.png)
-- TODO
+- Allow users the ability to create text posts to express themselves
 - Purpose: Posts play an integral part of the social aspect of social media application.
 
 ### Comment section
@@ -117,4 +117,6 @@ List/describe the artifacts you will produce in order to present your project id
 - Purpose: Comments allows users to engage in discussion. Our team believed that this was an important feature to implement to present in the project demo
 
 ### Login e-mail
-TODO
+- Image: see SSO
+- Create the ability for users to use e-mail to receive a one-time password to login.
+- Purpose: One-time passwords allow us to verify if the user is using a valid e-mail to register for an account.
