@@ -11,14 +11,17 @@ export const POST = async () => {
 	const title = "title" + Math.random().toString(36).substring(7);
 	const content = "content" + Math.random().toString(36).substring(7);
 	// const author = {connect: {id: 9,},};
-	const authorID = "1393486f-78b9-44c2-9282-1af8b75dc88e";
+	const authorID = "46e1ce09-78e7-4d1b-ba49-8479de96ea76";
+export const POST = async (req: Request) => {
+	const { title, content, authorId } = await req.json();
+	console.log(title, content, authorId);
 	const inscribe = await prisma.inscribe.create({
 		data: {
-			id: id,
 			title: title,
 			content: content,
-			authorId: authorID
+			authorId: authorId,
 		},
 	});
+
 	return new Response(JSON.stringify(inscribe), { status: 201 });
 };

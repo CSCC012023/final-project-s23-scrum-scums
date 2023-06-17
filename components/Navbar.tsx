@@ -26,7 +26,7 @@ const Navbar = () => {
 				<span className="flex flex-col h-full justify-end font-bold text-4xl font-robotoslab mb-1">Obelisk</span>
 			</Link>
 
-			<div className="p-2 flex flex-row justify-items-center gap-4">
+			<div className="p-2 flex flex-row justify-items-center gap-4 items-center text-lg">
 				<Link href="/inscribe" className="border-solid rounded-md border-rose-400 flex-1">
 					Inscribe
 				</Link>

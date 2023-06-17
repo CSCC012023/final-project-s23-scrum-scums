@@ -4,7 +4,7 @@ import React from "react";
 // import "@styles/globals.css";
 import axios from "axios";
 import { useState } from "react";
-import { GithubSignInButton, GoogleSignInButton } from "@components/signin";
+import { GithubSignInButton, GoogleSignInButton } from "@components/Signin";
 
 const Signup = () => {
 	const [username, setUsername] = useState("");
@@ -65,7 +65,7 @@ const Signup = () => {
 					onChange={(e) => setPassword(e.target.value)}
 					required
 				/>
-				<button type="submit" className="border-2 border-black rounded-lg" >Submit</button>
+				<button type="submit" className="border-2 border-black rounded-lg">Submit</button>
 			</form>
 		</div>
 	);
