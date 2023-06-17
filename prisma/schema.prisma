@@ -14,41 +14,43 @@ model User {
   password  String
   followers Int        @default(0)
   username  String?
-  inscribes Inscribe[]
   comments  Comment[]
+  inscribes Inscribe[]
   likes     Like[]
+
+  @@unique([email, password])
 }
 
 model Inscribe {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   title     String
   content   String
   authorId  String
-  createdAt DateTime @default(now())
-  author    User     @relation(fields: [authorId], references: [id])
+  createdAt DateTime  @default(now())
   comments  Comment[]
+  author    User      @relation(fields: [authorId], references: [id])
 }
 
 model Comment {
-  id         String   @id @default(uuid())
+  id         String    @id @default(uuid())
   content    String
   authorId   String
   inscribeId String
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime @updatedAt
-  author     User       @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  inscribe   Inscribe   @relation(fields: [inscribeId], references: [id], onDelete: Cascade)
-  parent     Comment? @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
+  createdAt  DateTime  @default(now())
   parentId   String?
+  updatedAt  DateTime  @updatedAt
+  author     User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  inscribe   Inscribe  @relation(fields: [inscribeId], references: [id], onDelete: Cascade)
+  parent     Comment?  @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
   children   Comment[] @relation("ParentChild")
   likes      Like[]
 }
 
 model Like {
-  user       User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  comment    Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
-  userId     String
-  commentId  String
+  userId    String
+  commentId String
+  comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, commentId])
 }
