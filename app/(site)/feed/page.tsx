@@ -1,7 +1,7 @@
 "use client";
 
-import Inscription from "@components/Inscription";
-import { InscriptionProps } from "@components/Inscription";
+import Inscription from "@components/InscriptionCard";
+import { InscriptionProps } from "@components/InscriptionCard";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -50,7 +50,17 @@ const Feed = () => {
 						{postEls}
 					</div>
 					<div className="w-1/2 flex flex-col items-center justify-center h-full">
-						<h1>hello</h1>
+						<div className="flex flex-col justify-center items-center">
+							<h1 className="text-center pb-1">Discover more about topics you love</h1>
+							<div className="flex flex-row flex-wrap justify-center gap-2 w-3/5">
+								<div className="badge badge-outline hover:badge-info hover:badge-outline hover:cursor-pointer">Finance</div>
+								<div className="badge badge-outline hover:badge-info hover:badge-outline hover:cursor-pointer">Programming</div>
+								<div className="badge badge-outline hover:badge-info hover:badge-outline hover:cursor-pointer">Politics</div>
+								<div className="badge badge-outline hover:badge-info hover:badge-outline hover:cursor-pointer">Science</div>
+								<div className="badge badge-outline hover:badge-info hover:badge-outline hover:cursor-pointer">Philosophy</div>
+								<div className="badge badge-outline hover:badge-info hover:badge-outline hover:cursor-pointer">Art</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			}

@@ -13,7 +13,14 @@ const Inscribe = () => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		console.log("posting");
-		const title = text.includes("\n") ? text.split("\n")[0] : text;
+		// let title = text.includes("\n") ? text.split("\n")[0] : text;
+		let title = text;
+		if (text.includes("\n") ){
+			title = text.split("\n")[0];
+			while(title[0] === "#") {
+				title = title.slice(1);
+			}
+		}
 		const content = text;
 		const authorId = "46e1ce09-78e7-4d1b-ba49-8479de96ea76";
 		await axios.post("/api/inscribe", { title, content, authorId });

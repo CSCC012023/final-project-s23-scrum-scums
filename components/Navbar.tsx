@@ -40,7 +40,7 @@ const Navbar = () => {
 					/>
 				</div>
 				<div className="dropdown dropdown-end">
-					<label tabIndex={0} className="btn btn-secondary btn-circle avatar">
+					<label tabIndex={0} className="btn btn-ghost btn-circle avatar">
 						<div className="w-10 rounded-full">
 							<Image alt="profile" src="/assets/icons/icon.png" width={32} height={32}/>
 						</div>

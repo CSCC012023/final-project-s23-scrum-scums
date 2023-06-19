@@ -2,8 +2,8 @@
 
 import Comment from "@components/Comment";
 import { CommentProps } from "@components/Comment";
-import Inscription from "@components/Inscription";
-import { InscriptionProps } from "@components/Inscription";
+import Inscription from "@components/InscriptionCard";
+import { InscriptionProps } from "@components/InscriptionCard";
 import React, { useState, useEffect } from "react";
 import {usePathname } from "next/navigation";
 import axios from "axios";
