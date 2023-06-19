@@ -26,7 +26,8 @@
     "react-markdown": "^8.0.7",
     "remark-gfm": "^3.0.1",
     "tailwindcss": "3.3.2",
-    "typescript": "5.0.4"
+    "typescript": "5.0.4",
+    "typewriter-effect": "^2.20.1"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",

@@ -2,40 +2,60 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import React from "react";
+import { useRouter } from "next/navigation";
 
-
+import { useState } from "react";
 
 const Navbar = () => {
-
-	const [toggleDropdown, setToggleDropdown] = useState(false);
-
+	const [search, setSearch] = useState("");
+	const router = useRouter();
 	return (
-		<nav
-			className="flex justify-between w-full h-16 px-8 bg-secondary font-inter"
-		>
-			<Link href="/" className="flex h-full gap-4 justify-center items-end">
-				<Image
-					src={"/assets/icons/icon.png"}
-					alt="logo"
-					width={35}
-					height={35}
-					className="mb-2"
-				/>
-				<span className="flex flex-col h-full justify-end font-bold text-4xl font-robotoslab mb-1">Obelisk</span>
-			</Link>
-
-			<div className="p-2 flex flex-row justify-items-center gap-4 items-center text-lg">
-				<Link href="/inscribe" className="border-solid rounded-md border-rose-400 flex-1">
-					Inscribe
+		<nav className="navbar bg-base-100 sticky">
+			<div className="flex-1 font-serif ">
+				<Link className="btn btn-ghost normal-case text-3xl" href="/">Obelisk</Link>
+			</div>
+			<div className="flex-none gap-2">
+				<Link className="btn btn-ghost btn-circle" href="/inscribe">
+					<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 fill-secondary" viewBox="0 0 512 512" stroke="currentColor"><g>
+						<g>
+							<path d="M489.068,22.913c-26.642-26.644-72.224-30.155-128.35-9.888c-51.569,18.618-108.577,55.861-160.523,104.868l-3.24,3.056
+			l-19.639,65.066l-34.289-6.73l-6.311,8.073C105.59,227.17,84.865,280.55,76.779,341.726c-4.407,33.348-3.995,60.425-3.393,73.261
+			L0,488.372l23.609,23.609l74.042-74.041c14.759-0.658,51.24-3.335,96.12-14.214c53.476-12.961,129.377-40.567,187.284-98.474
+			c10.237-10.236,20.219-20.92,29.665-31.757l6.794-7.794l-13.597-32.89l61.56-33.347l2.349-3.922
+			C517.993,131.79,525.934,59.779,489.068,22.913z M441.492,194.486l-79.919,43.292l17.148,41.477
+			c-6.88,7.621-14.009,15.123-21.274,22.387c-52.215,52.214-121.657,77.455-170.716,89.435c-19.355,4.727-37.162,7.822-52.067,9.849
+			L288.26,247.332l-23.609-23.609L106.866,381.508c1.874-42.013,11.409-110.654,50.117-165.46l43.565,8.552l25.791-85.446
+			c47.792-44.433,99.406-78.004,145.719-94.725c42.636-15.393,76.68-14.631,93.402,2.093
+			C489.562,70.626,480.109,128.423,441.492,194.486z"/>
+						</g>
+					</g>
+					</svg>
 				</Link>
-				<Link href="/feed" className="border-solid rounded-md border-rose-400 flex-1">
-					Feed
-				</Link>
-				<Link href="/login" className="border-solid rounded-md border-rose-400 flex-1">
-					Login
-				</Link>
+				<div className="form-control">
+					<input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto"
+						onChange={(e) => setSearch(e.target.value)}
+						onKeyUp={(e) => e.key === "Enter" && router.push(`/search?q=${search}`)}
+						value={search}
+					/>
+				</div>
+				<div className="dropdown dropdown-end">
+					<label tabIndex={0} className="btn btn-secondary btn-circle avatar">
+						<div className="w-10 rounded-full">
+							<Image alt="profile" src="/assets/icons/icon.png" width={32} height={32}/>
+						</div>
+					</label>
+					<ul tabIndex={0} className="mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+						<li>
+							<Link className="justify-between" href="/profile">
+								Profile
+								<span className="badge">New</span>
+							</Link>
+						</li>
+						<li><Link href="/settings">Settings</Link></li>
+						<li><Link href="/logout">Logout</Link></li>
+					</ul>
+				</div>
 			</div>
 		</nav>
 	);

@@ -9,11 +9,14 @@ export const content = [
 export const theme = {
 	extend: {
 		fontFamily: {
+			serif: [
+				"var(--font-warnock-pro)",
+				..._fontFamily.serif
+			],
 			sans: [
 				"var(--font-nunito-sans)",
 				..._fontFamily.sans
 			],
-			robotoslab: ["Roboto Slab", "sans-serif"]
 		},
 		transitionProperty: {
 			height: "height",
@@ -23,5 +26,5 @@ export const theme = {
 };
 export const plugins = [require("@tailwindcss/typography"), require("daisyui")];
 export const daisyui = {
-	themes: ["fantasy", "night"]
+	themes: ["fantasy", "business"]
 };

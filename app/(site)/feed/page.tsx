@@ -43,10 +43,15 @@ const Feed = () => {
 	// }, [posts]);
 
 	return (
-		<div className="h-full w-full">
+		<div className="h-full w-full ">
 			{loading ? <h1>loading...</h1> :
-				<div className="columns-3 overflow-hidden [&>*]:m-4 prose">
-					{postEls}
+				<div className="flex flex-row items-center justify-center">
+					<div className="columns-2 [&>*]:m-4 prose w-1/2 over">
+						{postEls}
+					</div>
+					<div className="w-1/2 flex flex-col items-center justify-center h-full">
+						<h1>hello</h1>
+					</div>
 				</div>
 			}
 		</div>

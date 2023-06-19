@@ -37,11 +37,11 @@ const Inscription = ({
 	const handleClick = () => {
 		router.push(`/inscribe/${id}`);
 	};
-	
+
 	return (
-		<section className="rounded-md flex flex-col w-full h-full justify-between bg-slate-100">
+		<section className="rounded-md break-inside-avoid font-serif flex flex-col w-full h-full justify-between bg-slate-100">
 			<div className="header flex bg-gray-200 flex-col items-start gap-2 p-2">
-				<div className="h-2"> { title } </div>
+				<div className="text-bold"> { title } </div>
 				<div className="text-sm">{ author?.username }</div>
 				<div className="text-xs">{ createdAt.toLocaleString() }</div>
 			</div>
