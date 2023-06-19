@@ -45,7 +45,7 @@ const Feed = () => {
 	return (
 		<div className="h-full w-full">
 			{loading ? <h1>loading...</h1> :
-				<div className="columns-3 overflow-hidden [&>*]:m-4 ">
+				<div className="columns-3 overflow-hidden [&>*]:m-4 prose">
 					{postEls}
 				</div>
 			}

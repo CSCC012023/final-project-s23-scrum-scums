@@ -1,7 +1,7 @@
 import React from "react";
 import { FaArrowUp, FaArrowDown, FaReply } from "react-icons/fa";
 import ReactMarkdown from "react-markdown";
-import { IconBtn } from "./Buttons";
+import IconBtn from "@components/Buttons";
 
 interface User {
 	id:        string,
@@ -30,13 +30,13 @@ const Comment = ({ content, author, createdAt }: CommentProps) => {
 				<ReactMarkdown className="prose lg: prose-base" >{content}</ReactMarkdown>
 			</div>
 			<div className="flex bg-gray-200 flex-wrap">
-				<IconBtn className="mr-1" Icon={FaArrowUp} aria-label="Like" isActive={undefined} color="blue">6</IconBtn>
-				<IconBtn className="mr-4" Icon={FaArrowDown} aria-label="Dislike" isActive={undefined} color="danger"> </IconBtn>
-				<IconBtn Icon={FaReply} aria-label="Comment" isActive={undefined} color="green"> </IconBtn>
+				<IconBtn className="mr-1" Icon={FaArrowUp} aria-label="Like" isActive={true} color="blue">6</IconBtn>
+				<IconBtn className="mr-4" Icon={FaArrowDown} aria-label="Dislike" isActive={true} color="danger"> </IconBtn>
+				<IconBtn Icon={FaReply} aria-label="Comment" isActive={true} color="green"> </IconBtn>
 			</div>
 
 		</div>
 	);
 };
 
-export default Comment; 
+export default Comment;

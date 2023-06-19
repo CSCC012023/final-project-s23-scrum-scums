@@ -27,7 +27,7 @@ const Editor = ({
 			</label>
 			{ type == "inscription" &&
 			<div
-				className="border-2 border-black rounded-lg w-1/2 h-full mx-2 px-2 font-robotoslab overflow-y-scroll">
+				className="border-2 border-black rounded-lg w-1/2 h-full mx-2 px-2 font-robotoslab overflow-y-scroll prose">
 				{/* the markdown preview renderer */}
 				<ReactMarkdown remarkPlugins={[remarkGfm]} children={text} />
 			</div>
