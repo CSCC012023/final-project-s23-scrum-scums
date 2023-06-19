@@ -2,32 +2,33 @@
 
 import Comment from "@components/Comment";
 import { CommentProps } from "@components/Comment";
-import Inscription from "@components/InscriptionCard";
 import { InscriptionProps } from "@components/InscriptionCard";
 import React, { useState, useEffect } from "react";
-import {usePathname } from "next/navigation";
 import axios from "axios";
+import remarkGfm from "remark-gfm";
+import ReactMarkdown from "react-markdown";
 
-const Comments = () => {
-	const [posts, setPost] = useState<InscriptionProps[]>([]);
+const Post = ({ params }: { params: { id: string } }) => {
+	const [post, setPost] = useState<InscriptionProps | null>(null);
 	const [comments, setComment] = useState<CommentProps[]>([]);
 	const [content, setContent] = useState("");
 	const [loading, setLoading] = useState(true);
+	const id = params.id;
 	// Find a better way to get dynamic route ids
-	const inscribeId = usePathname().replace("/inscribe/", "");
 	const fetchPost = async () => {
 		try {
-			const { data } =  await axios.get(`/api/getinscribe/${inscribeId}`);
+			const { data } =  await axios.get(`/api/inscribe/${id}`);
 			setPost(data);
+			setLoading(false);
 		} catch (err) {
 			console.log(err);
 		}
 	};
 	const fetchComment = async () => {
 		try {
-			const { data } =  await axios.get(`/api/commentsection/${inscribeId}`);
+			const { data } =  await axios.get(`/api/comment/${id}`);
 			setComment(data);
-			setLoading(false);
+
 		} catch (err) {
 			console.log(err);
 		}
@@ -38,17 +39,7 @@ const Comments = () => {
 		fetchComment();
 	}, []);
 
-	const postEls = posts.map((post) => (
-		<Inscription
-			key={post.id}
-			id={post.id}
-			title={post.title}
-			content={post.content}
-			authorId={post.authorId}
-			author={post.author}
-			createdAt={post.createdAt}
-		/>
-	));
+
 
 	const commentEls = comments.map((comment) => (
 		<Comment
@@ -62,8 +53,8 @@ const Comments = () => {
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log("submitting", content, inscribeId);
-		await axios.post("/api/comment", { content, inscribeId });
+		console.log("submitting", content, id);
+		await axios.post("/api/comment", { content, id });
 		setContent("");
 		fetchComment();
 	};
@@ -71,28 +62,34 @@ const Comments = () => {
 	return (
 		<div className="h-full w-full">
 			{loading ? <h1>loading...</h1> :
-				<div>
-					<div className="prose">
-						{postEls}
+				<div className="flex flex-col items-center justify-center">
+					<figure className="w-full object-cover" ><img src="https://picsum.photos/1500/800" alt="post image" /></figure>
+					<div className="prose py-4">
+						<ReactMarkdown remarkPlugins={[remarkGfm]} children={post.content}/>
 					</div>
-					<form onSubmit={handleSubmit} className="flex flex-col">
-						<textarea
-							className="border-2 border-black"
-							name="comment"
-							autoComplete="off"
-							value={content}
-							onChange={(e) => setContent(e.target.value)}
-							required
-						/>
-						<button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-1/6">Submit</button>
-					</form>
-					<div>
-						{commentEls}
-					</div>
+					<p className="text-right italic mr-4">By {post?.author?.username}</p>
+					<div className="divider"></div>
+					<section className="w-3/5">
+
+						<form onSubmit={handleSubmit} className="flex flex-col w-full">
+							<textarea
+								className="textarea textarea-secondary py-4 w-full"
+								name="comment"
+								autoComplete="off"
+								value={content}
+								onChange={(e) => setContent(e.target.value)}
+								required
+							/>
+							<button type="submit" className="btn btn-primary">Submit</button>
+						</form>
+						<div>
+							{commentEls}
+						</div>
+					</section>
 				</div>
 			}
 		</div>
 	);
 };
 
-export default Comments;
+export default Post;

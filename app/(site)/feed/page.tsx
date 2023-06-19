@@ -49,7 +49,7 @@ const Feed = () => {
 					<div className="columns-2 [&>*]:m-4 prose w-1/2 over">
 						{postEls}
 					</div>
-					<div className="w-1/2 flex flex-col items-center justify-center h-full">
+					<div className="relative top-0 w-1/2 flex flex-col items-center justify-center h-full">
 						<div className="flex flex-col justify-center items-center">
 							<h1 className="text-center pb-1">Discover more about topics you love</h1>
 							<div className="flex flex-row flex-wrap justify-center gap-2 w-3/5">

@@ -5,10 +5,12 @@ import React from "react";
 import axios from "axios";
 import Editor from "@components/Editor";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const Inscribe = () => {
 
 	const [text, setText] = useState("Start writing here...");
+	const router = useRouter();
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -23,8 +25,8 @@ const Inscribe = () => {
 		}
 		const content = text;
 		const authorId = "46e1ce09-78e7-4d1b-ba49-8479de96ea76";
-		await axios.post("/api/inscribe", { title, content, authorId });
-		setText("Start writing here...");
+		const result = await axios.post("/api/inscribe", { title, content, authorId });
+		router.push(`/inscribe/${result.data.id}`);
 	};
 
 
@@ -32,7 +34,7 @@ const Inscribe = () => {
 		<div className="w-full h-full ">
 			<Editor type="inscription" text={text} onTextChange={setText}/>
 			<form onSubmit={handleSubmit} className="flex flex-col items-center justify-center mt-4">
-				<button type="submit" className="border-2 border-black rounded-lg p-2 bg-green-300 font-robotoslab">Submit</button>
+				<button type="submit" className="btn btn-primary">Submit</button>
 			</form>
 		</div>
 	);

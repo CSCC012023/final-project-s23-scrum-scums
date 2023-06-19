@@ -23,7 +23,7 @@ export interface InscriptionProps {
 	createdAt: Date
 }
 
-const Inscription = ({
+const InscriptionCard = ({
 	id,
 	title,
 	content,
@@ -43,6 +43,7 @@ const Inscription = ({
 		const lines = content.split("\n");
 		return lines[1];
 	};
+	const trending = Math.random() > 0.5;
 
 	return (
 		// <section className="rounded-md break-inside-avoid font-serif flex flex-col w-full h-full justify-between bg-slate-100">
@@ -65,7 +66,7 @@ const Inscription = ({
 				<h2 className="card-title">
 					{ title }
 					{
-						Math.random() > 0.5 &&
+						trending &&
 						<div className="badge badge-accent">Trending</div>
 					}
 				</h2>
@@ -78,4 +79,4 @@ const Inscription = ({
 	);
 };
 
-export default Inscription;
+export default InscriptionCard;
