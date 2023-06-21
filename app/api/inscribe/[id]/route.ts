@@ -1,14 +1,16 @@
 // Query a specific inscribe for comments
-import { PrismaClient } from "@prisma/client";
-import { NextRequest } from "next/server";
-const prisma = new PrismaClient();
+import prisma from "@lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest) => {
 	const id = req.nextUrl.pathname.replace("/api/inscribe/", "");
 	const trending = await prisma.inscribe.findUnique({
 		where: {
 			id: id,
-		}
+		},
+		include: {
+			author: true,
+		},
 	});
-	return new Response(JSON.stringify(trending), { status: 200 });
+	return NextResponse.json(trending);
 };

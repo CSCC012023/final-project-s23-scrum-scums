@@ -10,15 +10,14 @@ interface BtnProps {
 	onClick?: () => void
 }
 
-const IconBtn = ({
+const IconBtn: React.FC<BtnProps> = ({
 	Icon,
 	isActive,
 	color,
 	children,
 	ariaLabel,
 	onClick
-}: BtnProps
-) => {
+}) => {
 	return (
 		<button
 			className={`btn icon-btn $(isActive ? "icon-btn-active" : ""} ${color}`}

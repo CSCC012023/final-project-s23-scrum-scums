@@ -18,7 +18,7 @@ export interface CommentProps {
     createdAt: Date
 }
 
-const Comment = ({ content, author, createdAt }: CommentProps) => {
+const Comment: React.FC<CommentProps> = ({ content, author, createdAt }) => {
 	return(
 		<div className="p-4">
 			<div className="flex flex-row justify-between bg-gray-200 flex-wrap">

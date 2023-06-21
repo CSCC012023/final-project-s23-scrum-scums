@@ -8,12 +8,11 @@ interface EditorProps {
 	onTextChange: (text: string) => void
 }
 
-const Editor = ({
+const Editor: React.FC<EditorProps> = ({
 	type,
 	text,
 	onTextChange
-}: EditorProps
-) => {
+}) => {
 	const inputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		const typedText = e.target.value;
 		onTextChange(typedText);

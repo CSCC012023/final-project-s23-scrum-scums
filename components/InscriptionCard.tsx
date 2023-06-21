@@ -23,15 +23,14 @@ export interface InscriptionProps {
 	createdAt: Date
 }
 
-const InscriptionCard = ({
+const InscriptionCard: React.FC<InscriptionProps> = ({
 	id,
 	title,
 	content,
 	author,
 	authorId,
 	createdAt
-}: InscriptionProps
-) => {
+}) => {
 	const router = useRouter();
 
 	const handleClick = () => {
@@ -60,8 +59,12 @@ const InscriptionCard = ({
 		// 		<IconBtn onClick={handleClick} Icon={FaReply} aria-label="Comment" isActive={true} color="green"></IconBtn>
 		// 	</div>
 		// </section>
-		<div className="card w-72 bg-base-100 shadow-xl break-inside-avoid">
-			<figure className="w-full" ><img src="https://picsum.photos/400" alt="post image" /></figure>
+		<div className="card w-96 h-[32rem] bg-base-100 shadow-xl break-inside-avoid prose
+		hover:cursor-pointer
+		transition-all duration-500 ease-in-out
+		hover:shadow-2xl
+		" onClick={handleClick}>
+			<figure className="w-full mb-0" ><img src="https://picsum.photos/400" alt="post image" /></figure>
 			<div className="card-body">
 				<h2 className="card-title">
 					{ title }

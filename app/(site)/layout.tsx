@@ -58,12 +58,9 @@ const RootLayout = ({children}: { children: React.ReactNode }) => {
 		<html lang="en" data-theme="fantasy" className={`${nunitoSans.variable} ${warnockPro.variable}`}>
 			<body className="bg-base-100">
 				<Navbar />
-				<main>
+				<main className="w-full h-full">
 					{children}
 				</main>
-
-
-
 			</body>
 		</html>
 	);
