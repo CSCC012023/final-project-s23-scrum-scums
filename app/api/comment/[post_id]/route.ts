@@ -2,11 +2,14 @@
 import { NextRequest } from "next/server";
 import prisma from "@lib/prisma";
 
-export const GET = async (req: NextRequest) => {
-	const id = req.nextUrl.pathname.replace("/api/comment/", "");
+export const GET = async (
+	req: NextRequest,
+	{ params }: { params: { post_id: string } }
+) => {
+	const { post_id } = params;
 	const trending = await prisma.comment.findMany({
 		where: {
-			inscribeId: id,
+			inscribeId: post_id,
 		}
 	});
 	return new Response(JSON.stringify(trending), { status: 200 });

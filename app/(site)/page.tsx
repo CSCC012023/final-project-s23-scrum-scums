@@ -3,10 +3,11 @@
 
 import React from "react";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 import Typewriter from "typewriter-effect";
 import InscriptionCard from "@components/InscriptionCard";
-import axios from "axios";
+import Tag from "@components/Tag";
 
 
 const Home = () => {
@@ -17,10 +18,8 @@ const Home = () => {
 	const fetchPosts = async () => {
 		try {
 			const { data } =  await axios.get("/api/trending");
-			console.log(data);
 			setPosts(data);
 			setLoading(false);
-			console.log("done loading");
 		} catch (err) {
 			console.log(err);
 		}
@@ -65,19 +64,19 @@ const Home = () => {
 			<div className="h-full w-full ">
 				{loading ? <h1 className="font-bold text-center">loading...</h1> :
 					<div className="flex flex-row items-center justify-evenly mt-12">
-						<div className="grid grid-cols-2 grid-flow-row gap-6">
+						<div className="grid grid-cols-2 grid-flow-row grid gap-6">
 							{postEls}
 						</div>
 						<div className="sticky top-1/2 flex flex-col items-center justify-center h-full">
 							<div className="flex flex-col justify-center items-center">
 								<h1 className="text-center pb-1">Discover more about topics you love</h1>
 								<div className="flex flex-row flex-wrap justify-center gap-2 w-3/5">
-									<div className="badge badge-outline hover:badge-info hover:badge-outline hover:cursor-pointer">Finance</div>
-									<div className="badge badge-outline hover:badge-info hover:badge-outline hover:cursor-pointer">Programming</div>
-									<div className="badge badge-outline hover:badge-info hover:badge-outline hover:cursor-pointer">Politics</div>
-									<div className="badge badge-outline hover:badge-info hover:badge-outline hover:cursor-pointer">Science</div>
-									<div className="badge badge-outline hover:badge-info hover:badge-outline hover:cursor-pointer">Philosophy</div>
-									<div className="badge badge-outline hover:badge-info hover:badge-outline hover:cursor-pointer">Art</div>
+									<Tag name={"Finance"}/>
+									<Tag name={"Programming"}/>
+									<Tag name={"Politics"}/>
+									<Tag name={"Film"}/>
+									<Tag name={"Philosophy"}/>
+									<Tag name={"Art"}/>
 								</div>
 							</div>
 						</div>

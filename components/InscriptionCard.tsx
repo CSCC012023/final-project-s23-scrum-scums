@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { FaReply, FaArrowDown, FaArrowUp } from "react-icons/fa";
 import IconBtn from "@components/Buttons";
 import remarkGfm from "remark-gfm";
+import Tag from "@components/Tag";
 // import Image from "next/image";
 
 interface User {
@@ -75,7 +76,7 @@ const InscriptionCard: React.FC<InscriptionProps> = ({
 				</h2>
 				<ReactMarkdown remarkPlugins={[remarkGfm]} children={getFirstLine(content)}/>
 				<div className="card-actions justify-end">
-					<div className="badge badge-outline">Finance</div>
+					<Tag name={"Games"}/>
 				</div>
 			</div>
 		</div>
