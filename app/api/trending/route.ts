@@ -10,6 +10,5 @@ export const GET = async (res: Response) => {
 			author: true,
 		},
 	});
-	console.log(trending[0]);
 	return new Response(JSON.stringify(trending), { status: 200 });
 };
