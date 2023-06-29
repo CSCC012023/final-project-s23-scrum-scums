@@ -15,7 +15,7 @@ interface User {
 	followers: number
 }
 
-export interface InscriptionProps {
+export interface InscriptionCardProps {
 	id:        string,
 	title:     string,
 	content:   string,

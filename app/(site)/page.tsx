@@ -7,12 +7,13 @@ import axios from "axios";
 
 import Typewriter from "typewriter-effect";
 import InscriptionCard from "@components/InscriptionCard";
+import { InscriptionCardProps } from "@components/InscriptionCard";
 import Tag from "@components/Tag";
 
 
 const Home = () => {
 
-	const [posts, setPosts] = useState<InscriptionProps[]>([]);
+	const [posts, setPosts] = useState<InscriptionCardProps[]>([]);
 	const [loading, setLoading] = useState(true);
 
 	const fetchPosts = async () => {
@@ -64,7 +65,7 @@ const Home = () => {
 			<div className="h-full w-full ">
 				{loading ? <h1 className="font-bold text-center">loading...</h1> :
 					<div className="flex flex-row items-center justify-evenly mt-12">
-						<div className="grid grid-cols-2 grid-flow-row grid gap-6">
+						<div className="grid-cols-2 grid-flow-row grid gap-6">
 							{postEls}
 						</div>
 						<div className="sticky top-1/2 flex flex-col items-center justify-center h-full">
