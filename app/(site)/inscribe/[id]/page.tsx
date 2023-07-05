@@ -14,7 +14,7 @@ const Post = ({ params }: { params: { id: string } }) => {
 	const [content, setContent] = useState("");
 	const [loading, setLoading] = useState(true);
 	const id = params.id;
-	// Find a better way to get dynamic route ids
+
 	const fetchPost = async () => {
 		try {
 			const { data } =  await axios.get(`/api/inscribe/${id}`);
@@ -65,12 +65,12 @@ const Post = ({ params }: { params: { id: string } }) => {
 			{loading ? <h1 className="font-bold text-center">loading...</h1> :
 				<div className="flex flex-col items-center justify-center">
 					<figure className="w-full object-cover flex-col flex justify-center" ><img src="https://picsum.photos/1000/460" alt="post image" /></figure>
-					<section className="content w-3/5 pt-4">
-						<p className="text-neutral-400 text-left text-sm">{post?.createdAt?.toLocaleDateString()}</p>
+					<section className="content w-2/3 pt-4 flex flex-col items-center">
 						<div className="prose">
+							<p className="text-neutral-400 text-sm w-full">{post?.createdAt?.toLocaleDateString()}</p>
 							<ReactMarkdown remarkPlugins={[remarkGfm]} children={post.content}/>
+							<p className="text-right italic mr-4">By {post?.author.username}</p>
 						</div>
-						<p className="text-right italic mr-4">By {post?.author.username}</p>
 					</section>
 					<div className="divider"></div>
 					<section className="comment-box w-3/5">
