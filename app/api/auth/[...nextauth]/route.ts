@@ -2,11 +2,8 @@ import NextAuth from "next-auth";
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-// import prisma from "@lib/prisma";
-import {	PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import prisma from "@lib/prisma";
 
 const authConfig: NextAuthOptions = {
 	adapter: PrismaAdapter(prisma),
@@ -20,19 +17,6 @@ const authConfig: NextAuthOptions = {
 			clientSecret: process.env.GITHUB_CLIENT_SECRET as string
 		})
 	],
-	session: {
-		// Use JWT instead of database sessions
-		strategy: "jwt",
-	},
-	callbacks: {
-		async jwt({ token, user }) {
-			return {...token, ...user};	
-		},
-		async session({ session, token, user}){
-			session.user = token as any;
-			return session;
-		},
-	}
 };
 
 const handler = NextAuth(authConfig);
