@@ -1,12 +1,12 @@
 "use client";
 
-import InscriptionCard from "@components/PostCard";
-import { InscriptionProps } from "@components/PostCard";
+import PostCard from "@components/PostCard";
+import { PostProps } from "@components/PostCard";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const Feed = () => {
-	const [posts, setPosts] = useState<InscriptionProps[]>([]);
+	const [posts, setPosts] = useState<PostProps[]>([]);
 	const [loading, setLoading] = useState(true);
 
 	const fetchPosts = async () => {
@@ -26,7 +26,7 @@ const Feed = () => {
 	}, []);
 
 	const postEls = posts.map((post) => (
-		<InscriptionCard
+		<PostCard
 			key={post.id}
 			id={post.id}
 			title={post.title}
