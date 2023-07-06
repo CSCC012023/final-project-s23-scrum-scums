@@ -1,5 +1,5 @@
 import prisma  from "@lib/prisma";
-import { getServerSession } from "next-auth/next"
+import { getServerSession } from "next-auth/next";
 // id        String     @id @default(uuid())
 // title     String
 // content   String
@@ -33,7 +33,6 @@ export const POST = async (req: Request) => {
 			categories: {
 				connect: cats.map((category) => ({ name: category })),
 			},
-			// likes: 0,
 		},
 	});
 

@@ -68,7 +68,9 @@ const Post = ({ params }: { params: { id: string } }) => {
 					<section className="content w-2/3 pt-4 flex flex-col items-center">
 						<div className="prose">
 							<p className="text-neutral-400 text-sm w-full">{post?.createdAt?.toLocaleDateString()}</p>
-							<ReactMarkdown remarkPlugins={[remarkGfm]} children={post.content}/>
+							<ReactMarkdown remarkPlugins={[remarkGfm]}>
+								{"## " + post?.title + "\n\n" + post?.content}
+							</ReactMarkdown>
 							<p className="text-right italic mr-4">By {post?.author.username}</p>
 						</div>
 					</section>

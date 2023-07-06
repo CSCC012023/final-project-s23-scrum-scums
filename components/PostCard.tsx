@@ -39,7 +39,7 @@ const PostCard: React.FC<PostProps> = ({
 	const router = useRouter();
 
 	const handleClick = () => {
-		router.push(`/inscribe/${id}`);
+		router.push(`/post/${id}`);
 	};
 
 	function getFirstLine(str: string) {

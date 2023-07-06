@@ -483,10 +483,7 @@ async function main() {
 			}
 		},
 	});
-
 	console.log("Azod Prepared!");
-
-
 }
 
 main()

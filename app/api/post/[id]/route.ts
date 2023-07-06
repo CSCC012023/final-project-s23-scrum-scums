@@ -3,9 +3,10 @@ import prisma from "@lib/prisma";
 import { NextResponse } from "next/server";
 
 export const GET = async (
+	req: Request,
 	{ params }: { params: { id: string } }
 ) => {
-	const { id } = params;
+	const id = params.id;
 	const trending = await prisma.post.findUnique({
 		where: {
 			id: id,

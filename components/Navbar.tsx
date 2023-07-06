@@ -16,7 +16,7 @@ const Navbar = () => {
 				<Link className="btn btn-ghost normal-case text-3xl" href="/">Obelisk</Link>
 			</div>
 			<div className="flex-none gap-2">
-				<Link className="btn btn-ghost btn-circle" href="/inscribe">
+				<Link className="btn btn-ghost btn-circle" href="/post">
 					<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 fill-secondary" viewBox="0 0 512 512" stroke="currentColor"><g>
 						<g>
 							<path d="M489.068,22.913c-26.642-26.644-72.224-30.155-128.35-9.888c-51.569,18.618-108.577,55.861-160.523,104.868l-3.24,3.056
