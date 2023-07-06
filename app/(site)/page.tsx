@@ -6,19 +6,20 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import Typewriter from "typewriter-effect";
-import InscriptionCard from "@components/InscriptionCard";
-import { InscriptionCardProps } from "@components/InscriptionCard";
+import PostCard from "@components/PostCard";
+import { PostProps } from "@components/PostCard";
 import Tag from "@components/Tag";
 
 
 const Home = () => {
 
-	const [posts, setPosts] = useState<InscriptionCardProps[]>([]);
+	const [posts, setPosts] = useState<PostProps[]>([]);
 	const [loading, setLoading] = useState(true);
 
 	const fetchPosts = async () => {
 		try {
 			const { data } =  await axios.get("/api/trending");
+			console.log(data);
 			setPosts(data);
 			setLoading(false);
 		} catch (err) {
@@ -31,7 +32,7 @@ const Home = () => {
 	}, []);
 
 	const postEls = posts.map((post) => (
-		<InscriptionCard
+		<PostCard
 			key={post.id}
 			id={post.id}
 			title={post.title}
@@ -39,6 +40,7 @@ const Home = () => {
 			authorId={post.authorId}
 			author={post.author}
 			createdAt={post.createdAt}
+			categories={post.categories}
 		/>
 	));
 

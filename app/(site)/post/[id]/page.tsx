@@ -2,14 +2,14 @@
 
 import Comment from "@components/Comment";
 import { CommentProps } from "@components/Comment";
-import { InscriptionProps } from "@components/InscriptionCard";
+import { PostProps } from "@components/PostCard";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
 
 const Post = ({ params }: { params: { id: string } }) => {
-	const [post, setPost] = useState<InscriptionProps | null>(null);
+	const [post, setPost] = useState<PostProps | null>(null);
 	const [comments, setComment] = useState<CommentProps[]>([]);
 	const [content, setContent] = useState("");
 	const [loading, setLoading] = useState(true);
@@ -17,7 +17,7 @@ const Post = ({ params }: { params: { id: string } }) => {
 
 	const fetchPost = async () => {
 		try {
-			const { data } =  await axios.get(`/api/inscribe/${id}`);
+			const { data } =  await axios.get(`/api/post/${id}`);
 			data.createdAt = new Date(data.createdAt);
 			setPost(data);
 			setLoading(false);

@@ -1,7 +1,7 @@
 "use client";
 
-import InscriptionCard from "@components/InscriptionCard";
-import { InscriptionProps } from "@components/InscriptionCard";
+import InscriptionCard from "@components/PostCard";
+import { InscriptionProps } from "@components/PostCard";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 

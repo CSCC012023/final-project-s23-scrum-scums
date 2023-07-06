@@ -35,6 +35,14 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
 model User {
   // required for prisma
   id            String    @id @default(cuid())
@@ -45,37 +53,33 @@ model User {
   accounts      Account[]
   sessions      Session[]
 
-  followers    Int           @default(0)
-  username     String?
-  comments     Comment[]
-  posts        Post[]
-  postLikes    PostLike[]
-  commentLikes CommentLike[]
+  followedBy    User[]    @relation("UserFollows")
+  following     User[]    @relation("UserFollows")
+  username      String?
+  comments      Comment[]
+  posts         Post[]
+  postLikes     PostLike[]
+  commentLikes  CommentLike[]
 }
 
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
 
-  @@unique([identifier, token])
-}
 
 model Post {
-  id        String     @id @default(uuid())
-  title     String
-  content   String
-  createdAt DateTime   @default(now())
-  comments  Comment[]
-  authorId  String
-  author    User       @relation(fields: [authorId], references: [id])
-  likes     PostLike[]
-  category  Category[]
+  id          String     @id @default(uuid())
+  title       String
+  mediaUrl    String?
+  content     String
+  createdAt   DateTime   @default(now())
+  comments    Comment[]
+  authorId    String
+  author      User       @relation(fields: [authorId], references: [id])
+  likes       PostLike[]
+  categories  Category[]
 }
 
 model Category {
   id    String @id @default(uuid())
-  name  String
+  name  String @unique
   posts Post[]
 }
 

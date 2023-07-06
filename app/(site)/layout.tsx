@@ -1,6 +1,7 @@
 import "@styles/globals.css";
 import { Nunito_Sans } from "next/font/google";
 import localFont from "next/font/local";
+import AuthProvider from "@app/AuthProvider";
 
 const nunitoSans = Nunito_Sans({
 	subsets: ["latin-ext"],
@@ -49,20 +50,22 @@ import React from "react";
 
 export const metadata = {
 	title: "Obelisk",
-	description: "Examine the Obelisk"
+	description: "Get on the internet's pulse"
 };
 
 
 const RootLayout = ({children}: { children: React.ReactNode }) => {
 	return (
-		<html lang="en" data-theme="fantasy" className={`${nunitoSans.variable} ${warnockPro.variable}`}>
-			<body className="bg-base-100">
-				<Navbar />
-				<main className="w-full h-full">
-					{children}
-				</main>
-			</body>
-		</html>
+		<AuthProvider>
+			<html lang="en" data-theme="fantasy" className={`${nunitoSans.variable} ${warnockPro.variable}`}>
+				<body className="bg-base-100">
+					<Navbar />
+					<main className="w-full h-full">
+						{children}
+					</main>
+				</body>
+			</html>
+		</AuthProvider>
 	);
 };
 

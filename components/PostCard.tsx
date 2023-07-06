@@ -15,22 +15,28 @@ interface User {
 	followers: number
 }
 
-export interface InscriptionProps {
-	id:        string,
-	title:     string,
-	content:   string,
-	author:    User,
-	authorId:  string,
-	createdAt: Date
+export interface PostProps {
+	id:        	string,
+	title:     	string,
+	content:   	string,
+	author:    	User,
+	authorId:  	string,
+	createdAt: 	Date,
+	categories: Category[]
 }
 
-const InscriptionCard: React.FC<InscriptionProps> = ({
+export interface Category {
+	id:   string,
+	name: string
+}
+
+const PostCard: React.FC<PostProps> = ({
 	id,
 	title,
 	content,
 	author,
-	authorId,
-	createdAt
+	createdAt,
+	categories
 }) => {
 	const router = useRouter();
 
@@ -38,11 +44,7 @@ const InscriptionCard: React.FC<InscriptionProps> = ({
 		router.push(`/inscribe/${id}`);
 	};
 
-	const getFirstLine = (content: string) => {
-		// get the first non-title line
-		const lines = content.split("\n");
-		return lines[1];
-	};
+
 	const trending = Math.random() > 0.5;
 
 	return (
@@ -63,8 +65,7 @@ const InscriptionCard: React.FC<InscriptionProps> = ({
 		<div className="card w-96 h-[32rem] bg-base-100 shadow-xl break-inside-avoid prose
 		hover:cursor-pointer
 		transition-all duration-500 ease-in-out
-		hover:shadow-2xl
-		" onClick={handleClick}>
+		hover:shadow-2xl" onClick={handleClick}>
 			<figure className="w-full mb-0" ><img src="https://picsum.photos/400" alt="post image" /></figure>
 			<div className="card-body">
 				<h2 className="card-title">
@@ -74,13 +75,13 @@ const InscriptionCard: React.FC<InscriptionProps> = ({
 						<div className="badge badge-accent">Trending</div>
 					}
 				</h2>
-				<ReactMarkdown remarkPlugins={[remarkGfm]} children={getFirstLine(content)}/>
+				<ReactMarkdown remarkPlugins={[remarkGfm]} children={content}/>
 				<div className="card-actions justify-end">
-					<Tag name={"Games"}/>
+					{ categories.map((category, index) => <Tag key={category.id} name={category.name}/>) }
 				</div>
 			</div>
 		</div>
 	);
 };
 
-export default InscriptionCard;
+export default PostCard;

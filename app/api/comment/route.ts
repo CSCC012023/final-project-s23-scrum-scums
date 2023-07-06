@@ -1,12 +1,28 @@
 import prisma from "@lib/prisma";
+import { getServerSession } from "next-auth/next"
 
-export const POST = async (request: Request) => {
-	const { inscribeId, content } = await request.json();
-	const authorId = "46e1ce09-78e7-4d1b-ba49-8479de96ea76";
+interface Request {
+	json: () => Promise<{
+		postId: string;
+		parentId?: string;
+		content: string;
+		categories: string[];
+	}>;
+}
+
+
+export const POST = async (req: Request) => {
+	const data = await req.json();
+	const session = await getServerSession();
+	if (!session) {
+		return new Response(JSON.stringify({ message: "Unauthorized" }), { status: 401 });
+	}
+	const authorId = session.user.id;
 	const comment = await prisma.comment.create({
 		data: {
-			inscribeId: inscribeId,
-			content: content,
+			postId: data.postId,
+			content: data.content,
+			parentId: data.parentId,
 			authorId: authorId,
 			createdAt: new Date(),
 			// likes: 0,

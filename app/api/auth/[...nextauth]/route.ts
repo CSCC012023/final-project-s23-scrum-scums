@@ -5,7 +5,8 @@ import GithubProvider from "next-auth/providers/github";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "@lib/prisma";
 
-const authConfig: NextAuthOptions = {
+export const authConfig: NextAuthOptions = {
+	// @ts-expect-error - adapter randomly can't accept undefined even though that's its
 	adapter: PrismaAdapter(prisma),
 	providers: [
 		GoogleProvider({
@@ -17,6 +18,14 @@ const authConfig: NextAuthOptions = {
 			clientSecret: process.env.GITHUB_CLIENT_SECRET as string
 		})
 	],
+	callbacks: {
+		async session ({ session, user }) {
+			if (session.user) {
+				session.user.id = user.id;
+			}
+			return session;
+		}
+	},
 };
 
 const handler = NextAuth(authConfig);
