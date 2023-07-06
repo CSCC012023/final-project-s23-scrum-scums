@@ -3,6 +3,23 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
+	// clear the database
+	const tableNames = [
+		"User",
+		"Post",
+		"PostLike",
+		"Category",
+		"Comment",
+		"CommentLike",
+		"Session",
+		"VerificationToken",
+		"_CategoryToPost",
+		"_UserFollows"
+	];
+	// make sure to keep this in sync with the schema
+	for (const tableName of tableNames) await prisma.$queryRawUnsafe(`Truncate "${tableName}" restart identity cascade;`);
+
+
 	// some example users
 
 	// the bot that follows everyone
@@ -384,7 +401,7 @@ async function main() {
 	});
 
 	console.log("Djikstra Prepared");
-	
+
 
 
 	const azodData = await prisma.user.update({

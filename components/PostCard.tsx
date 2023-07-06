@@ -34,8 +34,6 @@ const PostCard: React.FC<PostProps> = ({
 	id,
 	title,
 	content,
-	author,
-	createdAt,
 	categories
 }) => {
 	const router = useRouter();
@@ -45,7 +43,7 @@ const PostCard: React.FC<PostProps> = ({
 	};
 
 	function getFirstLine(str: string) {
-		return str.split("\n")[0];
+		return str.split(".")[0].concat(".");
 	}
 
 	const trending = Math.random() > 0.5;
@@ -78,9 +76,12 @@ const PostCard: React.FC<PostProps> = ({
 						<div className="badge badge-accent">Trending</div>
 					}
 				</h2>
-				<ReactMarkdown remarkPlugins={[remarkGfm]} children={getFirstLine(content)}/>
+				<ReactMarkdown remarkPlugins={[remarkGfm]}>
+					{getFirstLine(content)}
+				</ReactMarkdown>
+
 				<div className="card-actions justify-end">
-					{ categories.map((category, index) => <Tag key={category.id} name={category.name}/>) }
+					{ categories.map((category) => <Tag key={category.id} name={category.name}/>) }
 				</div>
 			</div>
 		</div>
