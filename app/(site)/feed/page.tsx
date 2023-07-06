@@ -34,13 +34,9 @@ const Feed = () => {
 			authorId={post.authorId}
 			author={post.author}
 			createdAt={post.createdAt}
+			categories={post.categories}
 		/>
 	));
-
-	// useEffect(() => {
-	// 	console.log("post change it");
-	// 	console.log(posts);
-	// }, [posts]);
 
 	return (
 		<div className="h-full w-full ">
