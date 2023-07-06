@@ -44,6 +44,9 @@ const PostCard: React.FC<PostProps> = ({
 		router.push(`/inscribe/${id}`);
 	};
 
+	function getFirstLine(str: string) {
+		return str.split("\n")[0];
+	}
 
 	const trending = Math.random() > 0.5;
 
@@ -75,7 +78,7 @@ const PostCard: React.FC<PostProps> = ({
 						<div className="badge badge-accent">Trending</div>
 					}
 				</h2>
-				<ReactMarkdown remarkPlugins={[remarkGfm]} children={content}/>
+				<ReactMarkdown remarkPlugins={[remarkGfm]} children={getFirstLine(content)}/>
 				<div className="card-actions justify-end">
 					{ categories.map((category, index) => <Tag key={category.id} name={category.name}/>) }
 				</div>
