@@ -22,6 +22,7 @@ const Home = () => {
 	const fetchPosts = async () => {
 		try {
 			const { data } =  await axios.get("/api/trending");
+			console.log(data);
 			setPosts(data);
 			setLoading(false);
 		} catch (err) {
