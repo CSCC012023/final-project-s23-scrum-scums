@@ -21,10 +21,21 @@ export const theme = {
 		transitionProperty: {
 			height: "height",
 			width: "width"
+		},
+		keyframes: {
+			"slide-up": {
+				"0%": {
+					transform: "translateY(100%)"
+				},
+				"100%": {
+					transform: "translateY(0)"
+				}
+			}
 		}
 	}
 };
 export const plugins = [require("@tailwindcss/typography"), require("daisyui")];
 export const daisyui = {
-	themes: ["fantasy", "business"]
+	themes: ["fantasy", "dark"],
+	// darkTheme: "forest"
 };

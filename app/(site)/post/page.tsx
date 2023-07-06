@@ -7,14 +7,13 @@ import Editor from "@components/Editor";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
 
-const post = () => {
+const EditPost = () => {
 
 	const [text, setText] = useState("Start writing here...");
 	const router = useRouter();
 	const { data: session } = useSession(
-		// { 
+		// {
 		// 	required: true,
 		// 	onUnauthenticated() {
 		// 		redirect("/login?callbackUrl=/inscribe");
@@ -49,4 +48,4 @@ const post = () => {
 	);
 };
 
-export default post;
+export default EditPost;

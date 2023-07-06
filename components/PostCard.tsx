@@ -2,7 +2,7 @@ import ReactMarkdown  from "react-markdown";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { FaReply, FaArrowDown, FaArrowUp } from "react-icons/fa";
-import IconBtn from "@components/Buttons";
+import IconBtn from "@components/Button";
 import remarkGfm from "remark-gfm";
 import Tag from "@components/Tag";
 // import Image from "next/image";
