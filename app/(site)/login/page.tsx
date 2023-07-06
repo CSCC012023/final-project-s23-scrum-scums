@@ -4,7 +4,7 @@ import React from "react";
 // import "@styles/globals.css";
 import axios from "axios";
 import { useState } from "react";
-import { GithubSignInButton, GoogleSignInButton } from "@components/Signin";
+import { GithubSignInButton, GoogleSignInButton } from "@components/LoginSSOButtons";
 
 const Signup = () => {
 	const [username, setUsername] = useState("");
@@ -23,9 +23,11 @@ const Signup = () => {
 	return (
 		<div>
 			<p className="text-2xl font-bold flex flex-col items-center">Sign In</p>
-			<div className="flex flex-col space-y-4 pb-4 pt-8">
-				<GoogleSignInButton />
-				<GithubSignInButton	/>
+			<div className="flex flex-col items-center justify-center">
+				<div className="flex flex-col items-center space-y-4 pb-4 pt-8 max-w-md mx-auto">
+					<GoogleSignInButton />
+					<GithubSignInButton />
+				</div>
 			</div>
 
 			{/* credits: https://stackoverflow.com/a/70203834 */}
@@ -37,6 +39,7 @@ const Signup = () => {
 					<span className="bg-white px-4 text-sm text-gray-500">Or</span>
 				</div>
 			</div>
+			
 			<form onSubmit={handleSubmit} className="flex flex-col items-center justify-center">
 				<label className="text-lg text-left px-2">Username</label>
 				<input

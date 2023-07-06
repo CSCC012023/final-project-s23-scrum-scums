@@ -1,6 +1,7 @@
 import "@styles/globals.css";
 import { Nunito_Sans } from "next/font/google";
 import localFont from "next/font/local";
+import Provider from "@/components/Provider";
 
 const nunitoSans = Nunito_Sans({
 	subsets: ["latin-ext"],
@@ -56,12 +57,14 @@ export const metadata = {
 const RootLayout = ({children}: { children: React.ReactNode }) => {
 	return (
 		<html lang="en" data-theme="fantasy" className={`${nunitoSans.variable} ${warnockPro.variable}`}>
-			<body className="bg-base-100">
-				<Navbar />
-				<main className="w-full h-full">
-					{children}
-				</main>
-			</body>
+			<Provider>
+				<body className="bg-base-100">
+					<Navbar />
+					<main className="w-full h-full">
+						{children}
+					</main>
+				</body>
+			</Provider>
 		</html>
 	);
 };

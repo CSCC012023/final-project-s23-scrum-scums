@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export function GoogleSignInButton() {
 	const handleClick = () => {
-		signIn("google", { callbackUrl: "/feed" });
+		signIn("google", { callbackUrl: "/" });
 	};
 
 	return (
@@ -21,7 +21,7 @@ export function GoogleSignInButton() {
 
 export function GithubSignInButton() {
 	const handleClick = () => {
-		signIn("github", { callbackUrl: "/feed" });
+		signIn("github", { callbackUrl: "/" });
 	};
 
 	return (

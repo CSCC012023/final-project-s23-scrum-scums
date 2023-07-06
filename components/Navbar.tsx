@@ -6,10 +6,15 @@ import React from "react";
 import { useRouter } from "next/navigation";
 
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 const Navbar = () => {
 	const [search, setSearch] = useState("");
 	const router = useRouter();
+	const { data: session } = useSession({ 
+		required: false,
+	});
+
 	return (
 		<nav className="navbar bg-base-100 sticky">
 			<div className="flex-1 font-serif ">
@@ -42,7 +47,8 @@ const Navbar = () => {
 				<div className="dropdown dropdown-end">
 					<label tabIndex={0} className="btn btn-ghost btn-circle avatar">
 						<div className="w-10 rounded-full">
-							<Image alt="profile" src="/assets/icons/icon.png" width={32} height={32}/>
+							{session?.user?.image ? <img src={session.user.image} alt="profile" className="rounded-full"/> : <img src="/assets/icons/icon.png" alt="profile" className="rounded-full"/>}
+							{/* {session?.user?.image ? <Image src={session.user.image} alt="profile" width={32} height={32} className="rounded-full"/> : <Image alt="profile" src="/assets/icons/icon.png" width={32} height={32}/>} */}
 						</div>
 					</label>
 					<ul tabIndex={0} className="mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
@@ -53,7 +59,7 @@ const Navbar = () => {
 							</Link>
 						</li>
 						<li><Link href="/settings">Settings</Link></li>
-						<li><Link href="/logout">Logout</Link></li>
+						{session ? <li><Link href="/logout">Logout</Link></li> : <li><Link href="/login">Login</Link></li>}
 					</ul>
 				</div>
 			</div>

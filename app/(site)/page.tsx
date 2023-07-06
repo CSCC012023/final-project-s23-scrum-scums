@@ -9,12 +9,15 @@ import Typewriter from "typewriter-effect";
 import InscriptionCard from "@components/InscriptionCard";
 import { InscriptionCardProps } from "@components/InscriptionCard";
 import Tag from "@components/Tag";
+import { useSession } from "next-auth/react";
 
 
 const Home = () => {
 
 	const [posts, setPosts] = useState<InscriptionCardProps[]>([]);
 	const [loading, setLoading] = useState(true);
+	const { data: session } = useSession();
+	console.log(JSON.stringify(session, null, 2));
 
 	const fetchPosts = async () => {
 		try {
@@ -45,9 +48,21 @@ const Home = () => {
 	return (
 		<div className="w-full h-3/5 ">
 			<div className="pl-6 w-1/2">
-				<h1 className="text-8xl font-bold font-serif my-4">
-				Read on.
+				<h1 className="text-4xl font-bold font-serif my-4 text-blue-600">
+					{session?.user?.name ? 
+						"Hello, " + session.user.name + "." : 
+						"Read on."}
 				</h1>
+				<h2 className="text-4xl font-bold font-serif my-4 text-blue-600">
+					{session?.user?.email ? 
+						"Your email: " + session.user.email + ".": 
+						""}
+				</h2>
+				<h2 className="text-4xl font-bold font-serif my-4 text-blue-600">
+					{session?.user?.id ? 
+						"Your user id: " + session.user.id + ".": 
+						""}
+				</h2>
 				<h2 className="text-3xl font-bold text-left">What&#39;s the Internet&#39;s views on
 					<span className="text-primary inline-block ml-2"><Typewriter
 						options={{

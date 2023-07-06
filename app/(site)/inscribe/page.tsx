@@ -6,11 +6,21 @@ import axios from "axios";
 import Editor from "@components/Editor";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 const Inscribe = () => {
 
 	const [text, setText] = useState("Start writing here...");
 	const router = useRouter();
+	const { data: session } = useSession(
+		// { 
+		// 	required: true,
+		// 	onUnauthenticated() {
+		// 		redirect("/login?callbackUrl=/inscribe");
+		// 	}
+		// }
+	);
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
