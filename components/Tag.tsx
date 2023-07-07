@@ -17,7 +17,7 @@ const Tag: React.FC<TagProps> = ({
 
 
 	return (
-		<div className="badge badge-outline
+		<div className="badge badge-outline badge-accent
 			hover:badge-info hover:badge-outline hover:cursor-pointer"
 		onClick={onClick}
 		>

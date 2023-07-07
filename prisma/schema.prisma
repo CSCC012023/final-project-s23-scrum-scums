@@ -8,33 +8,19 @@ datasource db {
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
-// model User {
-//   id        String     @id @default(uuid())
-//   email     String     @unique
-//   password  String
-//   followers Int        @default(0)
-//   username  String?
-//   comments  Comment[]
-//   inscribes Inscribe[]
-//   likes     Like[]
-
-//   @@unique([email, password])
-// }
-
-
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -49,21 +35,6 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  comments  Comment[]
-  inscribes Inscribe[]
-  likes     Like[]
-  password  String?
-  followers Int        @default(0)
-  username  String?
-}
 
 model VerificationToken {
   identifier String
@@ -73,36 +44,75 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Inscribe {
-  id        String    @id @default(uuid())
-  title     String
-  content   String
-  authorId  String
-  createdAt DateTime  @default(now())
-  comments  Comment[]
-  author    User      @relation(fields: [authorId], references: [id])
+
+model User {
+  // required for prisma
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+
+  followedBy    User[]    @relation("UserFollows")
+  following     User[]    @relation("UserFollows")
+  username      String?
+  comments      Comment[]
+  posts         Post[]
+  postLikes     PostLike[]
+  commentLikes  CommentLike[]
+}
+
+
+model Post {
+  id          String     @id @default(uuid())
+  title       String
+  mediaUrl    String?
+  content     String
+  createdAt   DateTime   @default(now())
+  comments    Comment[]
+  authorId    String
+  author      User       @relation(fields: [authorId], references: [id])
+  likes       PostLike[]
+  categories  Category[]
+}
+
+model Category {
+  id    String @id @default(uuid())
+  name  String @unique
+  posts Post[]
 }
 
 model Comment {
-  id         String    @id @default(uuid())
-  content    String
-  authorId   String
-  inscribeId String
-  createdAt  DateTime  @default(now())
-  parentId   String?
-  updatedAt  DateTime  @updatedAt
-  author     User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  inscribe   Inscribe  @relation(fields: [inscribeId], references: [id], onDelete: Cascade)
-  parent     Comment?  @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
-  children   Comment[] @relation("ParentChild")
-  likes      Like[]
+  id        String        @id @default(uuid())
+  content   String
+  authorId  String
+  createdAt DateTime      @default(now())
+  parentId  String?
+  updatedAt DateTime      @updatedAt
+  author    User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  postId    String
+  post      Post          @relation(fields: [postId], references: [id], onDelete: Cascade)
+  parent    Comment?      @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
+  children  Comment[]     @relation("ParentChild")
+  likes     CommentLike[]
 }
 
-model Like {
-  userId    String
+model CommentLike {
   commentId String
   comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  userId    String
   user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, commentId])
+}
+
+model PostLike {
+  postId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, postId])
 }
