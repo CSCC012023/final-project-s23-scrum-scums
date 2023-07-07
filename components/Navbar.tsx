@@ -46,19 +46,20 @@ const Navbar = () => {
 					/>
 				</div>
 
+				
 				{status==="authenticated" ?
 					(
 						<div className="dropdown dropdown-end">
 							<label tabIndex={0} className="btn btn-ghost btn-circle avatar">
 								<div className="w-10 rounded-full">
-							(session?.user?.image ? <Image src={session.user.image} fill alt="profile" className="rounded-full"/> :
-									<span className="avatar"></span>
-							)
+							({session?.user?.image !== null ? <img src={session.user.image}  alt="profile" className="rounded-full"/> :
+										<span className="avatar text-sm"> {session.user.name} </span>
+									})
 								</div>
 							</label>
 							<ul tabIndex={0} className="mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
 								<li>
-									<Link className="justify-between" href="/profile">
+									<Link className="justify-between" href={`/profile/${session.user.id}`}>
 									Profile
 										<span className="badge">New</span>
 									</Link>

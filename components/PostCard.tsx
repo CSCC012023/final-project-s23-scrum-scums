@@ -49,7 +49,7 @@ const PostCard: React.FC<PostProps> = ({
 	const trending = Math.random() > 0.5;
 
 	return (
-		<div className="card w-96 h-[32rem] bg-base-100 shadow-xl break-inside-avoid prose
+		<div className="card w-96 h-[32rem] bg-base-300 shadow-xl break-inside-avoid prose
 		hover:cursor-pointer
 		transition-all duration-500 ease-in-out
 		hover:shadow-2xl" onClick={handleClick}>

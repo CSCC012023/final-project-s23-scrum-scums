@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
+import bcrypt from "bcryptjs";
 
 async function main() {
 	// clear the database
@@ -34,7 +35,9 @@ async function main() {
 			username: "azod",
 		},
 	});
-
+	// refer to api docs for info on password hashing
+	const botvinnik_pw = await bcrypt.hash("bottythotty2", 10);
+	
 	// the wannabe influencer
 	const botvinnik = await prisma.user.upsert({
 		where: {
@@ -45,6 +48,7 @@ async function main() {
 			name: "Botvinnik",
 			username: "ripbotvinkle",
 			email: "botvinkle21@gmail.com",
+			password: botvinnik_pw,
 			followedBy: {
 				connect: {
 					id: azad.id,
@@ -313,7 +317,87 @@ async function main() {
 					{
 						title: "Everyone knows the best mathematical programming abstraction",
 						content: "Lambdas Rule, Turing Machines Drool",
-					}
+					},
+					{
+						title: "I hate cars",
+						content: "They clog up the road. They loud. They stinky. Get them off the road.",
+						categories: {
+							connectOrCreate: [
+								{
+									where: {
+										name: "Transport"
+									},
+									create: {
+										name: "Transport"
+									}
+								}
+							]
+						}
+					},
+					{
+						title: "Are streetcars free?",
+						content: "The streetcars of Toronto have a lot of passengers, and you have to pay the fare to get on. So contrary to popular belief, streetcars aren't free.",
+						categories: {
+							connectOrCreate: [
+								{
+									where: {
+										name: "Free?"
+									},
+									create: {
+										name: "Free?"
+									}
+								}
+							]
+						}
+					},
+					{
+						title: "Haiku",
+						content: "Shibboleth Standard. A scourge to this institute. A curse on us all.",
+						categories: {
+							connectOrCreate: [
+								{
+									where: {
+										name: "Eldritch"
+									},
+									create: {
+										name: "Eldritch"
+									}
+								}
+							]
+						}
+					},
+					{
+						title: "Dankest of Cellars",
+						content: "Ruin has come to our family. You remember our venerable house, opulent and imperial. Gazing proudly from its stoic perch above the moor. I lived all my years in that ancient, rumor-shadowed manor. Fattened by decadence and luxury. And yet, I began to tire of conventional extravagance. Singular, unsettling tales suggested the mansion itself was a gateway to some fabulous and unnamable power. With relic and ritual, I bent every effort towards the excavation and recovery of those long-buried secrets, exhausting what remained of our family fortune on swarthy workmen and sturdy shovels. At last, in the salt-soaked crags beneath the lowest foundations we unearthed that damnable portal of antediluvian evil. Our every step unsettled the ancient earth but we were in a realm of death and madness! In the end, I alone fled laughing and wailing through those blackened arcades of antiquity. Until consciousness failed me. You remember our venerable house, opulent and imperial. It is a festering abomination! I beg you, return home, claim your birthright, and deliver our family from the ravenous clutching shadows of the Dankest Cellar.",
+						categories: {
+							connectOrCreate: [
+								{
+									where: {
+										name: "Dank memes"
+									},
+									create: {
+										name: "Dank memes"
+									}
+								}
+							]
+						}
+					},
+					{
+						title: "Look",
+						content: "Look at these mountains.",
+						categories: {
+							connectOrCreate: [
+								{
+									where: {
+										name: "096"
+									},
+									create: {
+										name: "096"
+									}
+								}
+							]
+						}
+					},
 				]
 			}
 		},
@@ -322,7 +406,7 @@ async function main() {
 		}
 	});
 
-	console.log("Church Prepared");
+	console.log("Church Prepared!");
 
 
 	// now we have 4 users and some sample posts
@@ -353,6 +437,7 @@ async function main() {
 			}
 		}
 	});
+
 	console.log("Botvinnik Prepared!");
 
 	const dijkstraData = await prisma.user.update({
@@ -400,7 +485,7 @@ async function main() {
 		}
 	});
 
-	console.log("Djikstra Prepared");
+	console.log("Djikstra Prepared!");
 
 
 
@@ -484,6 +569,31 @@ async function main() {
 		},
 	});
 	console.log("Azod Prepared!");
+
+	const botvinnikcomment = await prisma.user.update({
+		where: {
+			email: "botvinkle21@gmail.com",
+		},
+		data: {
+			following: {
+				connect: {
+					id: dijkstra.id
+				}
+			},
+			comments: {
+				create: [
+					{
+						content: "Great to see you on this topic.",
+						post: {
+							connect: {
+								id: dijkstra.posts[3].id
+							}
+						}
+					}
+				]
+			}
+		}
+	});
 }
 
 main()
