@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
+import bcrypt from "bcryptjs";
 
 async function main() {
 	// clear the database
@@ -35,6 +36,7 @@ async function main() {
 		},
 	});
 	const botvinnik_pw = "bottythotty2";
+
 	// the wannabe influencer
 	const botvinnik = await prisma.user.upsert({
 		where: {
@@ -354,6 +356,7 @@ async function main() {
 			}
 		}
 	});
+
 	console.log("Botvinnik Prepared!");
 
 	const dijkstraData = await prisma.user.update({
@@ -485,6 +488,31 @@ async function main() {
 		},
 	});
 	console.log("Azod Prepared!");
+
+	const botvinnikcomment = await prisma.user.update({
+		where: {
+			email: "botvinkle21@gmail.com",
+		},
+		data: {
+			following: {
+				connect: {
+					id: dijkstra.id
+				}
+			},
+			comments: {
+				create: [
+					{
+						content: "Great to see you on this topic.",
+						post: {
+							connect: {
+								id: dijkstra.posts[3].id
+							}
+						}
+					}
+				]
+			}
+		}
+	});
 }
 
 main()

@@ -81,12 +81,8 @@ export const authConfig: NextAuthOptions = {
 		// Name, imageURL, username, id
 		async session({ session, token}) {
 			const tok = token as ObeliskToken;
-			console.log("token:");
-			console.log(tok);
 			session.user.id = tok.sub;
 			session.user.name = tok.name;
-			console.log("session");
-			console.log(session);
 			
 			return session;
 		},
