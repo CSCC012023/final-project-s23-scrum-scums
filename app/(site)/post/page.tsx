@@ -7,14 +7,13 @@ import Editor from "@components/Editor";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
 
-const Inscribe = () => {
+const EditPost = () => {
 
 	const [text, setText] = useState("Start writing here...");
 	const router = useRouter();
 	const { data: session } = useSession(
-		// { 
+		// {
 		// 	required: true,
 		// 	onUnauthenticated() {
 		// 		redirect("/login?callbackUrl=/inscribe");
@@ -34,9 +33,8 @@ const Inscribe = () => {
 			}
 		}
 		const content = text;
-		const authorId = "46e1ce09-78e7-4d1b-ba49-8479de96ea76";
-		const result = await axios.post("/api/inscribe", { title, content, authorId });
-		router.push(`/inscribe/${result.data.id}`);
+		const result = await axios.post("/api/post", { title, content });
+		router.push(`/post/${result.data.id}`);
 	};
 
 
@@ -50,4 +48,4 @@ const Inscribe = () => {
 	);
 };
 
-export default Inscribe;
+export default EditPost;

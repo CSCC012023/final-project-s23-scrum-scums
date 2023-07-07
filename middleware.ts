@@ -7,4 +7,4 @@ export default withAuth({
 	},
 });
 
-export const config = { matcher: ["/feed", "/inscribe"] };
+export const config = { matcher: ["/feed", "/post"] };

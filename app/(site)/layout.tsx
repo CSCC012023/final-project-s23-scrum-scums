@@ -1,7 +1,13 @@
 import "@styles/globals.css";
 import { Nunito_Sans } from "next/font/google";
 import localFont from "next/font/local";
-import Provider from "@/components/Provider";
+import React from "react";
+
+import AuthProvider from "@app/Providers/AuthProvider";
+import ToasterProvider from "@app/Providers/ToasterProvider";
+import RegisterModal from "@components/Modals/RegisterModal";
+import Navbar from "@components/Navbar";
+
 
 const nunitoSans = Nunito_Sans({
 	subsets: ["latin-ext"],
@@ -45,27 +51,27 @@ const warnockPro = localFont({
 	variable: "--font-warnock-pro",
 });
 
-import Navbar from "@components/Navbar";
-import React from "react";
 
 export const metadata = {
 	title: "Obelisk",
-	description: "Examine the Obelisk"
+	description: "Get on the internet's pulse"
 };
 
 
 const RootLayout = ({children}: { children: React.ReactNode }) => {
 	return (
-		<html lang="en" data-theme="fantasy" className={`${nunitoSans.variable} ${warnockPro.variable}`}>
-			<Provider>
+		<AuthProvider>
+			<html lang="en" className={`${nunitoSans.variable} ${warnockPro.variable}`}>
 				<body className="bg-base-100">
 					<Navbar />
-					<main className="w-full h-full">
+					<main className="w-full h-full" id="main">
+						<ToasterProvider/>
+						<RegisterModal/>
 						{children}
 					</main>
 				</body>
-			</Provider>
-		</html>
+			</html>
+		</AuthProvider>
 	);
 };
 

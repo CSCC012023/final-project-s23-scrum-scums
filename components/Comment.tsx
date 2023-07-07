@@ -1,7 +1,7 @@
 import React from "react";
 import { FaArrowUp, FaArrowDown, FaReply } from "react-icons/fa";
 import ReactMarkdown from "react-markdown";
-import IconBtn from "@components/Buttons";
+import IconBtn from "@components/Button";
 
 interface User {
 	id:        string,

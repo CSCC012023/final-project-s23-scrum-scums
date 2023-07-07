@@ -8,20 +8,21 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 
+import useRegisterModal from "@hooks/useRegisterModal";
+
 const Navbar = () => {
 	const [search, setSearch] = useState("");
 	const router = useRouter();
-	const { data: session } = useSession({ 
-		required: false,
-	});
+	const { data: session, status } = useSession();
+	const registerModal = useRegisterModal();
 
 	return (
-		<nav className="navbar bg-base-100 sticky">
-			<div className="flex-1 font-serif ">
-				<Link className="btn btn-ghost normal-case text-3xl" href="/">Obelisk</Link>
+		<nav className="navbar bg-base-100 sticky py-1">
+			<div className="flex-1 font-serif">
+				<Link className="btn btn-ghost normal-case text-4xl" href="/">Obelisk</Link>
 			</div>
 			<div className="flex-none gap-2">
-				<Link className="btn btn-ghost btn-circle" href="/inscribe">
+				<Link className="btn btn-ghost btn-circle" href="/post">
 					<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 fill-secondary" viewBox="0 0 512 512" stroke="currentColor"><g>
 						<g>
 							<path d="M489.068,22.913c-26.642-26.644-72.224-30.155-128.35-9.888c-51.569,18.618-108.577,55.861-160.523,104.868l-3.24,3.056
@@ -38,30 +39,40 @@ const Navbar = () => {
 					</svg>
 				</Link>
 				<div className="form-control">
-					<input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto"
+					<input type="text" placeholder="Search" className="input input-bordered input-accent w-24 md:w-auto"
 						onChange={(e) => setSearch(e.target.value)}
 						onKeyUp={(e) => e.key === "Enter" && router.push(`/search?q=${search}`)}
 						value={search}
 					/>
 				</div>
-				<div className="dropdown dropdown-end">
-					<label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-						<div className="w-10 rounded-full">
-							{session?.user?.image ? <img src={session.user.image} alt="profile" className="rounded-full"/> : <img src="/assets/icons/icon.png" alt="profile" className="rounded-full"/>}
-							{/* {session?.user?.image ? <Image src={session.user.image} alt="profile" width={32} height={32} className="rounded-full"/> : <Image alt="profile" src="/assets/icons/icon.png" width={32} height={32}/>} */}
+
+				{status==="authenticated" ?
+					(
+						<div className="dropdown dropdown-end">
+							<label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+								<div className="w-10 rounded-full">
+							(session?.user?.image ? <Image src={session.user.image} fill alt="profile" className="rounded-full"/> :
+									<span className="avatar"></span>
+							)
+								</div>
+							</label>
+							<ul tabIndex={0} className="mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+								<li>
+									<Link className="justify-between" href="/profile">
+									Profile
+										<span className="badge">New</span>
+									</Link>
+								</li>
+								<li><Link href="/settings">Settings</Link></li>
+								{session ? <li><Link href="/logout">Logout</Link></li> : <li><Link href="/login">Login</Link></li>}
+							</ul>
 						</div>
-					</label>
-					<ul tabIndex={0} className="mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-						<li>
-							<Link className="justify-between" href="/profile">
-								Profile
-								<span className="badge">New</span>
-							</Link>
-						</li>
-						<li><Link href="/settings">Settings</Link></li>
-						{session ? <li><Link href="/logout">Logout</Link></li> : <li><Link href="/login">Login</Link></li>}
-					</ul>
-				</div>
+					) :
+					<div className="btn btn-accent btn-outline" onClick={registerModal.onOpen}>
+						Sign Up
+					</div>
+				}
+
 			</div>
 		</nav>
 	);

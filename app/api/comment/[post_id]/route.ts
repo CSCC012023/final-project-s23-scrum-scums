@@ -7,10 +7,10 @@ export const GET = async (
 	{ params }: { params: { post_id: string } }
 ) => {
 	const { post_id } = params;
-	const trending = await prisma.comment.findMany({
+	const comments = await prisma.comment.findMany({
 		where: {
-			inscribeId: post_id,
+			postId: post_id,
 		}
 	});
-	return new Response(JSON.stringify(trending), { status: 200 });
+	return new Response(JSON.stringify(comments), { status: 200 });
 };
