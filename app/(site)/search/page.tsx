@@ -46,7 +46,7 @@ const SearchPage = () => {
 	return (
 		<div>
 			{data.posts.map((Post) => (
-				<div className="card-body">
+				<div className="hover:bg-slate-900 p-3 gap-4 my-4 rounded-xl border-[2px] border-zinc-600">
 					{Post.title}
 					<div className="flex flex-row flex-wrap justify-center gap-2 w-3/5">
 						{Post.content}
