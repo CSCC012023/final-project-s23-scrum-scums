@@ -116,3 +116,8 @@ model PostLike {
 
   @@id([userId, postId])
 }
+
+model SearchQuery {
+  id    String @id @default(cuid())
+  query String
+}

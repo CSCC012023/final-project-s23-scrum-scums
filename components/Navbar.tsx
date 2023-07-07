@@ -3,18 +3,28 @@
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
-import { useRouter } from "next/navigation";
-
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 
 import useRegisterModal from "@hooks/useRegisterModal";
 
 const Navbar = () => {
-	const [search, setSearch] = useState("");
+	const searches = useSearchParams();
+	const [search, setSearch] = useState<string | null>(searches ? searches?.get("q") : "");
 	const router = useRouter();
 	const { data: session, status } = useSession();
 	const registerModal = useRegisterModal();
+
+	const onSearch = (event: React.FormEvent) => {
+		event.preventDefault();
+
+		if (typeof search !== "string") {
+			return;
+		}
+		const encodedSearchQuery = encodeURI(search || "");
+		router.push(`/search?q=${encodedSearchQuery}`);
+	};
 
 	return (
 		<nav className="navbar bg-base-100 sticky py-1">
@@ -39,11 +49,12 @@ const Navbar = () => {
 					</svg>
 				</Link>
 				<div className="form-control">
-					<input type="text" placeholder="Search" className="input input-bordered input-accent w-24 md:w-auto"
-						onChange={(e) => setSearch(e.target.value)}
-						onKeyUp={(e) => e.key === "Enter" && router.push(`/search?q=${search}`)}
-						value={search}
-					/>
+					<form onSubmit={onSearch}>
+						<input type="text" placeholder="Search" className="input input-bordered input-accent w-24 md:w-auto"
+							onChange={(e) => setSearch(e.target.value)}
+							value={search || ""}
+						/>
+					</form>
 				</div>
 
 				{status==="authenticated" ?
