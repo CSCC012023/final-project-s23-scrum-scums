@@ -15,9 +15,11 @@ interface User {
     name: string
     password: string
     // postLikes: PostLike[]
-    // posts: Post[]
+    posts: Post[]
     username?: string
-    _count: {}
+    _count: {
+		followedBy: number
+	}
 }
 
 const Profile = ({ params }: { params: { id: string } }) => {
@@ -25,24 +27,22 @@ const Profile = ({ params }: { params: { id: string } }) => {
 	
 	const [user, setUser] = useState<User>();
 
-	let posts: React.FC<PostProps> = <> </>;
+	let posts: React.JSX.Element[] = [];
 
 	const getUserData = async () => {
 		await axios.get(`/api/profile/${id}`)
 			.then((response) => {
-				const dateFixed = response.data;
-				dateFixed.emailVerified = new Date(response.data.emailVerified);
-				setUser(dateFixed);
+				setUser(response.data);
 				posts = user.posts.map((post, index) => {
-					<PostCard
+					return <PostCard
 						key={index}
 						id={post.id}
 						title={post.title}
 						content={post.content}
 						authorId={post.authorId}
-						// author={post.author}
+						author={post.author}
 						createdAt={post.createdAt}
-						// categories={post.categories}
+						categories={post.categories}
 					/>;
 				});
 				console.log("posts: ", posts);
@@ -59,20 +59,19 @@ const Profile = ({ params }: { params: { id: string } }) => {
 	}, []);
 	
 	return (
-		<div className="drawer drawer-open">
-			<input id="my-drawer" type="checkbox" className="drawer-toggle" />
-			<div className="drawer-content flex flex-col items-center justify-center">
-				{/* Page content here */}
-				{ user ? {posts} 
-					:
-					<div className="text-cent font-semibold">loading...</div>
-				}
-			</div> 
-			<div className="drawer-side">
-				<label htmlFor="my-drawer" className="drawer-overlay"></label> 
-				<ul className="menu p-4 w-80 h-full bg-base-200 text-base-content font-serif">
-					{/* Sidebar content here */}
-					{ user &&
+		<>
+			<div className="drawer drawer-open">
+				<input id="my-drawer" type="checkbox" className="drawer-toggle" />
+				<div className="drawer-content flex flex-col items-center justify-center">
+					{/* Page content here */}
+					{ posts
+					}
+				</div> 
+				<div className="drawer-side">
+					<label htmlFor="my-drawer" className="drawer-overlay"></label> 
+					<ul className="menu p-4 w-80 h-full bg-base-200 text-base-content font-serif">
+						{/* Sidebar content here */}
+						{ user &&
 						<div className="w-full h-full">
 							<div className="avatar h-20 w-20">
 								{}
@@ -85,10 +84,11 @@ const Profile = ({ params }: { params: { id: string } }) => {
 								{user._count && user._count.followedBy} followers
 							</div>
 						</div> 
-					}
-				</ul>
+						}
+					</ul>
+				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 

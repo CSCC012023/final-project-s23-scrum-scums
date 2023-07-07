@@ -14,7 +14,12 @@ export const GET = async (
 		include: {
 			comments: {
 				include: {
-					post: true
+					post: {
+						include: {
+							categories: true,
+							likes: true,
+						},
+					}
 				},
 				orderBy: {
 					createdAt: "desc"
@@ -23,11 +28,20 @@ export const GET = async (
 			posts: {
 				orderBy: {
 					createdAt: "desc"
+				},
+				include: {
+					categories: true,
+					likes: true,
 				}
 			},
 			postLikes: {
 				include: {
-					post: true
+					post: {
+						include: {
+							categories: true,
+							likes: true,
+						}
+					}
 				},
 			},
 			_count: {

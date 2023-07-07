@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import axios from "axios";
 import { useState } from "react";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
@@ -58,7 +57,7 @@ const LoginModal = () => {
 		>
 			<Heading
 				title="Welcome to Obelisk"
-				subtitle="Create an account to get started"
+				subtitle="Welcome back! Login to your account to continue"
 			/>
 			<Input
 				id="email"

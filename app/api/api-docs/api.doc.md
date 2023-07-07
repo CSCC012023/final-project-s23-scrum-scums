@@ -1,4 +1,4 @@
-# API Reference
+df# API Reference
 
 ## Overview
 
@@ -6,6 +6,9 @@
 ## Authenticate
 Obelisk uses NextAuth to handle SSO login and API security.
 For a more detailed, refer to [NextAuth Documentation for Obelisk](/nextauth-01.doc.md)
+
+### Passwords
+Obelisk hashes passwords 10 times.
 
 ## Path formats
 ### Posts
