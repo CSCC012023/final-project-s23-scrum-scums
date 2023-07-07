@@ -8,9 +8,12 @@ export const GET = async (
 ) => {
 	const { post_id } = params;
 	const comments = await prisma.comment.findMany({
+		include: {
+			author: true,
+		},
 		where: {
 			postId: post_id,
-		}
+		},
 	});
 	return new Response(JSON.stringify(comments), { status: 200 });
 };
