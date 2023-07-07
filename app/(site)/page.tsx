@@ -88,17 +88,14 @@ const Home = () => {
 
 			<div className="h-full w-full ">
 				<div className="flex flex-row items-center justify-evenly mt-12">
-					{/* <div className="grid-cols-2 grid-flow-row grid gap-6">
-						{postEls}
-					</div> */}
 
 					<InfiniteScroll
 						dataLength={posts.length}
 						next={fetchPosts}
-						hasMore={true}
+						hasMore={hasMore}
 						loader={ <h1 className="font-bold text-center my-12">loading...</h1>}
 						endMessage={
-							<p className="font-bold text-center">No more posts. Go touch some grass ...</p>
+							<p className="font-bold text-center my-12">No more posts. Go touch some grass ...</p>
 						}
 					>
 						<div

@@ -52,7 +52,5 @@ export const GET = async (
 		},
 	});
 
-	console.log("up", user_data?.posts);
-
 	return NextResponse.json(user_data);
 };
