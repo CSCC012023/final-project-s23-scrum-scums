@@ -1,31 +1,20 @@
 "use client";
 
 import React from "react";
-// import "@styles/globals.css";
 import axios from "axios";
 import { useState } from "react";
 import { GithubSignInButton, GoogleSignInButton } from "@components/LoginSSOButtons";
 import RegisterModal from "@components/Modals/RegisterModal";
+import useRegisterModal from "@hooks/useRegisterModal";
 
 const Signup = () => {
-	const [username, setUsername] = useState("");
-	const [password, setPassword] = useState("");
-	const [email, setEmail] = useState("");
-
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		console.log("submitting", username, password, email);
-		const { data } = await axios.post("/api/signup", { username, password, email });
-		setUsername("");
-		setPassword("");
-		setEmail("");
-	};
-
+	const registerModal = useRegisterModal();
+	registerModal.onOpen();
 
 
 	return (
 		<div>
-			login
+
 		</div>
 	);
 
