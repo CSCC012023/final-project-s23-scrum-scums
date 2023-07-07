@@ -2,7 +2,8 @@
 
 import React, { useEffect } from "react";
 import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import Button from "@components/Button";
 
 const Logout = () => {
 	const router = useRouter();
@@ -21,13 +22,21 @@ const Logout = () => {
 	}
 
 	return (
-		<div className="flex flex-col items-center justify-center h-screen">
-			<p className="mb-4 text-xl font-bold">Are you sure you want to logout?</p>
-			<button 
-				onClick={() => signOut({ callbackUrl: "http://localhost:3000" })} 
-				className="px-4 py-2 text-white bg-blue-500 border border-blue-700 rounded-md">
-					Sign out
-			</button>
+		<div className="flex flex-col items-center justify-center h-full w-full">
+			<p className="mb-4 text-xl font-bold text-center">Are you sure you want to logout?</p>
+			<div
+				className="flex flex-row gap-4 items-center justify-center"
+			>
+				<Button
+					onClick={() => router.back()}
+					secondary
+					label="Go Back"
+				/>
+				<Button
+					onClick={() => signOut({ callbackUrl: "/" })} 
+					label="Sign out"
+				/>
+			</div>
 		</div>
 	);
 };

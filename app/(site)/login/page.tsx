@@ -2,19 +2,29 @@
 
 import React from "react";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GithubSignInButton, GoogleSignInButton } from "@components/LoginSSOButtons";
 import RegisterModal from "@components/Modals/RegisterModal";
 import useRegisterModal from "@hooks/useRegisterModal";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
 
 const Signup = () => {
 	const registerModal = useRegisterModal();
-	registerModal.onOpen();
 
+	const router = useRouter();
+	const { data: session, status } = useSession();
+	if (status === "authenticated") {
+		router.push("/");
+	}
+	
+	useEffect(() => {
+		registerModal.onOpen();
+	}, []);
 
 	return (
 		<div>
-
 		</div>
 	);
 

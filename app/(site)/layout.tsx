@@ -6,6 +6,7 @@ import React from "react";
 import AuthProvider from "@app/Providers/AuthProvider";
 import ToasterProvider from "@app/Providers/ToasterProvider";
 import RegisterModal from "@components/Modals/RegisterModal";
+import LoginModal from "@components/Modals/LoginModal";
 import Navbar from "@components/Navbar";
 
 
@@ -67,6 +68,7 @@ const RootLayout = ({children}: { children: React.ReactNode }) => {
 					<main className="w-full h-full" id="main">
 						<ToasterProvider/>
 						<RegisterModal/>
+						<LoginModal/>
 						{children}
 					</main>
 				</body>

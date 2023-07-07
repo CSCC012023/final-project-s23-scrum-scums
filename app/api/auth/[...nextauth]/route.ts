@@ -5,10 +5,29 @@ import GithubProvider from "next-auth/providers/github";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "@lib/prisma";
 import CredentialsProvider from "next-auth/providers/credentials";
-import axios from "axios";
+import bcrypt from "bcryptjs";
+
+interface ObeliskToken {
+	// the user name
+	name: string
+	// the user email
+	email: string
+	// the user profile image url
+	picture?: string
+	// the user id
+	sub: string
+	// the user access token
+	accessToken: string
+	// the user access token expiration date
+	exp: number
+	// the user access token issue date
+	iat: number
+	// the user access token unique id
+	jti: string
+}
 
 export const authConfig: NextAuthOptions = {
-	// @ts-expect-error - adapter randomly can't accept undefined even though that's its
+	// @ts-expect-error - adapter randomly can't accept undefined even though that's its type
 	adapter: PrismaAdapter(prisma),
 	providers: [
 		GoogleProvider({
@@ -23,45 +42,57 @@ export const authConfig: NextAuthOptions = {
 			name: "Email",
 			credentials: {
 				email: { label: "Email", type: "email", placeholder: "Email" },
-				username: { label: "Username", type: "text", placeholder: "Username" },
+				name: { label: "Name", type: "text", placeholder: "Name" },
 				password: { label: "Password", type: "password", placeholder: "Password"}
 			},
 			async authorize(credentials) {
-				const res = await axios.post("/api/signup", {
-					email: credentials?.email,
-					username: credentials?.username,
-					password: credentials?.password
+				const user = await prisma.user.findUnique({
+					where: {
+						email: credentials?.email
+					}
 				});
-				console.log("submitting", credentials?.username, credentials?.password, credentials?.email);
-
-				const user = await res.data.json();
-
-				if (user) {
-					console.log("Logged in as ", credentials?.username);
-					return user;
-				} else {
-					console.log("Login failed");
+				
+				if (!user) {
+					console.log("No user found");
 					return null;
 				}
+				const match = await bcrypt.compare(credentials?.password, user.password);
+				if (!match) {
+					console.log("Password doesn't match");
+					return null;
+				}
+				
+				console.log("Logged in as ", credentials?.name);
+				return user;
 			}
 		})
 	],
+	session: {
+		strategy: "jwt"
+	},
 	callbacks: {
-		async jwt({ token, user, account }) {
+		async redirect({ url, baseUrl }) { return baseUrl; },
+		async jwt({ token, account }) {
 			if (account) {
-				token.id = account.userId;
+				token.accessToken = account.access_token;
 			}
 			return token;
 		},
-		async session({ session, token, user }) {
-			session.user.id = token.id;
+		// Name, imageURL, username, id
+		async session({ session, token}) {
+			const tok = token as ObeliskToken;
+			console.log("token:");
+			console.log(tok);
+			session.user.id = tok.sub;
+			session.user.name = tok.name;
+			console.log("session");
+			console.log(session);
+			
 			return session;
 		},
 	},
-	session: {
-		strategy: "jwt"
-	}
 };
+
 
 const handler = NextAuth(authConfig);
 

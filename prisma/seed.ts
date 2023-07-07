@@ -34,7 +34,7 @@ async function main() {
 			username: "azod",
 		},
 	});
-
+	const botvinnik_pw = "bottythotty2";
 	// the wannabe influencer
 	const botvinnik = await prisma.user.upsert({
 		where: {
@@ -45,6 +45,7 @@ async function main() {
 			name: "Botvinnik",
 			username: "ripbotvinkle",
 			email: "botvinkle21@gmail.com",
+			password: botvinnik_pw,
 			followedBy: {
 				connect: {
 					id: azad.id,
@@ -322,7 +323,7 @@ async function main() {
 		}
 	});
 
-	console.log("Church Prepared");
+	console.log("Church Prepared!");
 
 
 	// now we have 4 users and some sample posts
@@ -400,7 +401,7 @@ async function main() {
 		}
 	});
 
-	console.log("Djikstra Prepared");
+	console.log("Djikstra Prepared!");
 
 
 

@@ -13,18 +13,17 @@ import {
 } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
-import useRegisterModal from "@hooks/useRegisterModal";
 import useLoginModal from "@hooks/useLoginModal";
+import useRegisterModal from "@hooks/useRegisterModal";
 import Heading from "@components/Heading";
 import Input from "@components/Inputs/Input";
 import Button from "@components/Button";
 import { signIn } from "next-auth/react";
 
 
-const RegisterModal = () => {
-	const registerModal = useRegisterModal();
+const LoginModal = () => {
 	const loginModal = useLoginModal();
-
+	const registerModal = useRegisterModal();
 	const [isLoading, setIsLoading] = useState(false);
 	const {
 		register,
@@ -40,18 +39,13 @@ const RegisterModal = () => {
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		setIsLoading(true);
-		await axios.post("api/register", data)
-			.then((response) => {
-				console.log(response);
-				if (response.data.error)  {
-					toast.error(response.data.error);
-				} else {
-					registerModal.onClose();
-					signIn("credentials", { redirect: false, ...data });
-				}
+		console.log(data);
+		signIn("credentials", { redirect: false, ...data })
+			.then(() => {
+				loginModal.onClose();
 			})
-			.catch((error) => {
-				toast.error(error);
+			.catch((err) => {
+				toast.error(`Something went wrong (${err.response.status})`);
 			})
 			.finally(() => {
 				setIsLoading(false);
@@ -75,14 +69,7 @@ const RegisterModal = () => {
 				errors={errors}
 				required
 			/>
-			<Input
-				id="name"
-				label="Name"
-				disabled={isLoading}
-				register={register}
-				errors={errors}
-				required
-			/>
+
 			<Input
 				id="password"
 				label="Password"
@@ -99,16 +86,18 @@ const RegisterModal = () => {
 		<div className="flex flex-col justify-center w-full h-full gap-4">
 			<Button
 				outline
-				label="Sign up with Google"
+				label="Log in with Google"
 				icon={FcGoogle}
 				onClick={() => signIn("google", { callbackUrl: "/" })}
 			/>
+			
 			<Button
 				outline
-				label="Sign up with GitHub"
+				label="Log in with GitHub"
 				icon={AiFillGithub}
 				onClick={() => signIn("github", { callbackUrl: "/" })}
 			/>
+
 			<div
 				className="
 				text-center
@@ -119,12 +108,12 @@ const RegisterModal = () => {
 				<div
 					className="
 					justify-center
-					flex flex-row
+					flex
 					items-center
 					gap-2
 					"
 				>
-					<div>Already have an account?</div>
+					<div>Don't have an account?</div>
 					<div
 						className="
 						text-blue-500
@@ -135,11 +124,11 @@ const RegisterModal = () => {
 						duration-200
 						"
 						onClick={() => {
-							registerModal.onClose();
-							loginModal.onOpen();
+							loginModal.onClose();
+							registerModal.onOpen();
 						}}
 					>
-					Log In
+					Sign Up
 					</div>
 				</div>
 
@@ -150,10 +139,10 @@ const RegisterModal = () => {
 	return (
 		<Modal
 			disabled={isLoading}
-			isOpen={registerModal.isOpen}
-			onClose={registerModal.onClose}
+			isOpen={loginModal.isOpen}
+			onClose={loginModal.onClose}
 			onSubmit={handleSubmit(onSubmit)}
-			title="Sign Up"
+			title="Log In"
 			actionLabel="Continue"
 			body={bodyContent}
 			footer={footerContent}
@@ -161,4 +150,4 @@ const RegisterModal = () => {
 	);
 };
 
-export default RegisterModal;
+export default LoginModal;
