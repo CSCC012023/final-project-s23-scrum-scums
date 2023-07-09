@@ -17,7 +17,7 @@ const Navbar = () => {
 	const registerModal = useRegisterModal();
 
 	return (
-		<nav className="navbar bg-base-100 sticky py-1">
+		<nav className="navbar bg-base-100 sticky py-1 z-50">
 			<div className="flex-1 font-serif">
 				<Link className="btn btn-ghost normal-case text-4xl" href="/">Obelisk</Link>
 			</div>
