@@ -1,6 +1,5 @@
 import prisma from "@src/lib/prisma";
-import { getServerSession } from "next-auth/next";
-import { useSession } from "next-auth/react";
+
 // id        String     @id @default(uuid())
 // title     String
 // content   String
@@ -15,17 +14,11 @@ interface Request {
 		title: string;
 		content: string;
 		cats: string[];
-		authorID: string;
+		authorId: string;
 	}>;
 }
 export const POST = async (req: Request) => {
-	const { title, content, cats, authorID } = await req.json();
-	// session does not have user id
-	// const session = await getServerSession();
-	// if (!session) {
-	// 	return new Response(JSON.stringify({ message: "Unauthorized" }), { status: 401 });
-	// }
-	const authorId = authorID;
+	const { title, content, cats, authorId } = await req.json();
 	const post = await prisma.post.create({
 		data: {
 			title: title,

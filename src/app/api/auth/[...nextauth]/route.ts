@@ -27,7 +27,6 @@ interface ObeliskToken {
 }
 
 export const authConfig: NextAuthOptions = {
-	// @ts-expect-error - adapter randomly can't accept undefined even though that's its type
 	adapter: PrismaAdapter(prisma),
 	providers: [
 		GoogleProvider({
@@ -78,21 +77,19 @@ export const authConfig: NextAuthOptions = {
 		strategy: "jwt"
 	},
 	callbacks: {
-		async redirect({ url, baseUrl }) {
-			return baseUrl;
-		},
 		async jwt({ token, account }) {
 			if (account) {
 				token.accessToken = account.access_token;
 			}
+			console.log("token", token);
 			return token;
 		},
 		// Name, imageURL, username, id
 		async session({ session, token }) {
-			const tok = token as ObeliskToken;
+			const tok = token as unknown as ObeliskToken;
 			session.user.id = tok.sub;
 			session.user.name = tok.name;
-
+			console.log("session", session);
 			return session;
 		}
 	}

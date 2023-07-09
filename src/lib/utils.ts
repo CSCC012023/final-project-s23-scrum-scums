@@ -1,6 +1,21 @@
+import { getServerSession } from "next-auth";
+import { authConfig } from "@src/app/api/auth/[...nextauth]/route";
+export const getAuthSession = getServerSession(authConfig);
+
+import { ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+// this is a wrapper around clsx and tailwind-merge
+// it allows us to use tailwind classes in clsx
+// and also merge tailwind classes
+// example:
+// cn("text-red-500", "text-lg", "text-center", "text-blue-500")
+// will return "text-red-500 text-lg text-center text-blue-500"
+export function cn(...inputs: ClassValue[]) {
+	return twMerge(clsx(inputs));
+}
+
 import { formatDistanceToNowStrict } from "date-fns";
 import locale from "date-fns/locale/en-US";
-
 const formatDistanceLocale = {
 	lessThanXSeconds: "just now",
 	xSeconds: "just now",
@@ -39,7 +54,7 @@ function formatDistance(token: string, count: number, options?: any): string {
 	return result;
 }
 
-export default function formatTimeToNow(date: Date): string {
+export function formatTimeToNow(date: Date): string {
 	return formatDistanceToNowStrict(date, {
 		addSuffix: true,
 		locale: {

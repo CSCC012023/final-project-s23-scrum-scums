@@ -52,7 +52,7 @@ const Navbar = () => {
 						<div className="dropdown dropdown-end">
 							<label tabIndex={0} className="btn btn-ghost btn-circle avatar">
 								<div className="w-10 rounded-full">
-							({session?.user?.image !== null ? <img src={session.user.image}  alt="profile" className="rounded-full"/> :
+							({session?.user?.image !== null ? <Image src={session.user.image}  alt="profile" className="rounded-full" referrerPolicy="no-referrer"/> :
 										<span className="avatar text-sm"> {session.user.name} </span>
 									})
 								</div>

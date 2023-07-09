@@ -63,7 +63,7 @@ const RootLayout = ({children}: { children: React.ReactNode }) => {
 	return (
 		<AuthProvider>
 			<html lang="en" className={`${nunitoSans.variable} ${warnockPro.variable}`}>
-				<body className="bg-base-100">
+				<body className="bg-base-100 min-h-screen antialiased">
 					<Navbar />
 					<main className="w-full h-full" id="main">
 						<ToasterProvider/>

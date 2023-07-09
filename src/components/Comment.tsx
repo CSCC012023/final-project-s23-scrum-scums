@@ -1,6 +1,6 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
-import formatTimeToNow from "@src/lib/utils/timeAgo";
+import { formatTimeToNow } from "@src/lib/utils";
 
 interface User {
 	id:        string,
