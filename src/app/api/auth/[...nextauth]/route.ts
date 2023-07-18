@@ -31,11 +31,13 @@ export const authConfig: NextAuthOptions = {
 	providers: [
 		GoogleProvider({
 			clientId: process.env.GOOGLE_CLIENT_ID as string,
-			clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
+			clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+			allowDangerousEmailAccountLinking: true,
 		}),
 		GithubProvider({
 			clientId: process.env.GITHUB_CLIENT_ID as string,
-			clientSecret: process.env.GITHUB_CLIENT_SECRET as string
+			clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+			allowDangerousEmailAccountLinking: true,
 		}),
 		CredentialsProvider({
 			name: "Email",
@@ -81,7 +83,7 @@ export const authConfig: NextAuthOptions = {
 			if (account) {
 				token.accessToken = account.access_token;
 			}
-			console.log("token", token);
+			// console.log("token", token);
 			return token;
 		},
 		// Name, imageURL, username, id
@@ -89,7 +91,7 @@ export const authConfig: NextAuthOptions = {
 			const tok = token as unknown as ObeliskToken;
 			session.user.id = tok.sub;
 			session.user.name = tok.name;
-			console.log("session", session);
+			// console.log("session", session);
 			return session;
 		}
 	}

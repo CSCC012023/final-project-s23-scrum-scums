@@ -15,28 +15,30 @@ import Tag from "@src/components/Tag";
 interface Response {
 	posts: PostProps[];
 	end?: boolean;
+	lastCursor: string;
 }
 
 const Home = () => {
 
 	const [posts, setPosts] = useState<PostProps[]>([]);
-	const [page, setPage] = useState(0);
+	const [lastCursor, setLastCursor] = useState("");
 	const [hasMore, setHasMore] = useState(true);
 	const { data: session } = useSession();
-	console.log(JSON.stringify(session, null, 2));
 
 	const fetchPosts = async () => {
-		setPage(page + 1);
 		try {
 			const data = await axios.get("/api/trending", {
 				params: {
-					page: page,
+					lastCursor: lastCursor,
 				}
 			});
+
 			const res: Response = data.data;
+			console.log(res.end);
 			if (res.end) {
 				setHasMore(false);
 			}
+			setLastCursor(res.lastCursor);
 
 			setPosts([...posts, ...res.posts]);
 			console.log(posts);
