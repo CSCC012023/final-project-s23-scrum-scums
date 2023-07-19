@@ -12,7 +12,7 @@ export const GET = async (
 			author: true
 		},
 		where: {
-			postId: post_id
+			postId: parseInt(post_id)
 		}
 	});
 	return new Response(JSON.stringify(comments), { status: 200 });
