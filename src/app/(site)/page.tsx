@@ -15,13 +15,13 @@ import Tag from "@src/components/Tag";
 interface Response {
 	posts: PostProps[];
 	end?: boolean;
-	lastCursor: string;
+	lastCursor: number;
 }
 
 const Home = () => {
 
 	const [posts, setPosts] = useState<PostProps[]>([]);
-	const [lastCursor, setLastCursor] = useState("");
+	const [lastCursor, setLastCursor] = useState<number | null>(null);
 	const [hasMore, setHasMore] = useState(true);
 	const { data: session } = useSession();
 
@@ -32,8 +32,9 @@ const Home = () => {
 					lastCursor: lastCursor,
 				}
 			});
-
+			const typed = parseInt(data.data.lastCursor);
 			const res: Response = data.data;
+			res.lastCursor = typed;
 			console.log(res.end);
 			if (res.end) {
 				setHasMore(false);

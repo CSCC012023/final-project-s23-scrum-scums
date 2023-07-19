@@ -7,14 +7,15 @@ import { NextRequest, NextResponse } from "next/server";
  * returns pages of posts, 6 per page
  */
 
-
+type Cursor = number | "notSet"
 
 export const GET = async (req: NextRequest) => {
-	const lastCursor = req.nextUrl.searchParams.get("lastCursor") as string;
-	
+	const lcParam = req.nextUrl.searchParams.get("lastCursor") as string;
+	const lastCursor: Cursor = lcParam ? parseInt(lcParam) : "notSet";
+
 	const numberOfPosts = 6;
 
-	function earlyReturn(page: any[]) {
+	function earlyReturn(page: any[]): NextResponse<unknown> | undefined {
 		// if less than 6 posts return those and add json value of "end"
 		if (page.length < numberOfPosts) {
 			const data = {
@@ -25,7 +26,7 @@ export const GET = async (req: NextRequest) => {
 		}
 	}
 
-	if (lastCursor === "") {
+	if (lastCursor === "notSet") {
 		const trending = await prisma.post.findMany({
 			take: numberOfPosts,
 			include: {
@@ -38,7 +39,7 @@ export const GET = async (req: NextRequest) => {
 			}
 		});
 		
-		const res: NextResponse<unknown> | undefined = earlyReturn(trending);
+		const res = earlyReturn(trending);
 		if (res) {
 			return res;
 		}
@@ -73,7 +74,7 @@ export const GET = async (req: NextRequest) => {
 		});
 
 
-		const res: NextResponse<unknown> | undefined = earlyReturn(nextPage);
+		const res = earlyReturn(nextPage);
 		if (res) {
 			return res;
 		}

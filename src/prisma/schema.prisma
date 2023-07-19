@@ -85,7 +85,7 @@ model User {
 
 // a post on obelisk by a user
 model Post {
-  id          String     @id @default(uuid())
+  id          Int     @id @default(autoincrement())
 
   // the title of the post
   title       String
@@ -110,6 +110,8 @@ model Post {
 
   // the likes the post has recieved 
   likes       PostLike[]
+
+  @@unique([id, createdAt(sort: Desc)], name: "id_createdAt")
 }
 
 // a tag that can be assigned to posts as well as to filter posts
@@ -121,7 +123,7 @@ model Category {
 
 // a comment on an obelisk post
 model Comment {
-  id        String        @id @default(uuid())
+  id        Int        @id @default(autoincrement())
   
   // the content of the comment
   content   String
@@ -134,11 +136,11 @@ model Comment {
   author    User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   // the underlying post under which the comment is made
-  postId    String
+  postId    Int
   post      Post          @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   // comments can be child comments or top-level and its a n - 1 relationship respectively
-  parentId  String?
+  parentId  Int?
   parent    Comment?      @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
   children  Comment[]     @relation("ParentChild")
 
@@ -149,7 +151,7 @@ model Comment {
 // a like given by a user to a comment
 model CommentLike {
   // the comment it was given to
-  commentId String
+  commentId Int
   comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
 
   // the user who gave the like
@@ -163,7 +165,7 @@ model CommentLike {
 // a like given by a user to a post
 model PostLike {
   // the post it was given to
-  postId String
+  postId Int
   post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
   
   // the user who gave the like

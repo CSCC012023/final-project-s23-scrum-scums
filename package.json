@@ -9,11 +9,14 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
-    "seed": "ts-node --esm --transpile-only prisma/seed.ts"
+    "seed": "npx ts-node --esm --transpile-only ./src/prisma/seed.ts"
+  },
+  "prisma": {
+    "schema": "src/prisma/schema.prisma"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^1.0.0",
-    "@prisma/client": "^4.16.2",
+    "@prisma/client": "^5.0.0",
     "@radix-ui/react-icons": "^1.3.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/react": "18.2.7",
@@ -40,6 +43,7 @@
     "react-infinite-scroll-component": "^6.1.0",
     "react-markdown": "^8.0.7",
     "remark-gfm": "^3.0.1",
+    "run": "^1.4.0",
     "tailwind-merge": "^1.14.0",
     "tailwindcss": "3.3.2",
     "typescript": "5.0.4",
@@ -58,7 +62,7 @@
     "eslint-plugin-react": "^7.32.2",
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
-    "prisma": "^4.16.2",
+    "prisma": "^5.0.0",
     "typescript": "5.1.3"
   }
 }
