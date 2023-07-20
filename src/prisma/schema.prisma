@@ -181,3 +181,8 @@ model PostLike {
   // a user can't like the same post more than once
   @@id([userId, postId])
 }
+
+model SearchQuery {
+  id    String @id @default(cuid())
+  query String
+}
