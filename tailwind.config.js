@@ -2,21 +2,14 @@ import { fontFamily as _fontFamily } from "tailwindcss/defaultTheme";
 
 /** @type {import('tailwindcss').Config} */
 export const content = [
-	"./pages/**/*.{js,ts,jsx,tsx,mdx}",
 	"./components/**/*.{js,ts,jsx,tsx,mdx}",
-	"./app/**/*.{js,ts,jsx,tsx,mdx}"
+	"./src/**/*.{js,ts,jsx,tsx,mdx}"
 ];
 export const theme = {
 	extend: {
 		fontFamily: {
-			serif: [
-				"var(--font-warnock-pro)",
-				..._fontFamily.serif
-			],
-			sans: [
-				"var(--font-nunito-sans)",
-				..._fontFamily.sans
-			],
+			serif: ["var(--font-warnock-pro)", ..._fontFamily.serif],
+			sans: ["var(--font-nunito-sans)", ..._fontFamily.sans]
 		},
 		transitionProperty: {
 			height: "height",
@@ -36,6 +29,15 @@ export const theme = {
 };
 export const plugins = [require("@tailwindcss/typography"), require("daisyui")];
 export const daisyui = {
-	themes: ["fantasy", "dark"],
-	// darkTheme: "forest"
+	themes: [
+		"fantasy",
+		{
+			dark: {
+				...require("daisyui/src/theming/themes")["[data-theme=dark]"],
+				primary: "hsl(210, 80%, 65%)",
+				"primary-focus": "hsl(215, 100%, 75%)"
+			}
+		}
+	],
+	darkTheme: "dark"
 };
