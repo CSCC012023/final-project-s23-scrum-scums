@@ -45,7 +45,7 @@ const SearchPage = () => {
 	}
 	return (
 		<div>
-			{data.posts.map((Post) => (
+			{data.posts.map((Post: Post) => (
 				<div className="hover:bg-slate-900 p-3 gap-4 my-4 rounded-xl border-[2px] border-zinc-600">
 					{Post.title}
 					<div className="flex flex-row flex-wrap gap-6 w-3/5">
