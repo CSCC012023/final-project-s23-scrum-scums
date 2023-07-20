@@ -81,6 +81,12 @@ model User {
   // the posts and comments they've liked
   postLikes     PostLike[]
   commentLikes  CommentLike[]
+
+  // User-written bio
+  bio           String?
+
+  // when the user joined
+  createdAt    DateTime  @default(now())
 }
 
 // a post on obelisk by a user

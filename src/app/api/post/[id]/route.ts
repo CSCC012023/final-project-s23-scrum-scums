@@ -9,7 +9,7 @@ export const GET = async (
 	const id = params.id;
 	const trending = await prisma.post.findUnique({
 		where: {
-			id: id
+			id: parseInt(id)
 		},
 		include: {
 			author: true

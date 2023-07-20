@@ -1,22 +1,22 @@
 "use client";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useEffect } from "react";
 import PostCard from "@src/components/PostCard";
 import { PostProps } from "@src/components/PostCard";
 import toast from "react-hot-toast";
+import Editable from "@src/components/Editable";
 
 interface User {
-    comments: Comment[]
-    email: string
-    emailVerified: string
-    id: string
-    image: string
+	id: string
     name: string
-    password: string
-    // postLikes: PostLike[]
-    posts: Post[]
+    image?: string
     username?: string
+	bio?: string
+	createdAt: Date
+    posts: PostProps[]
+    comments: Comment[]
+    // postLikes: PostLike[]
     _count: {
 		followedBy: number
 	}
@@ -25,14 +25,68 @@ interface User {
 const Profile = ({ params }: { params: { id: string } }) => {
 	const { id } = params;
 
-	const [user, setUser] = useState<User>();
+	const [user, setUser] = useState<User>({
+		id: "",
+		name: "",
+		createdAt: new Date(),
+		posts: [],
+		comments: [],
+		_count: {
+			followedBy: 0
+		},
+	});
+
+	const nameSubmit = async (text: string) => {
+		if (text != "" && user.name != text) {
+			setUser({ ...user, name: text });
+		}
+		await axios.patch(`/api/profile/${id}`, {
+			name: text
+		})
+		.then((response) => {
+			if (response.status === 200) {
+				toast.success("Username updated");
+			}
+		})
+		.catch((err) => {
+			console.log("patch: ", err);
+			toast.error(`Something went wrong (${err.response.status})`);
+		});
+	};
+
+	const bioSubmit = async (text: string) => {
+		// This is a temporary fix
+		// See route.ts in profile for more info
+		if (user.bio != text) {
+			setUser({ ...user, bio: text });
+		}
+		await axios.patch(`/api/profile/${id}`, {
+			bio: text
+		})
+		.then((response) => {
+			if (response.status === 200) {
+				toast.success("Bio updated");
+			}
+		})
+		.catch((err) => {
+			console.log("patch: ", err);
+			toast.error(`Something went wrong (${err.response.status})`);
+		});
+	};
+
 
 	let posts: React.JSX.Element[] = [];
 
 	const getUserData = async () => {
 		await axios.get(`/api/profile/${id}`)
 			.then((response) => {
-				setUser(response.data);
+				const res: User = response.data;
+				if (!res.id) {
+					toast.error("User not found");
+					return;
+				}
+
+				setUser(res);
 				posts = user.posts.map((post, index) => {
 					return <PostCard
 						key={index}
@@ -45,12 +99,10 @@ const Profile = ({ params }: { params: { id: string } }) => {
 						categories={post.categories}
 					/>;
 				});
-				console.log("posts: ", posts);
-				console.log("user: ", user);
 			})
 			.catch((err) => {
-				console.log("err", err.response);
-				toast.error(`Something went wrong (${err.response.status})`);
+				console.log("err", err);
+				toast.error(`Something went wrong (${err})`);
 			});
 	};
 
@@ -76,12 +128,21 @@ const Profile = ({ params }: { params: { id: string } }) => {
 							<div className="avatar h-20 w-20">
 								{}
 							</div>
-							<div className="font-semibold text-center w-full">
-								{user.name && user.name}
+							<div className="font-semibold text-center w-full font-sans">
+								{<Editable
+									content={user.name ? user.name : "How should we call you?"}
+									submit={nameSubmit}
+								/>}
 							</div>
 							<div className="seperator"></div>
 							<div className="text-neutral-700">
 								{user._count && user._count.followedBy} followers
+							</div>
+							<div className="w-full h-full">
+								{<Editable
+									content={user.bio ? user.bio : "Add a bio..."}
+									submit={bioSubmit}
+								/>}
 							</div>
 						</div>
 						}

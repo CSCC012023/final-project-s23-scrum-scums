@@ -1,7 +1,8 @@
 // Retrieves all comments for a given post
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse} from "next/server";
 import prisma from "@src/lib/prisma";
 
+// you need req imported to destructure dynamic params
 export const GET = async (
 	req: NextRequest,
 	{ params }: { params: { user_id: string } }
@@ -11,7 +12,13 @@ export const GET = async (
 		where: {
 			id: user_id
 		},
-		include: {
+		select: {
+			id: true,
+			name: true,
+			image: true,
+			username: true,
+			bio: true,
+			createdAt: true,
 			comments: {
 				include: {
 					post: {
@@ -54,3 +61,36 @@ export const GET = async (
 
 	return NextResponse.json(user_data);
 };
+
+
+
+// patch request to update the users bio
+export const PATCH = async (
+	req: NextRequest,
+	{ params }: { params: { user_id: string } }
+) => {
+	const { user_id } = params;
+	const reqJson = await req.json();
+	console.log(reqJson);
+	const key = Object.keys(reqJson)[0]
+
+	const user_data = (key === "bio")
+	? await prisma.user.update({
+		where: {
+			id: user_id
+		},
+		data: {
+			bio: reqJson.bio
+		}
+	})
+	: await prisma.user.update({
+		where: {
+			id: user_id
+		},
+		data: {
+			name: reqJson.name
+		}
+	})
+
+	return NextResponse.json(user_data);
+}
