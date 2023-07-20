@@ -23,7 +23,7 @@ const Navbar = () => {
 			return;
 		}
 		const encodedSearchQuery = encodeURI(search || "");
-		router.push(`/api/search?q=${encodedSearchQuery}`);
+		router.push(`/search?q=${encodedSearchQuery}`);
 	};
 
 	return (

@@ -1,13 +1,14 @@
 import { Post, User } from "@prisma/client";
-import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@src/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async (req: NextApiRequest, res: NextApiResponse) => {
+export const GET = async (req: NextRequest) => {
 	try {
-		const { q: query } = req.query;
-
-		if (typeof query !== "string") {
-			throw new Error("Invalid request");
+		const query = req.nextUrl.searchParams.get("q");
+		if (!query) {
+			return NextResponse.json({
+				posts: []
+			});
 		}
 
 		const posts: Array<Post & { author: User }> =
@@ -49,9 +50,11 @@ export const GET = async (req: NextApiRequest, res: NextApiResponse) => {
 			}
 		});
 
-		res.status(200).json({ posts });
+		return NextResponse.json({
+			posts
+		});
 	} catch (error: any) {
 		console.log(error);
-		res.status(500).end();
+		return NextResponse.error();
 	}
 };
