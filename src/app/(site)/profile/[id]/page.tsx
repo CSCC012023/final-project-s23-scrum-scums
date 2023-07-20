@@ -128,7 +128,7 @@ const Profile = ({ params }: { params: { id: string } }) => {
 							<div className="avatar h-20 w-20">
 								{}
 							</div>
-							<div className="font-semibold text-center w-full font-sans">
+							<div className="font-semibold text-center w-full font-sans text-lg">
 								{<Editable
 									content={user.name ? user.name : "How should we call you?"}
 									submit={nameSubmit}
@@ -136,13 +136,14 @@ const Profile = ({ params }: { params: { id: string } }) => {
 							</div>
 							<div className="seperator"></div>
 							<div className="text-neutral-700">
-								{user._count && user._count.followedBy} followers
+								{user._count && user._count.followedBy} follower(s)
 							</div>
-							<div className="w-full h-full">
-								{<Editable
-									content={user.bio ? user.bio : "Add a bio..."}
-									submit={bioSubmit}
-								/>}
+							<div className="w-full h-full mt-10">
+									<b>My Bio:</b>
+									{<Editable
+										content={user.bio ? user.bio : "Write something about yourself..."}
+										submit={bioSubmit}
+									/>}
 							</div>
 						</div>
 						}
