@@ -1,0 +1,5 @@
+In next 13 you can label a react function component as client-side rendered ("use client")
+or server-side which is the default.
+
+Some react components we import for the app may need interactivity and need to be client side rendered.
+Since by default next doesn't do that, we need to make a provider component that just returns the original component and calls 'use client' on it.
