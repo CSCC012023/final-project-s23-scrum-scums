@@ -9,11 +9,12 @@ export const GET = async (
 	const id = parseInt(params.id);
 	const trending = await prisma.post.findUnique({
 		where: {
-			id: id
+			id: parseInt(id)
 		},
 		include: {
 			author: true,
-			likes: true,
+			categories: true,
+			likes: true
 		}
 	});
 	return NextResponse.json(trending);

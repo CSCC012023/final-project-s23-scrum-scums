@@ -1,4 +1,4 @@
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import React from "react";
 
 // a tag to attach to posts with the category of the post and a link to the category page
@@ -10,19 +10,14 @@ interface TagProps {
 const Tag: React.FC<TagProps> = ({
 	name
 }) => {
-	const router = useRouter();
-	function onClick() {
-		router.push(`search/${name.toLowerCase()}`);
-	}
-
 
 	return (
-		<div className="badge badge-outline badge-accent
+		<Link className="badge badge-outline badge-accent
 			hover:badge-info hover:badge-outline hover:cursor-pointer"
-		onClick={onClick}
+		href={`/search?q=${name}`}
 		>
 			{name}
-		</div>
+		</Link>
 
 	);
 };
