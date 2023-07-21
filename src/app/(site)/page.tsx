@@ -59,7 +59,9 @@ const Home = () => {
 			authorId={post.authorId}
 			author={post.author}
 			createdAt={post.createdAt}
-			categories={post.categories}
+			categories={post.categories} 
+			mediaUrl={null}
+			likes={[]}		
 		/>
 	));
 
