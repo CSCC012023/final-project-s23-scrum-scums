@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]  // Enable the postgresqlExtensions
 }
 
 datasource db {
@@ -7,6 +8,7 @@ datasource db {
   url               = env("DATABASE_URL")
   // prisma tracks a shadow database to check if schemas drift
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  extensions = [vector]
 }
 // if a user signs in in multiple ways a unique acount is created for each of those methods
 model Account {
