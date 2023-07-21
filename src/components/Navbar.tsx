@@ -22,6 +22,9 @@ const Navbar = () => {
 				<Link className="btn btn-ghost normal-case text-4xl" href="/">Obelisk</Link>
 			</div>
 			<div className="flex-none gap-2">
+				<Link className="btn btn-accent btn-outline" href="/recommended">
+					Recommended
+				</Link>
 				<Link className="btn btn-ghost btn-circle" href="/post">
 					<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 fill-secondary" viewBox="0 0 512 512" stroke="currentColor"><g>
 						<g>
@@ -73,7 +76,6 @@ const Navbar = () => {
 						Sign Up
 					</div>
 				}
-
 			</div>
 		</nav>
 	);

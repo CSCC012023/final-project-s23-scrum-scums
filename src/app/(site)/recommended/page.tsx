@@ -11,7 +11,7 @@ interface PostLikeProps {
 }
 
 const Recommended = () => {
-    const { data: session } = useSession();
+    const user_id = useSession().data?.user?.id as string;
     const [posts, setPosts] = useState<PostProps[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -31,24 +31,26 @@ const Recommended = () => {
             }
             userlikes[users.indexOf(like.userId)][like.postId - 1] = 1;
         }
-        // // User has no likes
-        // if (session && !users.includes(session.user.id))
-        //     userlikes.push(Array(num_posts).fill(0));
 
+        // User has not liked a post
+        if (users.indexOf(user_id) === -1) {
+            userlikes.push(Array(num_posts).fill(0));
+            users.push(user_id);
+        }
+        
         var arr: string[] = [];
         for (var user of userlikes) {
             arr.push(user.toString());
         }
-        getRecommendedPosts(arr, num_posts, users);
+        getRecommendedPosts(arr, users);
     };
 
     
-    const getRecommendedPosts = async (userlikes: string[], num_posts: number, users: string[]) => {
-        const userId = users.indexOf("clkbzs1r20002ttxk3shygx9j")
+    const getRecommendedPosts = async (userlikes: string[], users: string[]) => {
+        const userId = users.indexOf(user_id)
         const params = {
             recommended: userlikes,
             user_id: userId,
-            numPosts: num_posts
         }
         const result = await axios.get("/api/recommended", { params: params });
         setPosts(result.data);
@@ -74,6 +76,13 @@ const Recommended = () => {
 
     return (
         <div>
+            <div className="pl-6 w-1/2">
+				<h1 className="text-6xl font-bold font-serif my-4 ">
+					Recommended
+				</h1>
+			</div>
+			<div className="divider">
+			</div>
             {loading ? <h1 className="font-bold text-center">loading...</h1> :
             <div className="grid grid-cols-2 grid-flow-row gap-6">
                 {postEls}

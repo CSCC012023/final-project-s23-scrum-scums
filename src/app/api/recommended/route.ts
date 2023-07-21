@@ -8,7 +8,6 @@ export const GET = async (req: NextRequest) => {
     const url = new URL(req.nextUrl);
     const recommended = url.searchParams.getAll("recommended[]");
     const user_id = Number(url.searchParams.get("user_id"));
-    const numPosts = Number(url.searchParams.get("numPosts"));
 
     var recommendedMatrix: number[][] = [];
     for (let i = 0; i < recommended.length; i++) {
@@ -17,7 +16,6 @@ export const GET = async (req: NextRequest) => {
     }
 
     // Create vector database
-    recommendedMatrix.map((row) => {row = row.map((x) => Number(x))});
     await prisma.$executeRaw`DROP TABLE IF EXISTS recommendations;`
     await prisma.$executeRaw`CREATE TABLE recommendations (
             id BIGINT PRIMARY KEY,
@@ -27,9 +25,8 @@ export const GET = async (req: NextRequest) => {
         await prisma.$executeRaw`INSERT INTO recommendations (id, embedding) VALUES (${i}, ${embedding}::vector);`;
     }
     const r_embedding = pgvector.toSql(recommendedMatrix[user_id]);
-    const result: any = await prisma.$queryRaw`SELECT embedding::text FROM recommendations WHERE id != ${user_id} ORDER BY embedding <-> ${r_embedding}::vector LIMIT 3;`;
+    const result: any = await prisma.$queryRaw`SELECT embedding::text FROM recommendations WHERE id != ${user_id} ORDER BY embedding <-> ${r_embedding}::vector LIMIT 2;`;
 
-    
     // Get recommended posts
     var userLikes: number[] = [];
     for (let i = 0; i < result.length; i++) {
