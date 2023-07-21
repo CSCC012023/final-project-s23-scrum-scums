@@ -12,7 +12,9 @@ export const GET = async (
 			id: id
 		},
 		include: {
-			author: true
+			author: true,
+			categories: true,
+			likes: true
 		}
 	});
 	return NextResponse.json(trending);

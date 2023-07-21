@@ -7,6 +7,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
+import Tag from "@src/components/Tag";
 
 const Post = ({ params }: { params: { id: string } }) => {
 	const [post, setPost] = useState<PostProps | null>(null);
@@ -25,6 +26,7 @@ const Post = ({ params }: { params: { id: string } }) => {
 			console.log(err);
 		}
 	};
+	// todo: return comments directly from post and do one api request
 	const fetchComment = async () => {
 		try {
 			const { data } =  await axios.get(`/api/comment/${id}`);
@@ -76,6 +78,9 @@ const Post = ({ params }: { params: { id: string } }) => {
 								{"## " + post?.title + "\n\n" + post?.content}
 							</ReactMarkdown>
 							<p className="text-right italic mr-4">By {post?.author.username}</p>
+							<div className="card-actions justify-end">
+								{ post?.categories.map((category) => <Tag key={category.id} name={category.name}/>) }
+							</div>
 						</div>
 					</section>
 					<div className="divider"></div>
