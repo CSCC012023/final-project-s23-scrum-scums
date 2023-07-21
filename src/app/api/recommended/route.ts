@@ -16,16 +16,13 @@ export const GET = async (req: NextRequest) => {
     }
     
     // Create vector database
-    await prisma.$executeRaw`DROP TABLE IF EXISTS recommendations;`
-    await prisma.$executeRaw`CREATE TABLE recommendations (
-            id BIGINT PRIMARY KEY,
-            embedding VECTOR);`
+    await prisma.$executeRaw`TRUNCATE TABLE "Recommendation";`
     for (let i = 0; i < recommendedMatrix.length; i++) {
         const embedding = pgvector.toSql(recommendedMatrix[i]);
-        await prisma.$executeRaw`INSERT INTO recommendations (id, embedding) VALUES (${i}, ${embedding}::vector);`;
+        await prisma.$executeRaw`INSERT INTO "Recommendation" (id, embedding) VALUES (${i}, ${embedding}::vector);`;
     }
     const r_embedding = pgvector.toSql(recommendedMatrix[user_id]);
-    const result: any = await prisma.$queryRaw`SELECT embedding::text FROM recommendations WHERE id != ${user_id} ORDER BY embedding <-> ${r_embedding}::vector LIMIT 3;`;
+    const result: any = await prisma.$queryRaw`SELECT embedding::text FROM "Recommendation" WHERE id != ${user_id} ORDER BY embedding <-> ${r_embedding}::vector LIMIT 3;`;
 
     // Get recommended posts
     let userLikes: number[] = [];           

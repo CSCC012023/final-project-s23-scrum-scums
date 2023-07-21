@@ -184,6 +184,11 @@ model PostLike {
   @@id([userId, postId])
 }
 
+model Recommendation {
+  id        Int                       @id @default(autoincrement())
+  embedding Unsupported("vector")?
+}
+
 model SearchQuery {
   id    String @id @default(cuid())
   query String
