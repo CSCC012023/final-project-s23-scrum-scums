@@ -83,7 +83,7 @@ model User {
   commentLikes  CommentLike[]
 
   // User-written bio
-  bio           String?
+  bio           String?  @db.VarChar(200)
 
   // when the user joined
   createdAt    DateTime  @default(now())

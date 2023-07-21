@@ -5,7 +5,7 @@ import { FaReply, FaArrowDown, FaArrowUp } from "react-icons/fa";
 import IconBtn from "@src/components/Buttons/Button";
 import remarkGfm from "remark-gfm";
 import Tag from "@src/components/Tag";
-import { PostProps, Category, Like } from "@src/types/index"
+import { PostProps, Category, Like } from "@src/types"
 // import Image from "next/image";
 
 
