@@ -16,7 +16,7 @@ import useLoginModal from "@src/hooks/useLoginModal";
 import useRegisterModal from "@src/hooks/useRegisterModal";
 import Heading from "@src/components/Heading";
 import Input from "@src/components/Inputs/Input";
-import Button from "@src/components/Button";
+import Button from "@src/components/Buttons/Button";
 import { signIn } from "next-auth/react";
 
 

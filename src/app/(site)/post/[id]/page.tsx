@@ -2,10 +2,13 @@
 
 import Comment from "@src/components/Comment";
 import { CommentProps } from "@src/components/Comment";
-import { PostProps } from "@src/components/PostCard";
+import { PostProps } from "@src/types";
+import LikeButton from "@src/components/Buttons/LikeButton";
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import remarkGfm from "remark-gfm";
+import { useSession } from "next-auth/react";
 import ReactMarkdown from "react-markdown";
 
 const Post = ({ params }: { params: { id: string } }) => {
@@ -13,7 +16,10 @@ const Post = ({ params }: { params: { id: string } }) => {
 	const [comments, setComment] = useState<CommentProps[]>([]);
 	const [content, setContent] = useState("");
 	const [loading, setLoading] = useState(true);
-	const id = params.id;
+	const id = parseInt(params.id);
+
+	const { data: session } = useSession();
+
 
 	const fetchPost = async () => {
 		try {
@@ -25,6 +31,7 @@ const Post = ({ params }: { params: { id: string } }) => {
 			console.log(err);
 		}
 	};
+
 	const fetchComment = async () => {
 		try {
 			const { data } =  await axios.get(`/api/comment/${id}`);
@@ -76,6 +83,16 @@ const Post = ({ params }: { params: { id: string } }) => {
 								{"## " + post?.title + "\n\n" + post?.content}
 							</ReactMarkdown>
 							<p className="text-right italic mr-4">By {post?.author.username}</p>
+							{ post && 
+							<LikeButton
+								label={post.likes.length}
+								type="post"
+								id={id}
+								isLiked={post.likes.some((like) => like.userId === session?.user?.id)}
+								disabled={!session}
+								userId={session?.user?.id}
+							/>
+							}
 						</div>
 					</section>
 					<div className="divider"></div>
