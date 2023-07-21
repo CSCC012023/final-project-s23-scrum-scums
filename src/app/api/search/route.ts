@@ -8,7 +8,8 @@ export const GET = async (req: NextRequest) => {
 		query = query ? query.replace(/ /g, "|") : query;
 		if (!query) {
 			return NextResponse.json({
-				posts: []
+				posts: [],
+				users: [], 
 			});
 		}
 
@@ -53,16 +54,36 @@ export const GET = async (req: NextRequest) => {
 				}
 			});
 
+		const users: Array<Post & { author: User }> =
+			await prisma.post.findMany({
+				where: {
+					OR: [
+						{
+							author: {
+								username: {
+									search: query,
+									mode: "insensitive"
+								}
+							}
+						}
+					]
+				},
+				include: {
+					author: true
+				},
+				distinct: ["authorId"],
+			});
+
 		await prisma.searchQuery.create({
 			data: {
 				query
 			}
 		});
 
-		return NextResponse.json({
-			posts
-		});
-	} catch (error: any) {
+		return NextResponse.json({posts, users});
+	} 
+	
+	catch (error: any) {
 		console.log(error);
 		return NextResponse.error();
 	}
