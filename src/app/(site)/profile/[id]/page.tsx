@@ -1,11 +1,11 @@
 "use client";
 import axios from "axios";
-import React, { useState, useRef } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import PostCard from "@src/components/PostCard";
-import { PostProps } from "@src/components/PostCard";
+import { PostProps } from "@src/types";
 import toast from "react-hot-toast";
 import Editable from "@src/components/Editable";
+import {Comment, PostLike } from "@prisma/client";
 
 interface User {
 	id: string
@@ -15,8 +15,8 @@ interface User {
 	bio?: string
 	createdAt: Date
     posts: PostProps[]
-    comments: Comment[]
-    // postLikes: PostLike[]
+    comments: Comment & {"post": PostProps}[]
+    postLikes: PostLike & {"post": PostProps}[]
     _count: {
 		followedBy: number
 	}
@@ -30,7 +30,10 @@ const Profile = ({ params }: { params: { id: string } }) => {
 		name: "",
 		createdAt: new Date(),
 		posts: [],
+		// @ts-ignore
 		comments: [],
+		// @ts-ignore
+		postLikes:[],
 		_count: {
 			followedBy: 0
 		},
@@ -74,37 +77,71 @@ const Profile = ({ params }: { params: { id: string } }) => {
 		});
 	};
 
-
-	let posts: React.JSX.Element[] = [];
-
 	const getUserData = async () => {
 		await axios.get(`/api/profile/${id}`)
 			.then((response) => {
+				const fixedDate = new Date(response.data.createdAt);
 				const res: User = response.data;
+				res.createdAt = fixedDate;
+				console.log("res", res);
 				if (!res.id) {
 					toast.error("User not found");
 					return;
 				}
 
 				setUser(res);
-				posts = user.posts.map((post, index) => {
-					return <PostCard
-						key={index}
-						id={post.id}
-						title={post.title}
-						content={post.content}
-						authorId={post.authorId}
-						author={post.author}
-						createdAt={post.createdAt}
-						categories={post.categories}
-					/>;
-				});
+				
 			})
 			.catch((err) => {
 				console.log("err", err);
 				toast.error(`Something went wrong (${err})`);
 			});
 	};
+
+	const posts = user.posts.map((post, index) => {
+		return <PostCard
+			key={index}
+			id={post.id}
+			title={post.title}
+			content={post.content}
+			authorId={post.authorId}
+			author={post.author}
+			createdAt={post.createdAt}
+			categories={post.categories} 
+			mediaUrl={null} 
+			likes={[]}					
+			/>;
+	});
+	const posts_commented_on = user.comments.map((comment, index) => {
+		return <PostCard
+			key={index}
+			id={comment.post.id}
+			title={comment.post.title}
+			content={comment.post.content}
+			authorId={comment.post.authorId}
+			author={comment.post.author}
+			createdAt={comment.post.createdAt}
+			categories={comment.post.categories} 
+			mediaUrl={null} 
+			likes={[]}					
+			/>;
+	});
+
+	const posts_liked = user.postLikes.map((postLike, index) => {
+		return <PostCard
+			key={index}
+			id={postLike.post.id}
+			title={postLike.post.title}
+			content={postLike.post.content}
+			authorId={postLike.post.authorId}
+			author={postLike.post.author}
+			createdAt={postLike.post.createdAt}
+			categories={postLike.post.categories}
+			mediaUrl={null}
+			likes={[]}
+			/>
+	})
+			
 
 	useEffect(() => {
 		getUserData();
@@ -114,7 +151,7 @@ const Profile = ({ params }: { params: { id: string } }) => {
 		<>
 			<div className="drawer drawer-open">
 				<input id="my-drawer" type="checkbox" className="drawer-toggle" />
-				<div className="drawer-content flex flex-col items-center justify-center">
+				<div className="drawer-content flex flex-col items-center justify-center [&>div]:my-4">
 					{/* Page content here */}
 					{ posts
 					}
@@ -135,8 +172,8 @@ const Profile = ({ params }: { params: { id: string } }) => {
 								/>}
 							</div>
 							<div className="seperator"></div>
-							<div className="text-neutral-700">
-								{user._count && user._count.followedBy} follower(s)
+							<div className="text-neutral-700 text-center">
+								{user._count && user._count.followedBy} follower{user._count.followedBy > 0 ? "s" : ""}
 							</div>
 							<div className="w-full h-full mt-10">
 									<b>My Bio:</b>

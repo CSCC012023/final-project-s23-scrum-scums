@@ -3,7 +3,11 @@
 import React, { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import useSWR from "swr";
-import { Post } from "@prisma/client";
+import { Post, User } from "@prisma/client";
+
+type Response = {
+	posts: Post & {"author": User}[];
+};
 
 const fetchPosts = async (url: string) => {
 	const response = await fetch(url);
@@ -14,6 +18,7 @@ const fetchPosts = async (url: string) => {
 
 	return response.json();
 };
+
 
 const SearchPage = () => {
 	const search = useSearchParams();
@@ -30,17 +35,16 @@ const SearchPage = () => {
 		{ revalidateOnFocus: false }
 	);
 
-	console.log("data below");
-	console.log(data);
-	
+	const res: Response = data;
+
 	if (!encodedSearchQuery) {
 		router.push("/");
 	}
 
-	if(!data?.posts) {
+	if(!res?.posts) {
 		return null;
 	}
-	if (data.posts.length === 0) {
+	if (res.posts.length === 0) {
 		return (
 			<div className="flex items-center justify-center h-screen text-2xl text-gray-500">
 				No results found
