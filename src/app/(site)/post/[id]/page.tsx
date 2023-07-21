@@ -84,9 +84,6 @@ const Post = ({ params }: { params: { id: string } }) => {
 								{"## " + post?.title + "\n\n" + post?.content}
 							</ReactMarkdown>
 							<p className="text-right italic mr-4">By {post?.author.username}</p>
-							<div className="card-actions justify-end">
-								{ post?.categories.map((category) => <Tag key={category.id} name={category.name}/>) }
-							</div>
 							{ post && 
 							<LikeButton
 								label={post.likes.length}
