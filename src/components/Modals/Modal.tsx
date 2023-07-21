@@ -2,7 +2,7 @@
 // a generic higher order component for modals
 
 import React, { useCallback, useEffect, useState } from "react";
-import Button from "@src/components/Button";
+import Button from "@src/components/Buttons/Button";
 import { IoMdClose } from "react-icons/io";
 
 
