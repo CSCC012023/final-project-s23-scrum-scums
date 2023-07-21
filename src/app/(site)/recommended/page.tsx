@@ -14,6 +14,7 @@ const Recommended = () => {
     const user_id = useSession().data?.user?.id as string;
     const [posts, setPosts] = useState<PostProps[]>([]);
     const [loading, setLoading] = useState(true);
+    const [likedAll, setLikedAll] = useState(false);
 
     const getPostLikes = async () => {
         const result = await axios.get("/api/postlike")
@@ -53,8 +54,15 @@ const Recommended = () => {
             user_id: userId,
         }
         const result = await axios.get("/api/recommended", { params: params });
-        setPosts(result.data);
-        setLoading(false);
+        if (result.data.length === 0) {
+            setLikedAll(true);
+            setPosts(result.data);
+            setLoading(false);
+        }
+        else {
+            setPosts(result.data);
+            setLoading(false);
+        }
     };
 
     useEffect(() => {
@@ -84,7 +92,8 @@ const Recommended = () => {
 			<div className="divider">
 			</div>
             {loading ? <h1 className="font-bold text-center">loading...</h1> :
-            <div className="grid grid-cols-2 grid-flow-row gap-6">
+            likedAll ? <h1 className="font-bold text-center">You have liked all the posts!</h1> :
+             <div className="grid grid-cols-2 grid-flow-row gap-6">
                 {postEls}
             </div> }
         </div>
