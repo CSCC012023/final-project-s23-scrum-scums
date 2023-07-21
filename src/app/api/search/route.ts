@@ -4,10 +4,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest) => {
 	try {
-		const query = req.nextUrl.searchParams.get("q");
+		let query = req.nextUrl.searchParams.get("q");
+		query = query ? query.replace(/ /g, "|") : query;
 		if (!query) {
 			return NextResponse.json({
-				posts: []
+				posts: [],
+				users: [], 
 			});
 		}
 
@@ -17,13 +19,13 @@ export const GET = async (req: NextRequest) => {
 					OR: [
 						{
 							content: {
-								contains: query,
+								search: query,
 								mode: "insensitive"
 							}
 						},
 						{
 							title: {
-								contains: query,
+								search: query,
 								mode: "insensitive"
 							}
 						},
@@ -31,9 +33,17 @@ export const GET = async (req: NextRequest) => {
 							categories: {
 								some: {
 									name: {
-										contains: query,
+										search: query,
 										mode: "insensitive"
 									}
+								}
+							}
+						},
+						{
+							author: {
+								username: {
+									search: query,
+									mode: "insensitive"
 								}
 							}
 						}
@@ -44,16 +54,36 @@ export const GET = async (req: NextRequest) => {
 				}
 			});
 
+		const users: Array<Post & { author: User }> =
+			await prisma.post.findMany({
+				where: {
+					OR: [
+						{
+							author: {
+								username: {
+									search: query,
+									mode: "insensitive"
+								}
+							}
+						}
+					]
+				},
+				include: {
+					author: true
+				},
+				distinct: ["authorId"],
+			});
+
 		await prisma.searchQuery.create({
 			data: {
 				query
 			}
 		});
 
-		return NextResponse.json({
-			posts
-		});
-	} catch (error: any) {
+		return NextResponse.json({posts, users});
+	} 
+	
+	catch (error: any) {
 		console.log(error);
 		return NextResponse.error();
 	}

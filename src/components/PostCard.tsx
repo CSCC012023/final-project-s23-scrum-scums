@@ -16,7 +16,7 @@ interface User {
 }
 
 export interface PostProps {
-	id:        	number,
+	id:        	string,
 	title:     	string,
 	content:   	string,
 	author:    	User,

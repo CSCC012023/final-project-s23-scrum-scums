@@ -51,7 +51,6 @@ async function main() {
 			username: "ripbotvinkle",
 			email: "botvinkle21@gmail.com",
 			password: botvinnik_pw,
-			bio: "The best chess player in the world. I'm here to share my thoughts on chess, life, and everything in between.",
 			followedBy: {
 				connect: {
 					id: azad.id
