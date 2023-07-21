@@ -10,9 +10,9 @@ export const POST = async (req: NextRequest,
 	const data: body = await req.json();
 	const userId = data.userId;
 	const liked = data.isLiked;
-	console.log("liked", liked)
-	console.log("userid", userId);
-	console.log("id", id);
+	// console.log("liked", liked)
+	// console.log("userid", userId);
+	// console.log("id", id);
 
 	const likes = liked
 		? await prisma.post.update({	
