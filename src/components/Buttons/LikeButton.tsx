@@ -45,12 +45,13 @@ const LikeButton:React.FC<LikeButtonProps> = ({
 			setLiked(true)
 		}
 		axios.post(`/api/${type}/${id}/like`, {
-			userId
+			userId,
+			isLiked: !liked
 		})
-			.then(res => {
+		.then(res => {
 				const data: Response = res.data;
-				setLiked(data.likes.some((like) => like.userId === userId));
-				setNumLikes(data.likes.length);
+				liked ? {} : setLiked(data.likes.some((like) => like.userId === userId));
+				liked ? {} : setNumLikes(data.likes.length);
 			})
 			.catch(err => {
 				toast.error(err.message);
