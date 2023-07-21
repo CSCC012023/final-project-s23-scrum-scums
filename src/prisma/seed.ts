@@ -25,6 +25,8 @@ async function main() {
 
 	// some example users
 
+	const azad_pw = await bcrypt.hash("hd^vps62$a", 10);
+
 	// the bot that follows everyone
 	const azad = await prisma.user.upsert({
 		where: {
@@ -34,7 +36,8 @@ async function main() {
 		create: {
 			name: "Azad",
 			email: "azad@mail.com",
-			username: "azod"
+			username: "azod",
+			password: azad_pw
 		}
 	});
 	// refer to api docs for info on password hashing
