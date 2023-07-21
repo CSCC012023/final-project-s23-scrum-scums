@@ -18,14 +18,14 @@ const Recommended = () => {
 
     const getPostLikes = async () => {
         const result = await axios.get("/api/postlike")
-        const num_posts = await axios.get("/api/postlike/postCount")
-        const num_users = await axios.get("/api/postlike/userCount")
+        const num_posts = await axios.get("/api/post/postCount")
+        const num_users = await axios.get("/api/postlike/userLikeCount")
         makeRecommended(result.data, num_posts.data, num_users.data);
     };
 
     const makeRecommended = (likes: PostLikeProps[], num_posts: number, num_users: number) => {
-        var userlikes = Array.from(Array(num_users), _ => Array(num_posts).fill(0));
-        var users: string[] = [];
+        let userlikes = Array.from(Array(num_users), _ => Array(num_posts).fill(0));
+        let users: string[] = [];
         for (const like of likes) {
             if (!users.includes(like.userId)) {
                 users.push(like.userId);
@@ -39,8 +39,8 @@ const Recommended = () => {
             users.push(user_id);
         }
         
-        var arr: string[] = [];
-        for (var user of userlikes) {
+        let arr: string[] = [];
+        for (let user of userlikes) {
             arr.push(user.toString());
         }
         getRecommendedPosts(arr, users);

@@ -9,9 +9,9 @@ export const GET = async (req: NextRequest) => {
     const recommended = url.searchParams.getAll("recommended[]");
     const user_id = Number(url.searchParams.get("user_id"));
 
-    var recommendedMatrix: number[][] = [];
+    let recommendedMatrix: number[][] = [];
     for (let i = 0; i < recommended.length; i++) {
-        var split = recommended[i].split(",").map((x) => parseInt(x));
+        let split = recommended[i].split(",").map((x) => parseInt(x));
         recommendedMatrix.push(split);
     }
     
@@ -28,10 +28,10 @@ export const GET = async (req: NextRequest) => {
     const result: any = await prisma.$queryRaw`SELECT embedding::text FROM recommendations WHERE id != ${user_id} ORDER BY embedding <-> ${r_embedding}::vector LIMIT 3;`;
 
     // Get recommended posts
-    var userLikes: number[] = [];           
-    var user_recommend: number[] = [];      // All current user likes
+    let userLikes: number[] = [];           
+    let user_recommend: number[] = [];      // All current user likes
     for (let i = 0; i < result.length; i++) {
-        var count = 1;
+        let count = 1;
         const userLike: number[] = [];
         result[i] = result[i].embedding
             .replace(/[\[\]']+/g,'')
