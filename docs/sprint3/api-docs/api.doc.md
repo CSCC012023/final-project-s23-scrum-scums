@@ -36,6 +36,8 @@
     - GET:
   		returns all comments under the post with the given post_id.
 - [api/trending](#api/trending)
+	- Verbs: 'GET'
+	- GET: returns a list of posts in json payload with post, author, category, and like data that corresponds to the post, sorted in descending order by date creation
 - [api/register](#api/register)
   - Verbs: 'POST'
   - POST:
