@@ -213,7 +213,7 @@ Tracking on JIRA Total Mark: 22 / 24
  
     Your Mark: 4
 
-System Design Total Mark: 2 / 10 (-2 as updated version was not found in /docs/sprint2, used sprint1 to mark)
+System Design Total Mark: 4 / 10 ~~(-2 as updated version was not found in /docs/sprint2, used sprint1 to mark)~~ regraded
  
 ## Documentation (max 3 mark)
   
@@ -221,7 +221,7 @@ System Design Total Mark: 2 / 10 (-2 as updated version was not found in /docs/s
   - 2 mark = documentation is updated partially.
   - 0 marks = documentation has not been updated or is unclear & not maintained properly
    
-  Your Mark: 0 / 3
+  Your Mark: 3 / 3 (regraded)
  
  
 ## Sprint Demo (Max 14 marks) 
@@ -250,4 +250,4 @@ System Design Total Mark: 2 / 10 (-2 as updated version was not found in /docs/s
  
 ## Total Mark
  
-82 / 95 
+88 / 95 
