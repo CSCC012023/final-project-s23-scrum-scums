@@ -1,3 +1,33 @@
+# Obelisk Documentation
+
+* **Title:** System Design for Obelisk
+* **Prepared by:** Eric Fan, Arnav Priyadarshi, Jason Xia, Arwin Fong, Harrick Cheong 
+* **Date:** 2023-07-21
+
+---
+
+## Table of Contents
+
+1. [Workload Distribution](#Workload-Distribution)
+2. [Environment](#Environment)
+3. [Frontend](#Frontend)
+   - [Dependencies](#Dependencies)
+   - [Responsibilities](#Responsibilities)
+   - [Potential Failures](#Potential-Failures)
+4. [Backend](#Backend)
+   - [Responsibilities](#Responsibilities-1)
+   - [Potential Failures](#Potential-Failures-1)
+5. [Authentication Service](#Authentication-Service)
+   - [Responsibilities](#Responsibilities-2)
+   - [Potential Failures](#Potential-Failures-2)
+6. [Database](#Database)
+   - [Responsibilities](#Responsibilities-3)
+   - [Potential Failures](#Potential-Failures-3)
+7. [Deployment](#Deployment)
+8. [CI](#CI)
+9. [System Design Diagram](#System-Design-Diagram)
+
+# Workload Distribution
 Everyone is responsible for maintaining all of the components, so we’re all collaborators on it.
 # Environment
 Ideally we’d run our backend on a Dockerized Ubuntu Linux VM. This is running a Nodejs environment and responding to requests over the internet on an SSL encrypted connection. It should be listening on a certain port and responding to traffic with our site on HTTPS.
@@ -54,6 +84,36 @@ Currently undecided but maybe Vercel, or AWS
 # CI
 Github Actions will be our continuous testing facility.
 
+# CRC Cards
+### User
+
+| **Class** | **User** |
+| --- | --- |
+| **Responsibilities** | Create and manage account, follow other users, create posts, like posts |
+| **Collaborations** | Post, Like, Follow |
+
+### Post
+
+| **Class** | **Post** |
+| --- | --- |
+| **Responsibilities** | Hold content of post (text, images, etc.), receive likes, be associated with a user |
+| **Collaborations** | User, Like |
+
+### Like
+
+| **Class** | **Like** |
+| --- | --- |
+| **Responsibilities** | Associate with a user and a post |
+| **Collaborations** | User, Post |
+
+### Follow
+
+| **Class** | **Follow** |
+| --- | --- |
+| **Responsibilities** | Associate between two users (follower and following) |
+| **Collaborations** | User |
+
+# Software Architectural Diagram
 ![System Design](artifacts/SDD.png)
 
 
