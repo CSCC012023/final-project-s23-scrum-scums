@@ -9,6 +9,7 @@ import { PostProps, Category, Like } from "@src/types"
 // import Image from "next/image";
 
 
+
 const PostCard: React.FC<PostProps> = ({
 	id,
 	title,
