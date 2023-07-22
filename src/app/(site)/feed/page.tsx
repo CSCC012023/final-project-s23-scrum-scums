@@ -1,28 +1,72 @@
 "use client";
-
-import PostCard from "@src/components/PostCard";
-import { PostProps } from "@src/components/PostCard";
-import React, { useState, useEffect } from "react";
 import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { PostProps } from "@src/components/PostCard";
+import PostCard from "@src/components/PostCard";
 
-const Feed = () => {
+interface PostLikeProps {
+    postId: number,
+    userId: string
+}
+
+const Recommended = () => {
+	const user_id = useSession().data?.user?.id as string;
 	const [posts, setPosts] = useState<PostProps[]>([]);
 	const [loading, setLoading] = useState(true);
+	const [likedAll, setLikedAll] = useState(false);
 
-	const fetchPosts = async () => {
-		try {
-			const { data } =  await axios.get("/api/trending");
-			console.log(data);
-			setPosts(data);
+	const getPostLikes = async () => {
+		const result = await axios.get("/api/postlike");
+		const num_posts = await axios.get("/api/post/postCount");
+		const num_users = await axios.get("/api/postlike/userLikeCount");
+		makeRecommended(result.data, num_posts.data, num_users.data);
+	};
+
+	const makeRecommended = (likes: PostLikeProps[], num_posts: number, num_users: number) => {
+		const userlikes = Array.from(Array(num_users), _ => Array(num_posts).fill(0));
+		const users: string[] = [];
+		for (const like of likes) {
+			if (!users.includes(like.userId)) {
+				users.push(like.userId);
+			}
+			userlikes[users.indexOf(like.userId)][like.postId - 1] = 1;
+		}
+
+		// User has not liked a post
+		if (users.indexOf(user_id) === -1) {
+			userlikes.push(Array(num_posts).fill(0));
+			users.push(user_id);
+		}
+
+		const arr: string[] = [];
+		for (const user of userlikes) {
+			arr.push(user.toString());
+		}
+		getRecommendedPosts(arr, users);
+	};
+
+
+	const getRecommendedPosts = async (userlikes: string[], users: string[]) => {
+		const userId = users.indexOf(user_id);
+		const params = {
+			recommended: userlikes,
+			user_id: userId,
+		};
+		const result = await axios.get("/api/recommended", { params: params });
+		if (result.data.length === 0) {
+			setLikedAll(true);
+			setPosts(result.data);
 			setLoading(false);
-			console.log("done loading");
-		} catch (err) {
-			console.log(err);
+		}
+		else {
+			setPosts(result.data);
+			setLoading(false);
 		}
 	};
 
 	useEffect(() => {
-		fetchPosts();
+		getPostLikes();
 	}, []);
 
 	const postEls = posts.map((post) => (
@@ -39,29 +83,21 @@ const Feed = () => {
 	));
 
 	return (
-		<div className="h-full w-full ">
+		<div>
+			<div className="pl-6 w-1/2">
+				<h1 className="text-6xl font-bold font-serif my-4 ">
+					Recommended
+				</h1>
+			</div>
+			<div className="divider">
+			</div>
 			{loading ? <h1 className="font-bold text-center">loading...</h1> :
-				<div className="flex flex-row items-center justify-evenly">
+				likedAll ? <h1 className="font-bold text-center">You have liked all the posts!</h1> :
 					<div className="grid grid-cols-2 grid-flow-row gap-6">
 						{postEls}
-					</div>
-					<div className="sticky top-1/2 flex flex-col items-center justify-center h-full">
-						<div className="flex flex-col justify-center items-center">
-							<h1 className="text-center pb-1">Discover more about topics you love</h1>
-							<div className="flex flex-row flex-wrap justify-center gap-2 w-3/5">
-								<div className="badge badge-outline hover:badge-info hover:badge-outline hover:cursor-pointer">Finance</div>
-								<div className="badge badge-outline hover:badge-info hover:badge-outline hover:cursor-pointer">Programming</div>
-								<div className="badge badge-outline hover:badge-info hover:badge-outline hover:cursor-pointer">Politics</div>
-								<div className="badge badge-outline hover:badge-info hover:badge-outline hover:cursor-pointer">Science</div>
-								<div className="badge badge-outline hover:badge-info hover:badge-outline hover:cursor-pointer">Philosophy</div>
-								<div className="badge badge-outline hover:badge-info hover:badge-outline hover:cursor-pointer">Art</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			}
+					</div> }
 		</div>
 	);
 };
 
-export default Feed;
+export default Recommended;

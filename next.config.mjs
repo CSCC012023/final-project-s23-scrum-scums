@@ -11,11 +11,10 @@ export default removeImportsFun({
 	// webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
 	images: {
 		domains: [
-			"res.cloudinary.com", 
+			"res.cloudinary.com",
 			"avatars.githubusercontent.com",
 			"lh3.googleusercontent.com"
 		]
 	},
 	reactStrictMode: true
-	
 });

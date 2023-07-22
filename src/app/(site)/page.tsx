@@ -1,6 +1,5 @@
 "use client";
 
-
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -11,6 +10,7 @@ import Typewriter from "typewriter-effect";
 import PostCard from "@src/components/PostCard";
 import { PostProps } from "@src/components/PostCard";
 import Tag from "@src/components/Tag";
+import { redirect } from "next/navigation";
 
 interface Response {
 	posts: PostProps[];
@@ -23,7 +23,11 @@ const Home = () => {
 	const [posts, setPosts] = useState<PostProps[]>([]);
 	const [lastCursor, setLastCursor] = useState<number | null>(null);
 	const [hasMore, setHasMore] = useState(true);
-	const { data: session } = useSession();
+	const { data: _session, status } = useSession();
+	if (status === "authenticated") {
+		// users should go their feed if they are logged in
+		redirect("/feed");
+	}
 
 	const fetchPosts = async () => {
 		try {
@@ -35,14 +39,13 @@ const Home = () => {
 			const typed = parseInt(data.data.lastCursor);
 			const res: Response = data.data;
 			res.lastCursor = typed;
-			console.log(res.end);
 			if (res.end) {
 				setHasMore(false);
 			}
 			setLastCursor(res.lastCursor);
 
 			setPosts([...posts, ...res.posts]);
-			console.log(posts);
+			// console.log(posts);
 		} catch (err) {
 			console.log(err);
 		}
@@ -69,10 +72,9 @@ const Home = () => {
 		<div className="w-full h-3/5 ">
 			<div className="pl-6 w-1/2">
 				<h1 className="text-6xl font-bold font-serif my-4 ">
-					{session?.user?.username ?
-						"Welcome, " + session?.user.username + "." :
-						"Read on."
-					}
+					Welcome to Obelisk.
+					<br/>
+					Read on.
 				</h1>
 
 				<h2 className="text-3xl font-bold text-left">What&#39;s the Internet&#39;s views on
@@ -103,7 +105,7 @@ const Home = () => {
 						className="self-center"
 					>
 						<div
-							className="gap-8 grid-cols-1 md:grid-cols-2 grid-flow-row grid"
+							className="gap-12 grid-cols-1 md:grid-cols-2 grid-flow-row grid"
 						>
 							{postEls}
 						</div>

@@ -1,6 +1,4 @@
-import ReactMarkdown from "react-markdown";
 import React from "react";
-import remarkGfm from "remark-gfm";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
@@ -8,7 +6,7 @@ import { useEffect, useState } from "react";
 
 
 interface EditorProps {
-	type: "inscription" | "comment"
+	type: "post" | "comment"
 	text: string
 	onTextChange: (text: string) => void
 }
@@ -33,8 +31,8 @@ const Editor: React.FC<EditorProps> = ({
 		window.addEventListener("resize", getWindowsHeight);
 	});
 
-	const inputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		const typedText = e;
+	const inputChange = (e: string | undefined) => {
+		const typedText = e || "";
 		onTextChange(typedText);
 	};
 	return (
