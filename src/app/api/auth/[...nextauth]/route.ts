@@ -27,18 +27,17 @@ interface ObeliskToken {
 }
 
 export const authConfig: NextAuthOptions = {
-	// @ts-expect-error idk why this is an error
 	adapter: PrismaAdapter(prisma),
 	providers: [
 		GoogleProvider({
 			clientId: process.env.GOOGLE_CLIENT_ID as string,
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-			allowDangerousEmailAccountLinking: true
+			allowDangerousEmailAccountLinking: true,
 		}),
 		GithubProvider({
 			clientId: process.env.GITHUB_CLIENT_ID as string,
 			clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
-			allowDangerousEmailAccountLinking: true
+			allowDangerousEmailAccountLinking: true,
 		}),
 		CredentialsProvider({
 			name: "Email",

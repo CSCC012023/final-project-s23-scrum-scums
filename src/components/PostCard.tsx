@@ -1,6 +1,8 @@
 import ReactMarkdown  from "react-markdown";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { FaReply, FaArrowDown, FaArrowUp } from "react-icons/fa";
+import IconBtn from "@src/components/Button";
 import remarkGfm from "remark-gfm";
 import Tag from "@src/components/Tag";
 // import Image from "next/image";
@@ -44,6 +46,8 @@ const PostCard: React.FC<PostProps> = ({
 		return str.split(".")[0].concat(".");
 	}
 
+	const trending = Math.random() > 0.5;
+
 	return (
 		<div className="card w-96 h-[32rem] bg-base-300 shadow-xl break-inside-avoid prose
 		hover:cursor-pointer
@@ -53,6 +57,10 @@ const PostCard: React.FC<PostProps> = ({
 			<div className="card-body">
 				<h2 className="card-title">
 					{ title }
+					{
+						trending &&
+						<div className="badge badge-accent">Trending</div>
+					}
 				</h2>
 				<ReactMarkdown remarkPlugins={[remarkGfm]}>
 					{getFirstLine(content)}

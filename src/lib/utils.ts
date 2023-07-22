@@ -1,4 +1,8 @@
-import { type ClassValue, clsx } from "clsx";
+// import { getServerSession } from "next-auth";
+// import { authConfig } from "@src/app/api/auth/[...nextauth]/route";
+// export const getAuthSession = getServerSession(authConfig);
+
+import { ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 // this is a wrapper around clsx and tailwind-merge
 // it allows us to use tailwind classes in clsx
