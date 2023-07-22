@@ -6,6 +6,7 @@ import { PostProps } from "@src/types";
 import toast from "react-hot-toast";
 import Editable from "@src/components/Editable";
 import {Comment, PostLike } from "@prisma/client";
+import Image from "next/image";
 
 interface User {
 	id: string
@@ -162,8 +163,12 @@ const Profile = ({ params }: { params: { id: string } }) => {
 						{/* Sidebar content here */}
 						{ user &&
 						<div className="w-full h-full">
-							<div className="avatar h-20 w-20">
-								{}
+							<div className="avatar h-20 w-20 self-center">
+								{<Image
+									src="/assets/icons/random_avatars/panda.png"
+									fill
+									alt="User avatar"
+								/>}
 							</div>
 							<div className="font-semibold text-center w-full font-sans text-lg">
 								{<Editable
