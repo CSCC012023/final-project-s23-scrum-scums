@@ -1,6 +1,5 @@
 import prisma from "@src/lib/prisma";
 
-
 interface Request {
 	json: () => Promise<{
 		title: string;
@@ -16,10 +15,12 @@ export const POST = async (req: Request) => {
 		data: {
 			title: title,
 			content: content,
-			authorId: authorId,
 			createdAt: new Date(),
 			categories: {
 				connect: cats.map(category => ({ name: category }))
+			},
+			author: {
+				connect: { id: authorId }
 			}
 			// likes: 0,
 		}

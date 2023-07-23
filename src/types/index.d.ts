@@ -1,17 +1,10 @@
-import type { Post, User } from '@prisma/client';
+import type { Post, User, PostLike } from "@prisma/client";
 
-export type PostProps = Post & {
-    author:    	User,
-    categories: Category[],
-    likes:     	Like[],
-}
-
-export interface Category {
-    id:   string,
-    name: string
-}
-
-export interface Like {
-    postId: number,
-    userId: string,
-}
+export type PostData = Post & {
+	author: User;
+	categories: Category[];
+	likes: PostLike[];
+	_count: {
+		comments: number;
+	};
+};

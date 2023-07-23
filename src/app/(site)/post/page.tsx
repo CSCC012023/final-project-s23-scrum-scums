@@ -12,23 +12,15 @@ const EditPost = () => {
 	const [post_title, setTitle] = useState("");
 	const [text, setText] = useState("Start writing here...");
 	const router = useRouter();
-	const { data: session } = useSession(
-		// {
-		// 	required: true,
-		// 	onUnauthenticated() {
-		// 		redirect("/login?callbackUrl=/inscribe");
-		// 	}
-		// }
-	);
+	const { data: session } = useSession();
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log("posting");
 		const title = post_title;
 		const content = text;
 		const cats: string[] = [];
-		const authorID = session?.user?.id;
-		const result = await axios.post("/api/post", { title, content, cats, authorID });
+		const authorId = session?.user.id;
+		const result = await axios.post("/api/post", { title, content, cats, authorId });
 		router.push(`/post/${result.data.id}`);
 	};
 
@@ -40,7 +32,7 @@ const EditPost = () => {
 				onChange={(e) => setTitle(e.target.value)}
 				placeholder="Title">
 			</textarea>
-			<Editor  type="inscription" text={text} onTextChange={setText}/>
+			<Editor type="post" text={text} onTextChange={setText}/>
 			<form onSubmit={handleSubmit} className="flex flex-col items-center justify-center mt-4">
 				<button type="submit" className="btn btn-primary">Submit</button>
 			</form>

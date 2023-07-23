@@ -72,8 +72,8 @@ model User {
   followedBy User[] @relation("UserFollows")
   following  User[] @relation("UserFollows")
 
-  // a username / display name the user can change at will
-  username String?
+  // a username / display name the user can change at will as long as it's not taken
+  username String? @unique
 
   // the users posts and comments
   posts    Post[]

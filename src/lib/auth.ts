@@ -5,6 +5,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "@src/lib/prisma";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+import { nanoid } from "nanoid";
 
 interface ObeliskToken {
 	// the user name
@@ -98,6 +99,17 @@ export const authConfig: NextAuthOptions = {
 			});
 			if (!user) {
 				return token;
+			}
+
+			if (!user.username) {
+				await prisma.user.update({
+					where: {
+						id: user.id
+					},
+					data: {
+						username: nanoid(10)
+					}
+				});
 			}
 
 			if (account) {

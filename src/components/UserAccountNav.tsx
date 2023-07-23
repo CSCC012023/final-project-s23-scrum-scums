@@ -11,7 +11,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@src/components/ui/DropdownMenu";
-import { UserAvatar } from "@src/components/UserAvatar";
+import UserAvatar  from "@src/components/UserAvatar";
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
   user: Pick<User, "id" | "name" | "image" | "email">
@@ -31,22 +31,22 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
 					<div className='flex flex-col space-y-1 leading-none'>
 						{user.name && <p className='font-medium'>{user.name}</p>}
 						{user.email && (
-							<p className='w-[200px] truncate text-sm text-muted-foreground'>
+							<p className='w-18 truncate text-sm text-muted-foreground'>
 								{user.email}
 							</p>
 						)}
 					</div>
 				</div>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem asChild>
+				<DropdownMenuItem asChild className="cursor-pointer">
 					<Link href='/feed'>Feed</Link>
 				</DropdownMenuItem>
 
-				<DropdownMenuItem asChild>
+				<DropdownMenuItem asChild className="cursor-pointer">
 					<Link href={`/profile/${user.id}`}>Profile</Link>
 				</DropdownMenuItem>
 
-				<DropdownMenuItem asChild>
+				<DropdownMenuItem asChild className="cursor-pointer">
 					<Link href='/settings'>Settings</Link>
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />

@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
  * returns pages of posts, 6 per page
  */
 
-type Cursor = number | "notSet"
+type Cursor = number | "notSet";
 
 export const GET = async (req: NextRequest) => {
 	const lcParam = req.nextUrl.searchParams.get("lastCursor") as string;
@@ -32,47 +32,50 @@ export const GET = async (req: NextRequest) => {
 			include: {
 				author: true,
 				categories: true,
-				likes: true
+				likes: true,
+				_count: {
+					select: { comments: true }
+				}
 			},
 			orderBy: {
 				createdAt: "desc"
 			}
 		});
-		
+
 		const res = earlyReturn(trending);
 		if (res) {
 			return res;
 		}
-		
+
 		const lastPost = trending[trending.length - 1];
 		const cursor = lastPost.id;
-		
+
 		const data = {
 			posts: trending,
-			lastCursor: cursor,
+			lastCursor: cursor
 		};
 
-		
 		return NextResponse.json(data);
-		
 	} else {
 		const nextPage = await prisma.post.findMany({
 			// Same as before, limit the number of events returned by this query.
 			take: numberOfPosts,
 			skip: 1, // Do not include the cursor itself in the query result.
 			cursor: {
-				id: lastCursor,
+				id: lastCursor
 			},
 			include: {
 				author: true,
 				categories: true,
-				likes: true
+				likes: true,
+				_count: {
+					select: { comments: true }
+				}
 			},
 			orderBy: {
 				createdAt: "desc"
 			}
 		});
-
 
 		const res = earlyReturn(nextPage);
 		if (res) {
@@ -81,12 +84,12 @@ export const GET = async (req: NextRequest) => {
 
 		const lastPost = nextPage[nextPage.length - 1];
 		const cursor = lastPost.id;
-		
+
 		const data = {
 			posts: nextPage,
-			lastCursor: cursor,
+			lastCursor: cursor
 		};
-				
+
 		return NextResponse.json(data);
 	}
 };

@@ -83,10 +83,10 @@ const LoginForm: FC = () => {
 			<Button
 				disabled={isLoading}
 				onClick={handleSubmit(onSubmit)}
-				size={"sm"}
+
 				className="w-full"
 			>
-				Register
+				Login
 			</Button>
 
 			<Separator/>

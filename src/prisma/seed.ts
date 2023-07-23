@@ -118,8 +118,8 @@ async function main() {
 			posts: true
 		}
 	});
+	console.log("Botvinnik Created!");
 
-	// the real influencer
 	const dijkstra = await prisma.user.upsert({
 		where: {
 			email: "aloken1309u8!@swedemail.com"
@@ -129,6 +129,11 @@ async function main() {
 			name: "Dijkstra",
 			username: "dijkstra",
 			email: "aloken1309u8!@swedemail.com",
+			bio: `I'm interested in the boundary between tech and society, and how it affects the forces that shape our world.
+			Current Focus: AI, Working Remotely, EVs.
+			I post every Monday, Wednesday, and Friday.
+			Current Series: Maps - The Future of Work - Relics of Japanese Internet
+			`,
 			followedBy: {
 				connect: [
 					{
@@ -416,7 +421,6 @@ async function main() {
 			}
 		}
 	});
-	console.log("Botvinnik Created!");
 
 	const azodData = await prisma.user.update({
 		where: {
@@ -530,9 +534,10 @@ async function main() {
 		},
 		update: {},
 		create: {
-			name: "John",
-			username: "johndoe",
-			email: "user1@example.com"
+			name: "Jax",
+			username: "jjlov3",
+			email: "jaxjones@example.com",
+			bio: "I live life by the three M's: Music, Muscles, and Money. If you're on the grind, reach out"
 		}
 	});
 	console.log("John Created!");
@@ -543,9 +548,10 @@ async function main() {
 		},
 		update: {},
 		create: {
-			name: "Jane",
-			username: "janesmith",
-			email: "user2@example.com"
+			name: "Lupita",
+			username: "lolpita31",
+			email: "user2@example.com",
+			bio: "Librarian, Bookworm, and Cat Lover"
 		}
 	});
 	console.log("Jane Created!");
@@ -668,7 +674,8 @@ async function main() {
 		create: {
 			name: "Alice Zhang",
 			username: "alicej",
-			email: "alice@example.com"
+			email: "alice@example.com",
+			bio: "I'm an explorer at heart. I love to travel and see new places."
 		}
 	});
 	console.log("Alice Created!");
@@ -681,7 +688,8 @@ async function main() {
 		create: {
 			name: "Bob Williams",
 			username: "bobw",
-			email: "user4@example.com"
+			email: "user4@example.com",
+			bio: "Father, Loving Husband, and Long Distance Runner"
 		}
 	});
 	console.log("Bob Created!");
@@ -714,7 +722,8 @@ async function main() {
 	const post6 = await prisma.post.create({
 		data: {
 			title: "Exploring New Horizons",
-			content: "Venturing into the unknown, one step at a time.",
+			content:
+				"Venturing into the unknown, one step at a time. The world is a big place and I want to see it all.",
 			author: {
 				connect: {
 					id: alice.id
@@ -738,8 +747,9 @@ async function main() {
 	// Additional posts for user4
 	const post7 = await prisma.post.create({
 		data: {
-			title: "Tech Trends",
-			content: "The latest tech trends that are shaping the future.",
+			title: "What's in your shoe cabinet?",
+			content:
+				"I'm currently running in the Nike Pegasus 37. What about you?",
 			author: {
 				connect: {
 					id: user4.id
@@ -749,10 +759,10 @@ async function main() {
 				connectOrCreate: [
 					{
 						where: {
-							name: "Technology"
+							name: "Running"
 						},
 						create: {
-							name: "Technology"
+							name: "Running"
 						}
 					}
 				]
@@ -1055,7 +1065,8 @@ async function main() {
 				connect: {
 					id: dijkstra.id
 				}
-			}
+			},
+			bio: "The definition of insanity is doing the same thing over and over again and expecting different results."
 		}
 	});
 	console.log("Ji-Young Created!");
@@ -1073,7 +1084,8 @@ async function main() {
 				connect: {
 					id: dijkstra.id
 				}
-			}
+			},
+			bio: "In pursuit of the Zen of Programming..."
 		}
 	});
 	console.log("Hiroshi Created!");
@@ -1091,7 +1103,13 @@ async function main() {
 				connect: {
 					id: dijkstra.id
 				}
-			}
+			},
+			followedBy: {
+				connect: {
+					id: azad.id
+				}
+			},
+			bio: "Grad UIUC '21 | Living in Chicago, IL | In ❤️ with the world 🌎"
 		}
 	});
 	console.log("Ying Created!");
@@ -1209,73 +1227,61 @@ async function main() {
 		data: {
 			title: "The Power of JavaScript: A Comprehensive Guide",
 			content: `Hello everyone! 👋
-	  In this post, I want to share my insights into the power of JavaScript and how it has become one of the most popular and versatile programming languages in the world.
-
-	  JavaScript is an essential language for web development. Its ability to run on both the client-side and server-side makes it incredibly versatile. Let's take a look at some of the key features that make JavaScript so powerful.
-
-	  1. Asynchronous Programming:
-	  JavaScript's asynchronous nature allows it to handle non-blocking operations efficiently. This is crucial for building responsive and dynamic web applications. Take a look at this example of using async/await for asynchronous API calls:
-
-	  \`\`\`javascript
-	  async function fetchData() {
-		try {
-		  const response = await fetch('https://api.example.com/data');
-		  const data = await response.json();
-		  console.log(data);
-		} catch (error) {
-		  console.error('Error fetching data:', error);
-		}
-	  }
-	  fetchData();
-	  \`\`\`
-
-	  2. Modern ES6+ Features:
-	  JavaScript's ES6+ introduced several powerful features that enhance code readability and maintainability. Arrow functions, template literals, and destructuring are some of the ES6 features that simplify coding:
-
-	  \`\`\`javascript
-	  const name = 'Hiroshi';
-	  const greet = (name) => {
-		return \`Hello, \${name}!\`;
-	  };
-	  console.log(greet(name)); // Output: "Hello, Hiroshi!"
-	  \`\`\`
-
-	  3. DOM Manipulation:
-	  JavaScript's ability to interact with the Document Object Model (DOM) enables developers to create dynamic web pages. Here's an example of how to add a new element to the DOM:
-
-	  \`\`\`html
-	  <!DOCTYPE html>
-	  <html>
-		<body>
-		  <div id="container"></div>
-		  <script>
-			const container = document.getElementById('container');
-			const newElement = document.createElement('p');
-			newElement.textContent = 'This is a new paragraph.';
-			container.appendChild(newElement);
-		  </script>
-		</body>
-	  </html>
-	  \`\`\`
-
-	  4. Node.js and Server-side Development:
-	  JavaScript's growth expanded beyond the browser with the advent of Node.js. Now, developers can build server-side applications using JavaScript. Here's a simple Node.js server:
-
-	  \`\`\`javascript
-	  const http = require('http');
-	  const port = 3000;
-
-	  const server = http.createServer((req, res) => {
-		res.writeHead(200, { 'Content-Type': 'text/plain' });
-		res.end('Hello from Node.js server!');
-	  });
-
-	  server.listen(port, () => {
-		console.log(\`Server is running on http://localhost:\${port}\`);
-	  });
-	  \`\`\`
-
-	  I hope you enjoyed this comprehensive guide on the power of JavaScript. It's incredible to see how this language continues to evolve and shape the future of web development. Happy coding! 🚀`,
+In this post, I want to share my insights into the power of JavaScript and how it has become one of the most popular and versatile programming languages in the world.
+JavaScript is an essential language for web development. Its ability to run on both the client-side and server-side makes it incredibly versatile. Let's take a look at some of the key features that make JavaScript so powerful.
+1. Asynchronous Programming:
+JavaScript's asynchronous nature allows it to handle non-blocking operations efficiently. This is crucial for building responsive and dynamic web applications. Take a look at this example of using async/await for asynchronous API calls:
+\`\`\`javascript
+async function fetchData() {
+	try {
+	  const response = await fetch('https://api.example.com/data');
+	  const data = await response.json();
+	  console.log(data);
+	} catch (error) {
+	  console.error('Error fetching data:', error);
+	}
+}
+fetchData();
+\`\`\`
+2. Modern ES6+ Features:
+JavaScript's ES6+ introduced several powerful features that enhance code readability and maintainability. Arrow functions, template literals, and destructuring are some of the ES6 features that simplify coding:
+\`\`\`javascript
+const name = 'Hiroshi';
+const greet = (name) => {
+	return \`Hello, \${name}!\`;
+};
+console.log(greet(name)); // Output: "Hello, Hiroshi!"
+\`\`\`
+3. DOM Manipulation:
+JavaScript's ability to interact with the Document Object Model (DOM) enables developers to create dynamic web pages. Here's an example of how to add a new element to the DOM:
+\`\`\`html
+<!DOCTYPE html>
+<html>
+	<body>
+	  <div id="container"></div>
+	  <script>
+		const container = document.getElementById('container');
+		const newElement = document.createElement('p');
+		newElement.textContent = 'This is a new paragraph.';
+		container.appendChild(newElement);
+	  </script>
+	</body>
+</html>
+\`\`\`
+4. Node.js and Server-side Development:
+JavaScript's growth expanded beyond the browser with the advent of Node.js. Now, developers can build server-side applications using JavaScript. Here's a simple Node.js server:
+\`\`\`javascript
+const http = require('http');
+const port = 3000;
+const server = http.createServer((req, res) => {
+	res.writeHead(200, { 'Content-Type': 'text/plain' });
+	res.end('Hello from Node.js server!');
+});
+server.listen(port, () => {
+	console.log(\`Server is running on http://localhost:\${port}\`);
+});
+\`\`\`
+I hope you enjoyed this comprehensive guide on the power of JavaScript. It's incredible to see how this language continues to evolve and shape the future of web development. Happy coding! 🚀`,
 			categories: {
 				connectOrCreate: [
 					{
@@ -1452,29 +1458,21 @@ async function main() {
 		data: {
 			title: "The Art of Algorithm Design: Striving for Elegance",
 			content: `Greetings, fellow developers! 🖥️
-	  In this post, I'd like to delve into the art of algorithm design and discuss the importance of striving for elegance in our solutions.
-
-	  Algorithm design is at the core of computer science and plays a pivotal role in solving complex problems efficiently. Crafting elegant algorithms not only enhances the performance of our software but also makes it easier to maintain and understand. Here are some key principles to achieve elegance in algorithm design:
-
-	  1. Clarity and Simplicity:
-	  A well-designed algorithm should be clear and straightforward. Avoid overcomplicating the solution with unnecessary details. Emphasize simplicity, as it allows for better comprehension and reduces the chances of introducing bugs. Remember, simplicity is the ultimate sophistication.
-
-	  2. Time and Space Complexity:
-	  Optimize the algorithm's time and space complexity to achieve efficiency. Strive for algorithms with linear or logarithmic time complexity whenever possible. Be cautious of exponential or factorial time complexities that can hinder performance.
-
-	  3. Modularity and Reusability:
-	  Break down the algorithm into modular components that can be reused in different contexts. Modular designs promote code maintainability and facilitate code sharing across projects.
-
-	  4. Mathematical Rigor:
-	  Leverage mathematical principles to derive and validate your algorithms. Proving the correctness of an algorithm strengthens its reliability and builds confidence in its performance.
-
-	  5. Optimization vs. Readability:
-	  Balance optimization efforts with code readability. While optimization is crucial, it should not compromise the clarity of the algorithm. Code that is easy to read and understand is more maintainable in the long run.
-
-	  6. Considering Edge Cases:
-	  Thoroughly test the algorithm for edge cases and handle corner scenarios gracefully. Robust algorithms account for exceptional inputs and gracefully handle boundary conditions.
-
-	  Let's embrace the art of algorithm design and pursue elegance in our coding practices. As we continue to advance in computer science, elegance in algorithm design will remain a timeless principle that elevates the quality of our software. Happy coding! 🚀`,
+In this post, I'd like to delve into the art of algorithm design and discuss the importance of striving for elegance in our solutions.
+Algorithm design is at the core of computer science and plays a pivotal role in solving complex problems efficiently. Crafting elegant algorithms not only enhances the performance of our software but also makes it easier to maintain and understand. Here are some key principles to achieve elegance in algorithm design:
+1. Clarity and Simplicity:
+A well-designed algorithm should be clear and straightforward. Avoid overcomplicating the solution with unnecessary details. Emphasize simplicity, as it allows for better comprehension and reduces the chances of introducing bugs. Remember, simplicity is the ultimate sophistication.
+2. Time and Space Complexity:
+Optimize the algorithm's time and space complexity to achieve efficiency. Strive for algorithms with linear or logarithmic time complexity whenever possible. Be cautious of exponential or factorial time complexities that can hinder performance.
+3. Modularity and Reusability:
+Break down the algorithm into modular components that can be reused in different contexts. Modular designs promote code maintainability and facilitate code sharing across projects.
+4. Mathematical Rigor:
+Leverage mathematical principles to derive and validate your algorithms. Proving the correctness of an algorithm strengthens its reliability and builds confidence in its performance.
+5. Optimization vs. Readability:
+Balance optimization efforts with code readability. While optimization is crucial, it should not compromise the clarity of the algorithm. Code that is easy to read and understand is more maintainable in the long run.
+6. Considering Edge Cases:
+Thoroughly test the algorithm for edge cases and handle corner scenarios gracefully. Robust algorithms account for exceptional inputs and gracefully handle boundary conditions.
+Let's embrace the art of algorithm design and pursue elegance in our coding practices. As we continue to advance in computer science, elegance in algorithm design will remain a timeless principle that elevates the quality of our software. Happy coding! 🚀`,
 			categories: {
 				connectOrCreate: [
 					{
@@ -1624,13 +1622,10 @@ async function main() {
 		data: {
 			title: "Lost in the Jungle: An Adventure to Remember",
 			content: `Hey adventurers! 🌿🌳
-	  I'm back from an exhilarating journey through the dense Amazon jungle. Navigating through the thick vegetation and unpredictable terrain was no easy feat, but the experience was nothing short of extraordinary.
-
-	  As I delved deeper into the jungle, I encountered diverse wildlife, from vibrant parrots to elusive jaguars. I relied on my survival skills to find food, build shelter, and purify water. The nights were filled with the symphony of insects and the eerie calls of nocturnal creatures, making the expedition all the more thrilling.
-
-	  The Amazon taught me the value of adaptability and resourcefulness. In the face of challenges, I discovered my resilience and how to embrace the unknown. Nature has a unique way of humbling us, reminding us that we are just visitors in this vast and untamed world.
-
-	  Remember, every adventure comes with risks and rewards. To all my fellow adventurers, keep exploring, learning, and cherishing the wonders of our planet. Adventure awaits around every corner! 🌏✨`,
+I'm back from an exhilarating journey through the dense Amazon jungle. Navigating through the thick vegetation and unpredictable terrain was no easy feat, but the experience was nothing short of extraordinary.
+As I delved deeper into the jungle, I encountered diverse wildlife, from vibrant parrots to elusive jaguars. I relied on my survival skills to find food, build shelter, and purify water. The nights were filled with the symphony of insects and the eerie calls of nocturnal creatures, making the expedition all the more thrilling.
+The Amazon taught me the value of adaptability and resourcefulness. In the face of challenges, I discovered my resilience and how to embrace the unknown. Nature has a unique way of humbling us, reminding us that we are just visitors in this vast and untamed world.
+Remember, every adventure comes with risks and rewards. To all my fellow adventurers, keep exploring, learning, and cherishing the wonders of our planet. Adventure awaits around every corner! 🌏✨`,
 			categories: {
 				connectOrCreate: [
 					{
@@ -1663,15 +1658,11 @@ async function main() {
 		data: {
 			title: "Solo Camping in the Wilderness: A Test of Grit",
 			content: `Greetings, fellow adventurers! ⛺🏕️
-	  Last week, I embarked on a solo camping expedition in the heart of the untamed wilderness. Surrounded by towering trees and shimmering stars, I found myself humbled by the beauty and vastness of nature.
-
-	  Throughout the journey, I honed my survival skills, starting a fire with flint and tinder, purifying water from nearby streams, and constructing a sturdy shelter from fallen branches and leaves. The solitude offered me an opportunity to connect with myself and the natural world in a profound way.
-
-	  Though challenges arose, the sense of empowerment that comes with self-reliance is indescribable. Embracing uncertainty and embracing the beauty of the present moment, I felt more alive than ever.
-
-	  To all those seeking an adventure of a lifetime, don't shy away from solitude and self-discovery. Nature has much to teach us if we're willing to listen.
-
-	  Stay adventurous, and may your journeys be filled with wonder and self-discovery! 🌌🔥`,
+Last week, I embarked on a solo camping expedition in the heart of the untamed wilderness. Surrounded by towering trees and shimmering stars, I found myself humbled by the beauty and vastness of nature.
+Throughout the journey, I honed my survival skills, starting a fire with flint and tinder, purifying water from nearby streams, and constructing a sturdy shelter from fallen branches and leaves. The solitude offered me an opportunity to connect with myself and the natural world in a profound way.
+Though challenges arose, the sense of empowerment that comes with self-reliance is indescribable. Embracing uncertainty and embracing the beauty of the present moment, I felt more alive than ever.
+To all those seeking an adventure of a lifetime, don't shy away from solitude and self-discovery. Nature has much to teach us if we're willing to listen.
+Stay adventurous, and may your journeys be filled with wonder and self-discovery! 🌌🔥`,
 			categories: {
 				connectOrCreate: [
 					{
@@ -1761,7 +1752,8 @@ async function main() {
 		create: {
 			name: "SportsBot",
 			username: "sports_bot",
-			email: "sportsbot@example.com"
+			email: "sportsbot@example.com",
+			bio: "Keep up to date with the latest news and scores from the world of sports!"
 		}
 	});
 	console.log("SportsBot Created!");
@@ -1771,10 +1763,10 @@ async function main() {
 		data: {
 			title: "FIFA World Cup 2026: Opening Match Result",
 			content: `⚽️🏆 FIFA World Cup 2026 - Opening Match Result 🏆⚽️
-
-	  The opening match of the FIFA World Cup 2026 saw an exciting clash between the host nation, United States, and the reigning champions, France. The match ended in a thrilling 2-2 draw, leaving fans on the edge of their seats until the final whistle.
-
-	  Both teams displayed incredible skills and determination, promising an electrifying tournament ahead. Stay tuned for more updates and scores as the World Cup unfolds! 🌎🌍🌏`,
+The opening match of the FIFA World Cup 2026 saw an exciting clash between the host nation, United States, and the reigning champions, France.
+The match ended in a thrilling 2-2 draw, leaving fans on the edge of their seats until the final whistle.
+Both teams displayed incredible skills and determination, promising an electrifying tournament ahead.
+Stay tuned for more updates and scores as the World Cup unfolds! 🌎🌍🌏`,
 			categories: {
 				connectOrCreate: [
 					{
@@ -1807,10 +1799,10 @@ async function main() {
 		data: {
 			title: "FIFA World Cup 2026: Semi-Final Match Result",
 			content: `⚽️🏆 FIFA World Cup 2026 - Semi-Final Match Result 🏆⚽️
-
-	  In a nail-biting semi-final encounter, Brazil defeated Germany 3-2, securing their place in the World Cup final. The match was filled with drama and memorable moments, showcasing the true spirit of the beautiful game.
-
-	  As the tournament progresses, the stakes get higher, and every team vies for glory. The anticipation for the final is at its peak! Who will lift the coveted trophy? Stay tuned to find out! 🏆🌟`,
+In a nail-biting semi-final encounter, Brazil defeated Germany 3-2, securing their place in the World Cup final.
+The match was filled with drama and memorable moments, showcasing the true spirit of the beautiful game.
+As the tournament progresses, the stakes get higher, and every team vies for glory.
+The anticipation for the final is at its peak! Who will lift the coveted trophy? Stay tuned to find out! 🏆🌟`,
 			categories: {
 				connectOrCreate: [
 					{
@@ -1843,10 +1835,11 @@ async function main() {
 		data: {
 			title: "FIFA World Cup 2026: Final Match Result",
 			content: `⚽️🏆 FIFA World Cup 2026 - Final Match Result 🏆⚽️
-
-	  In the grand finale of the FIFA World Cup 2026, Argentina emerged as the champions, defeating Spain 4-2 in a thrilling match. The stadium erupted with joy as Argentina lifted the coveted trophy, celebrating their victory with a display of skill and passion.
-
-	  This World Cup journey has been one for the ages, with numerous memorable moments etched in football history. Congratulations to Argentina for their spectacular triumph, and kudos to all teams for putting up a stellar show! Until the next World Cup, let the celebrations continue! 🎉🎊`,
+In the grand finale of the FIFA World Cup 2026, Argentina emerged as the champions, defeating Spain 4-2 in a thrilling match.
+The stadium erupted with joy as Argentina lifted the coveted trophy, celebrating their victory with a display of skill and passion.
+This World Cup journey has been one for the ages, with numerous memorable moments etched in football history.
+Congratulations to Argentina for their spectacular triumph, and kudos to all teams for putting up a stellar show!
+Until the next World Cup, let the celebrations continue! 🎉🎊`,
 			categories: {
 				connectOrCreate: [
 					{

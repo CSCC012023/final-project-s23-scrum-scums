@@ -9,7 +9,7 @@ interface UserAvatarProps extends AvatarProps {
   user: Pick<User, "image" | "name">
 }
 
-export function UserAvatar({ user, ...props }: UserAvatarProps) {
+const UserAvatar = ({ user, ...props }: UserAvatarProps) => {
 	return (
 		<Avatar {...props}>
 			{user.image ? (
@@ -17,6 +17,7 @@ export function UserAvatar({ user, ...props }: UserAvatarProps) {
 					<Image
 						fill
 						src={user.image}
+						sizes="100%"
 						alt='profile picture'
 						referrerPolicy='no-referrer'
 					/>
@@ -29,4 +30,6 @@ export function UserAvatar({ user, ...props }: UserAvatarProps) {
 			)}
 		</Avatar>
 	);
-}
+};
+
+export default UserAvatar;

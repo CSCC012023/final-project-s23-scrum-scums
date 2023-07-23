@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { FC, useState } from "react";
 import React from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import Heading from "./Heading";
 import Input from "./Inputs/Input";
 import { Separator } from "./ui/Separator";
@@ -15,6 +14,7 @@ import { Button } from "./ui/Button";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import axios from "axios";
 import { useToast } from "@src/hooks/use-toast";
+import { Icons } from "./Icons";
 
 
 const RegisterForm = () => {
@@ -101,7 +101,6 @@ const RegisterForm = () => {
 			<Button
 				disabled={isLoading}
 				onClick={handleSubmit(onSubmit)}
-				size={"sm"}
 				className="w-full"
 			>
 				Register
@@ -112,16 +111,15 @@ const RegisterForm = () => {
 				<Button
 					variant={"outline"}
 					disabled={isLoading}
-					size={"sm"}
 					onClick={() => signIn("google", { callbackUrl: "/" })}
 				>
+					<Icons.google className="mr-2 h-4 w-4" />
 					Register with Google
 				</Button>
 
 				<Button
 					variant={"outline"}
 					disabled={isLoading}
-					size={"sm"}
 					onClick={() => signIn("github", { callbackUrl: "/" })}
 				>
 					<GitHubLogoIcon className="mr-2 h-4 w-4" />

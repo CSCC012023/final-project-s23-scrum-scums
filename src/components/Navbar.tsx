@@ -8,6 +8,7 @@ import { Icons } from "@src/components/Icons";
 import { buttonVariants } from "./ui/Button";
 import { getAuthSession } from "@src/lib/auth";
 import { UserAccountNav } from "./UserAccountNav";
+import { cn } from "@src/lib/utils";
 
 const Navbar = async () => {
 	// const searches = useSearchParams();
@@ -28,26 +29,29 @@ const Navbar = async () => {
 	return (
 		<nav className="sticky top-0 inset-x-0 bg-secondary border-b border-zinc-400 h-fit z-10 py-1">
 			<div className="container max-w-6xl h-full mx-auto flex items-center justify-between gap-2 font-serif">
-				<Link href="/" className="flex gap-2 items-center">
+				<Link href="/" className="flex gap-2 items-center flex-1">
 					<Icons.logo className="h-8 w-8 sm:h-6 sm:w-6" />
-					<p className="hidden text-zinc-700 text-xl font-medium md:block">Obelisk</p>
+					<p className="hidden text-zinc-700 text-xl font-medium md:block align-text-bottom">Obelisk</p>
 				</Link>
-				{session ? (
-					<UserAccountNav
-						user={session.user}
-					/>
-				) :(
-					<Link href='/login' className={buttonVariants()}>Login</Link>
-				)}
+				<div className="flex flex-row items-center justify-center">
+					<Link className={cn(buttonVariants({variant: "ghost"}), "hover:bg-gray-100 transition-all")} href="/post">
+						<Icons.post className="h-8 w-8 sm:h-4 sm:w-4" />
+					</Link>
+					{session ? (
+						<UserAccountNav
+							user={session.user}
+						/>
+					) :(
+						<Link href='/login' className={buttonVariants()}>Login</Link>
+					)}
+				</div>
 				{/* <Link className="btn btn-ghost normal-case text-4xl" href="/">Obelisk</Link> */}
 			</div>
 			{/* <div className="flex-none gap-2">
 				<Link className="btn btn-accent btn-outline" href="/recommended">
 					Recommended
 				</Link>
-				<Link className="btn btn-ghost btn-circle" href="/post">
-					<Icons.post className="h-8 w-8 sm:h-6 sm:w-6" />
-				</Link>
+
 				<div className="form-control">
 					<form onSubmit={onSearch}>
 						<input type="text" placeholder="Search" className="input input-bordered input-accent w-24 md:w-auto"

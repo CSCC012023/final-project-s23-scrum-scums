@@ -4,12 +4,12 @@ import React, { ReactNode } from "react";
 import { SessionProvider } from "next-auth/react";
 
 // define a type for component props
-interface ProviderProps {
+interface AuthProviderProps {
 	children: ReactNode;
 }
 
-const Provider = ({ children }: ProviderProps) => {
+const AuthProvider = ({ children }: AuthProviderProps) => {
 	return <SessionProvider>{children}</SessionProvider>;
 };
 
-export default Provider;
+export default AuthProvider;

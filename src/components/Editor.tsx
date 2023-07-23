@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 
 interface EditorProps {
-	type: "inscription" | "comment"
+	type: "post" | "comment"
 	text: string
 	onTextChange: (text: string) => void
 }
@@ -33,7 +33,7 @@ const Editor: React.FC<EditorProps> = ({
 		window.addEventListener("resize", getWindowsHeight);
 	});
 
-	const inputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+	const inputChange = (e: string | undefined) => {
 		const typedText = e;
 		onTextChange(typedText);
 	};
