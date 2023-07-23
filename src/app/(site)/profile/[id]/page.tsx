@@ -11,9 +11,9 @@ import Image from "next/image";
 interface User {
 	id: string
     name: string
-    password: string
+	image?: string
+    password?: string
     // postLikes: PostLike[]
-    image?: string
     username?: string
 	bio?: string
 	createdAt: Date
