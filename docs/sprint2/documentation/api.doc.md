@@ -42,9 +42,6 @@
   - Verbs: 'GET'
   - GET:
 		returns the profile of the user with the given id. The profile contains the user's username, email, and posts, comments, and likes.
-- [api/search](#api/profile/{id})
-  - Verbs: 'GET'
-  - GET: returns list of posts associated with query result (in terms of post title, content, and category), and list of users associated with query result (in terms of users of posts by their username)
 - [api/auth](#api/auth)
 	- Handled by Next-Auth. Refer to [NextAuth Documentation for Obelisk](/nextauth-01.doc.md)
 

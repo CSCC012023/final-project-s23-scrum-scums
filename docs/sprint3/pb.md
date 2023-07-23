@@ -3,14 +3,17 @@
 - OBELISK-27: Post - Comments
 - OBELISK-11: Login - Social Sign On
 - OBELISK-10: Login - Email
+
 # Sprint 1 (Carryover to Sprint 2)
 - OBELISK-26: Post - Likes/Dislikes
-- Sprint 2 (Completed)
+
+# Sprint 2 (Completed)
 - OBELISK-5: Feed - Infinite scrolling
 - OBELISK-32: Login - Sessions
 - OBELISK-37: Post - Markdown Toolbar
 - OBELISK-34: Prisma Seeding
 - OBELISK-33: Search 
+
 # Sprint 2 (Carryover to Sprint 3)
 - OBELISK-26: Post - Likes/Dislikes
 - OBELISK-31: API Protection

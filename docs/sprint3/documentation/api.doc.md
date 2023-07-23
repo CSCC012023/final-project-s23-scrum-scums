@@ -13,6 +13,15 @@
 		- Verbs: 'GET'
 		- GET:
 			returns the post and author with the given id.
+	- [api/post/postCount](#api/post/postCount)
+		- Verbs: 'GET'
+		- GET:
+			returns the number of posts
+- [api/postLike](#api/postLike)
+    - Verbs: 'GET'
+    - GET: returns a list that represents the relationship between users and posts they like.
+    - [api/postLike/userLikeCount](#api/userLikeCount)
+      - GET: returns the number of users that have liked at least one post
 - [api/comment](#api/comment)
   - Verbs: 'POST'
   - POST:
@@ -45,6 +54,9 @@
 - [api/search](#api/profile/{id})
   - Verbs: 'GET'
   - GET: returns list of posts associated with query result (in terms of post title, content, and category), and list of users associated with query result (in terms of users of posts by their username)
+- [api/recommended](#api/recommended)
+    - Verbs: 'GET'
+    - GET: returns a list of posts that are recommended for the current user. Recommended posts are based on the top 3 users with a similar like pattern as the current user.
 - [api/auth](#api/auth)
 	- Handled by Next-Auth. Refer to [NextAuth Documentation for Obelisk](/nextauth-01.doc.md)
 

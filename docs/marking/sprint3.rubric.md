@@ -1,6 +1,6 @@
 # Sprint 2-4 Marking Scheme
  
-**Team Name:** scrum-scums  
+**Team Name:** scrum-scums 
  
 *(Convention: N=sprint number, ex: sprintN.md means sprint2.md for sprint 2, and SR(N-1)md means SR1.md for sprint 2, that is Sprint Retrospective for Sprint 1, to be hold during planning meeting at the beginning of Sprint 2)*
  
@@ -14,7 +14,7 @@
     there is no clear evidence which user story will be completed or task breakdown is unclear or incomplete
     - 0 marks = No meeting document submitted or the submitted document contains no relevant information to the sprint 1
  
-    Your Mark: 2
+    Your Mark: 2 
  
   Planning Meetings Total Mark: 2 / 2
  
@@ -74,7 +74,7 @@ Sprint Review Total Mark: 2 / 2
     - 1 mark  = two or more stories in Jira Backlog not are prioritized in the order which matches the priority of their associated milestones]
     - 0 marks = the majority of stories in Jira Backlog appear to be not prioritized in the order which matches the priority of their associated milestones
  
-    Your Mark: 2 
+    Your Mark: 2
  
   - Clearly Defined Acceptance Criteria (max 2 marks)
     - 2 marks = all Sprint 1 stories have clearly defined and testable acceptance criteria
@@ -101,14 +101,14 @@ Sprint Review Total Mark: 2 / 2
     - 1 mark  = part of the stories not started and explanation why not is not provided
     - 0 marks = no story started
     
-    Your Mark: 2 
+    Your Mark: 2
  
   - Do the pull request on GitHub match the tasks listed on JIRA Active Sprint Board? (max 2 marks)
     - 2 marks = no tasks are missing
     - 1 mark  = two or more tasks are missing
     - 0 marks = no tasks or tasks do not match at all
     
-    Your Mark: 2
+    Your Mark: 2 
  
   - Is the pull request done by the person to whom the task has been assigned to?  (max 2 marks)
     - 2 marks = all assigned tasks are completed
@@ -164,9 +164,8 @@ Your Mark: 0
     - 2 marks = diagram present, critical path computed, and explanations are adequate.
     - 1 mark  = diagram present, but no critical path or explanations provided, or explanations are not adequate.
     - 0 marks = document not available or not containing a valid diagram
-
-    Your Mark: 2
  
+ Your Mark: 2
  
 Tracking on JIRA Total Mark: 22 / 24
  
@@ -190,7 +189,7 @@ Tracking on JIRA Total Mark: 22 / 24
     1 mark  = at least one is present
     0 marks = None present
     
-    Your Mark: 0 
+    Your Mark: 2 (not a pdf but technically a cover page and table of contents is there)
  
   - CRC Cards [or equivalent, if the team is not using CRC) (max 4 marks)
     - 4 marks = Class names and Collaborators have matching names and responsibilities are stated clearly
@@ -199,7 +198,7 @@ Tracking on JIRA Total Mark: 22 / 24
     - 1 mark  = The majority of class names do not match the collaborator names or the responsibilities of the majority of the classes are not stated or are unclear
     - 0 marks = No CRC provided or the provided document does not match the CRC model
  
-    Your Mark: 0
+    Your Mark: 4
  
   - Software Architecture Diagram (max 4 marks)
     - 4 marks = The Architecture Diagram is present, it is formatted using proper graphic symbols, and it follows a known Architecture diagram.
@@ -213,7 +212,7 @@ Tracking on JIRA Total Mark: 22 / 24
  
     Your Mark: 4
 
-System Design Total Mark: 4 / 10 ~~(-2 as updated version was not found in /docs/sprint2, used sprint1 to mark)~~ regraded
+System Design Total Mark: 10 / 10
  
 ## Documentation (max 3 mark)
   
@@ -221,7 +220,7 @@ System Design Total Mark: 4 / 10 ~~(-2 as updated version was not found in /docs
   - 2 mark = documentation is updated partially.
   - 0 marks = documentation has not been updated or is unclear & not maintained properly
    
-  Your Mark: 3 / 3 (regraded)
+  Your Mark: 3 / 3
  
  
 ## Sprint Demo (Max 14 marks) 
@@ -250,4 +249,4 @@ System Design Total Mark: 4 / 10 ~~(-2 as updated version was not found in /docs
  
 ## Total Mark
  
-88 / 95 
+93 / 95
