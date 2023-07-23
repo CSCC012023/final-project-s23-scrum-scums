@@ -2,33 +2,13 @@ import ReactMarkdown  from "react-markdown";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { FaReply, FaArrowDown, FaArrowUp } from "react-icons/fa";
-import IconBtn from "@src/components/Button";
+import IconBtn from "@src/components/Buttons/Button";
 import remarkGfm from "remark-gfm";
 import Tag from "@src/components/Tag";
+import { PostProps, Category, Like } from "@src/types"
 // import Image from "next/image";
 
-interface User {
-	id:        string,
-	email:     string,
-	username:  string,
-	password:  string,
-	followers: number
-}
 
-export interface PostProps {
-	id:        	number,
-	title:     	string,
-	content:   	string,
-	author:    	User,
-	authorId:  	string,
-	createdAt: 	Date,
-	categories: Category[]
-}
-
-export interface Category {
-	id:   string,
-	name: string
-}
 
 const PostCard: React.FC<PostProps> = ({
 	id,

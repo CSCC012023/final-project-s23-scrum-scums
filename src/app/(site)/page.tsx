@@ -9,7 +9,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import Typewriter from "typewriter-effect";
 import PostCard from "@src/components/PostCard";
-import { PostProps } from "@src/components/PostCard";
+import { PostProps } from "@src/types";
 import Tag from "@src/components/Tag";
 
 interface Response {
@@ -35,14 +35,12 @@ const Home = () => {
 			const typed = parseInt(data.data.lastCursor);
 			const res: Response = data.data;
 			res.lastCursor = typed;
-			console.log(res.end);
 			if (res.end) {
 				setHasMore(false);
 			}
 			setLastCursor(res.lastCursor);
-
 			setPosts([...posts, ...res.posts]);
-			console.log(posts);
+
 		} catch (err) {
 			console.log(err);
 		}
@@ -61,7 +59,9 @@ const Home = () => {
 			authorId={post.authorId}
 			author={post.author}
 			createdAt={post.createdAt}
-			categories={post.categories}
+			categories={post.categories} 
+			mediaUrl={null}
+			likes={[]}		
 		/>
 	));
 
