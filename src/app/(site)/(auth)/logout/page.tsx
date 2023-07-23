@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { signOut, useSession } from "next-auth/react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Button from "@src/components/Button";
 
 const Logout = () => {

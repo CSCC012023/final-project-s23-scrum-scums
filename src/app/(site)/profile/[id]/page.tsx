@@ -15,7 +15,7 @@ interface User {
     name: string
     password: string
     // postLikes: PostLike[]
-    posts: Post[]
+    posts: PostProps[]
     username?: string
     _count: {
 		followedBy: number

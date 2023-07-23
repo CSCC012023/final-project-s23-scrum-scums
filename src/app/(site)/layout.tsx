@@ -5,10 +5,9 @@ import React from "react";
 
 import AuthProvider from "@src/Providers/AuthProvider";
 import ToasterProvider from "@src/Providers/ToasterProvider";
-import RegisterModal from "@src/components/Modals/RegisterModal";
-import LoginModal from "@src/components/Modals/LoginModal";
+import { Toaster } from "@src/components/ui/Toaster";
 import Navbar from "@src/components/Navbar";
-
+import { cn } from "@src/lib/utils";
 
 const nunitoSans = Nunito_Sans({
 	subsets: ["latin-ext"],
@@ -59,17 +58,26 @@ export const metadata = {
 };
 
 
-const RootLayout = ({children}: { children: React.ReactNode }) => {
+const RootLayout = ({
+	children,
+	authModal
+}: 	{
+	children: React.ReactNode,
+	authModal: React.ReactNode
+}) => {
 	return (
 		<AuthProvider>
-			<html lang="en" className={`${nunitoSans.variable} ${warnockPro.variable}`}>
-				<body className="bg-base-100 min-h-screen antialiased">
+			<html lang="en" className={cn("antialiased text-primary-foreground", nunitoSans.variable, warnockPro.variable)}>
+				<body>
+					{/* @ts-expect-error server components */}
 					<Navbar />
 					<main className="w-full h-full" id="main">
 						<ToasterProvider/>
-						<RegisterModal/>
-						<LoginModal/>
-						{children}
+						<Toaster/>
+						{authModal}
+						<div className="container max-w-8xl mx-auto h-full">
+							{children}
+						</div>
 					</main>
 				</body>
 			</html>

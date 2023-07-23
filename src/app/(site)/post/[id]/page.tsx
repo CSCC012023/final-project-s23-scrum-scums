@@ -70,7 +70,7 @@ const Post = ({ params }: { params: { id: string } }) => {
 		<div className="h-full w-full">
 			{loading ? <h1 className="font-bold text-center">loading...</h1> :
 				<div className="flex flex-col items-center justify-center">
-					<figure className="w-full object-cover flex-col flex justify-center" ><img src="https://picsum.photos/1000/460" alt="post image" /></figure>
+					{/* <figure className="w-full object-cover flex-col flex justify-center" ><img src="https://picsum.photos/1000/460" alt="post image" /></figure> */}
 					<section className="content w-2/3 pt-4 flex flex-col items-center">
 						<div className="prose">
 							<p className="text-neutral-400 text-sm w-full">{post?.createdAt?.toLocaleDateString()}</p>

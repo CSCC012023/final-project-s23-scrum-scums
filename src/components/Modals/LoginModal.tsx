@@ -2,27 +2,24 @@
 
 import React from "react";
 import { useState } from "react";
-import { AiFillGithub } from "react-icons/ai";
-import { FcGoogle } from "react-icons/fc";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import Modal from "@src/components/Modals/Modal";
 import {
 	FieldValues,
 	SubmitHandler,
 	useForm,
 } from "react-hook-form";
-import { toast } from "react-hot-toast";
-
-import useLoginModal from "@src/hooks/useLoginModal";
-import useRegisterModal from "@src/hooks/useRegisterModal";
 import Heading from "@src/components/Heading";
 import Input from "@src/components/Inputs/Input";
-import Button from "@src/components/Button";
+import { Button } from "@src/components/ui/Button";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Icons } from "../Icons";
+import { useToast } from "@src/hooks/use-toast";
 
 
 const LoginModal = () => {
-	const loginModal = useLoginModal();
-	const registerModal = useRegisterModal();
 	const [isLoading, setIsLoading] = useState(false);
 	const {
 		register,
@@ -35,16 +32,22 @@ const LoginModal = () => {
 			password: "",
 		},
 	});
+	const router = useRouter();
+	const { toast } = useToast();
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		setIsLoading(true);
 		console.log(data);
 		signIn("credentials", { redirect: false, ...data })
 			.then(() => {
-				loginModal.onClose();
+				router.back();
 			})
 			.catch((err) => {
-				toast.error(`Something went wrong (${err.response.status})`);
+				toast({
+					title: "There was an error logging you in",
+					description: err.response.data.error,
+					variant: "destructive"
+				});
 			})
 			.finally(() => {
 				setIsLoading(false);
@@ -84,18 +87,22 @@ const LoginModal = () => {
 	const footerContent = (
 		<div className="flex flex-col justify-center w-full h-full gap-4">
 			<Button
-				outline
-				label="Log in with Google"
-				icon={FcGoogle}
+				variant={"outline"}
+				disabled={isLoading}
 				onClick={() => signIn("google", { callbackUrl: "/" })}
-			/>
+			>
+				<Icons.google className="mr-2 h-4 w-4" />
+					Log in with Google
+			</Button>
 
 			<Button
-				outline
-				label="Log in with GitHub"
-				icon={AiFillGithub}
+				variant={"outline"}
+				disabled={isLoading}
 				onClick={() => signIn("github", { callbackUrl: "/" })}
-			/>
+			>
+				<GitHubLogoIcon className="mr-2 h-4 w-4" />
+					Log in with GitHub
+			</Button>
 
 			<div
 				className="
@@ -113,7 +120,7 @@ const LoginModal = () => {
 					"
 				>
 					<div>Don&apos;t have an account?</div>
-					<div
+					<Link href="/register"
 						className="
 						text-blue-500
 						cursor-pointer
@@ -122,13 +129,9 @@ const LoginModal = () => {
 						ease-in-out
 						duration-200
 						"
-						onClick={() => {
-							loginModal.onClose();
-							registerModal.onOpen();
-						}}
 					>
 					Sign Up
-					</div>
+					</Link>
 				</div>
 
 			</div>
@@ -138,8 +141,8 @@ const LoginModal = () => {
 	return (
 		<Modal
 			disabled={isLoading}
-			isOpen={loginModal.isOpen}
-			onClose={loginModal.onClose}
+			// isOpen={loginModal.isOpen}
+			// onClose={loginModal.onClose}
 			onSubmit={handleSubmit(onSubmit)}
 			title="Log In"
 			actionLabel="Continue"

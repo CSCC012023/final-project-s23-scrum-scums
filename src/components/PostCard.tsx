@@ -53,7 +53,7 @@ const PostCard: React.FC<PostProps> = ({
 		hover:cursor-pointer
 		transition-all duration-500 ease-in-out
 		hover:shadow-2xl" onClick={handleClick}>
-			<figure className="w-full mb-0" ><img src="https://picsum.photos/400" alt="post image" /></figure>
+			{/* <figure className="w-full mb-0" ><img src="https://picsum.photos/400" alt="post image" /></figure> */}
 			<div className="card-body">
 				<h2 className="card-title">
 					{ title }
