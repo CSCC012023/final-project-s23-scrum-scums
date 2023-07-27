@@ -35,14 +35,14 @@ const CommentTree: FC<CommentTreeType> = ({
 			<div className="flex flex-row items-stretch w-full">
 				<CollapsibleTrigger
 					asChild
-					className="hover:cursor-pointer hover:bg-blue-600"
+					className="hover:cursor-pointer hover:bg-blue-500"
 				>
 					<div className="w-fit flex flex-col">
 						<ViewGridIcon
 							className="h-2 w-1 stroke-gray-400
 					align-middle"
 						/>
-						<div className="rounded-full bg-gray-400 w-1 flex-grow transition-all hover:bg-blue-600 duration-150 min-h-4"></div>
+						<div className="rounded-full bg-gray-400 w-1 flex-grow transition-all hover:bg-blue-500 duration-150 min-h-4"></div>
 					</div>
 				</CollapsibleTrigger>
 				<div className="flex-grow w-full min-w-full">

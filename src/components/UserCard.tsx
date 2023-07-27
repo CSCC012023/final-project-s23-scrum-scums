@@ -11,6 +11,7 @@ import Link from "next/link";
 import { buttonVariants } from "./ui/Button";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { HoverCardProps } from "@radix-ui/react-hover-card";
+import { cn } from "@src/lib/utils";
 
 interface UserCardProps extends HoverCardProps {
 	user: Pick<
@@ -24,7 +25,9 @@ const UserCard: FC<UserCardProps> = ({ user, ...props }) => {
 		<HoverCard {...props}>
 			<HoverCardTrigger asChild>
 				<Link
-					className={buttonVariants({ variant: "link" })}
+					className={cn`${buttonVariants({
+						variant: "link"
+					})}, no-underline hover:underline`}
 					href={`profile/${user.id}`}
 				>
 					{user.username}
@@ -34,11 +37,11 @@ const UserCard: FC<UserCardProps> = ({ user, ...props }) => {
 				<div className="flex justify-between space-x-4 items-center">
 					<UserAvatar user={user} />
 					<div className="space-y-1">
-						<h4 className="text font-semibold text-muted-foreground">
+						<h4 className="text font-semibold text-muted-foreground m-0">
 							@{user.username}
 						</h4>
-						<p className="text-sm">{user.bio}</p>
-						<div className="flex items-center pt-2">
+						<p className="text-sm m-0">{user.bio}</p>
+						<div className="flex items-center pt-2 m-0">
 							<CalendarIcon className="mr-2 h-4 w-4 opacity-70" />{" "}
 							<span className="text-xs text-muted-foreground">
 								Joined{" "}

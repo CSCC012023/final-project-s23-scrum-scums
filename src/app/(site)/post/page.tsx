@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-// import "@styles/globals.css";
 import axios from "axios";
 import Editor from "@src/components/Editor";
 import { useState } from "react";
@@ -20,21 +19,31 @@ const EditPost = () => {
 		const content = text;
 		const cats: string[] = [];
 		const authorId = session?.user.id;
-		const result = await axios.post("/api/post", { title, content, cats, authorId });
+		const result = await axios.post("/api/post", {
+			title,
+			content,
+			cats,
+			authorId
+		});
 		router.push(`/post/${result.data.id}`);
 	};
 
-
 	return (
 		<div className="w-full h-full -z-50">
-			<textarea className="w-1/2 h-12 max-h-72 p-2 border-2 border-gray-300 rounded-md resize-none"
+			<textarea
+				className="w-1/2 h-12 max-h-72 p-2 border-2 border-gray-300 rounded-md resize-none"
 				value={post_title}
-				onChange={(e) => setTitle(e.target.value)}
-				placeholder="Title">
-			</textarea>
-			<Editor type="post" text={text} onTextChange={setText}/>
-			<form onSubmit={handleSubmit} className="flex flex-col items-center justify-center mt-4">
-				<button type="submit" className="btn btn-primary">Submit</button>
+				onChange={e => setTitle(e.target.value)}
+				placeholder="Title"
+			></textarea>
+			<Editor type="post" text={text} onTextChange={setText} />
+			<form
+				onSubmit={handleSubmit}
+				className="flex flex-col items-center justify-center mt-4"
+			>
+				<button type="submit" className="btn btn-primary">
+					Submit
+				</button>
 			</form>
 		</div>
 	);

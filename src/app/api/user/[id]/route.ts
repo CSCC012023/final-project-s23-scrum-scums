@@ -1,16 +1,15 @@
-// Retrieves all comments for a given post
-import { NextRequest, NextResponse} from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@src/lib/prisma";
 
 // you need req imported to destructure dynamic params
 export const GET = async (
 	req: NextRequest,
-	{ params }: { params: { user_id: string } }
+	{ params }: { params: { id: string } }
 ) => {
-	const { user_id } = params;
+	const { id } = params;
 	const user_data = await prisma.user.findUnique({
 		where: {
-			id: user_id
+			id: id
 		},
 		select: {
 			id: true,
@@ -62,35 +61,36 @@ export const GET = async (
 	return NextResponse.json(user_data);
 };
 
-
-
 // patch request to update the users bio
 export const PATCH = async (
 	req: NextRequest,
-	{ params }: { params: { user_id: string } }
+	{ params }: { params: { id: string } }
 ) => {
-	const { user_id } = params;
+	const { id } = params;
 	const reqJson = await req.json();
 	console.log(reqJson);
-	const key = Object.keys(reqJson)[0]
+	const key = Object.keys(reqJson)[0];
 
-	const user_data = (key === "bio")
-	? await prisma.user.update({
-		where: {
-			id: user_id
-		},
-		data: {
-			bio: reqJson.bio
-		}
-	})
-	: await prisma.user.update({
-		where: {
-			id: user_id
-		},
-		data: {
-			name: reqJson.name
-		}
-	})
+	let user_data;
+	if (key === "bio") {
+		user_data = await prisma.user.update({
+			where: {
+				id: id
+			},
+			data: {
+				bio: reqJson.bio
+			}
+		});
+	} else {
+		user_data = await prisma.user.update({
+			where: {
+				id: id
+			},
+			data: {
+				name: reqJson.name
+			}
+		});
+	}
 
 	return NextResponse.json(user_data);
-}
+};

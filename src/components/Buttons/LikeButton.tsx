@@ -74,7 +74,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({
 	return (
 		<Button
 			className={cn(
-				"flex gap-1 items-center",
+				"flex items-center",
 				liked ? "text-red-500" : "text-gray-500"
 			)}
 			{...props}

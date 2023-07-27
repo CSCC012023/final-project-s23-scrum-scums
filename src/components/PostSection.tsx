@@ -14,6 +14,7 @@ import UserAvatar from "./UserAvatar";
 import UserCard from "./UserCard";
 import CommentButton from "./Buttons/CommentButton";
 import { Share2Icon } from "@radix-ui/react-icons";
+import FollowButton from "./Buttons/FollowButton";
 
 interface PostSectionProps {
 	id: number;
@@ -52,11 +53,19 @@ const PostSection: FC<PostSectionProps> = async ({ id }) => {
 								user={post?.author}
 								className="h-5 w-5"
 							/>
-							<UserCard user={post?.author} />{" "}
+							<UserCard user={post?.author} />
+							<FollowButton
+								userId={post?.author.id}
+								disabled={!session}
+							/>
 						</span>
 					)}
 					<span className="text-muted-foreground text-sm w-full justify-self-end h-full text-end">
-						{post && formatTimeToNow(post.createdAt)}
+						{post?.createdAt.toLocaleDateString(undefined, {
+							month: "long",
+							day: "numeric",
+							year: "numeric"
+						})}
 					</span>
 				</div>
 				<Separator />

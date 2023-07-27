@@ -17,7 +17,7 @@ const CommentButton: FC<CommentButtonProps> = ({
 }) => {
 	return (
 		<Button
-			className={cn("flex gap-1 items-center text-gray-500")}
+			className={cn("flex items-center text-gray-500")}
 			{...props}
 			onClick={() => console.log("comment")}
 			disabled={disabled}
