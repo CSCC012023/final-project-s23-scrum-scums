@@ -47,7 +47,7 @@ const GeneralFeed = () => {
 	}, []);
 
 	const loader = (
-		<div className="flex flex-col space-y-4 w-full">
+		<div className="flex flex-col space-y-4 w-full mt-4">
 			<PostSkeleton/>
 			<PostSkeleton/>
 			<PostSkeleton/>
@@ -64,21 +64,24 @@ const GeneralFeed = () => {
 			endMessage={
 				<p className="font-bold text-center my-12">No more posts. Go touch some grass ...</p>
 			}
-			className="self-center w-full h-full container flex flex-col justify-center items-center space-y-4"
+			className="self-center w-full h-full container flex flex-col justify-center items-center"
 		>
-			{posts.map((post, index) => (
-				<Post
-					key={index}
-					postId={post.id}
-					content={post.content}
-					title={post.title}
-					createdAt={post.createdAt}
-					author={post.author}
-					categories={post.categories}
-					likes={post.likes}
-					_count={post._count}
-				/>))
-			}
+			<div className="flex flex-col space-y-4 w-full items-center">
+
+				{posts.map((post, index) => (
+					<Post
+						key={index}
+						postId={post.id}
+						content={post.content}
+						title={post.title}
+						createdAt={post.createdAt}
+						author={post.author}
+						categories={post.categories}
+						likes={post.likes}
+						_count={post._count}
+					/>))
+				}
+			</div>
 
 		</InfiniteScroll>
 	);

@@ -18,7 +18,7 @@ const Home = () => {
 					</h1>
 
 					<h2 className="text-3xl font-bold text-left">What&#39;s the Internet&#39;s views on
-						<span className="text-primary inline-block ml-2"><Typewriter
+						<span className="text-secondary-foreground inline-block ml-2"><Typewriter
 							options={{
 								strings: ["programming.", "design.", "politics.", "music.", "movies.", "books."],
 								autoStart: true,

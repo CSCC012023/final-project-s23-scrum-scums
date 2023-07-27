@@ -63,15 +63,15 @@ const RootLayout = ({
 	authModal
 }: 	{
 	children: React.ReactNode,
-	authModal: React.ReactNode
+	authModal: React.ReactNode,
+
 }) => {
 	return (
 		<AuthProvider>
 			<html lang="en" className={cn("antialiased text-primary-foreground", nunitoSans.variable, warnockPro.variable)}>
 				<body>
-					{/* @ts-expect-error server components */}
 					<Navbar />
-					<main className="w-full h-full" id="main">
+					<main className="w-full h-full mt-12" id="main">
 						<ToasterProvider/>
 						<Toaster/>
 						{authModal}

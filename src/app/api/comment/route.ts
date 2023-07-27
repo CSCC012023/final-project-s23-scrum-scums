@@ -3,8 +3,8 @@ import { getServerSession } from "next-auth/next";
 
 interface Request {
 	json: () => Promise<{
-		postId: string;
-		parentId?: string;
+		postId: number;
+		parentId?: number;
 		content: string;
 		categories: string[];
 	}>;

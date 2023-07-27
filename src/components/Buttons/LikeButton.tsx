@@ -62,14 +62,6 @@ const LikeButton:React.FC<LikeButtonProps> = ({
 	}
 
 	return (
-		// <Button
-		// 	label={label === 0 ? "Like" : String(numLikes)}
-		// 	icon={isLiked ? HeartFilledIcon : HeartIcon}
-		// 	onClick={() => like()}
-		// 	small
-		// 	outline={!liked}
-		// 	disabled={disabled}
-		// />
 		<Button
 			className={cn("flex gap-1 items-center", liked ? "text-red-500" : "text-gray-500")}
 			{...props}

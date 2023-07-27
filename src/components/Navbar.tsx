@@ -27,7 +27,7 @@ const Navbar = async () => {
 	// };
 
 	return (
-		<nav className="sticky top-0 inset-x-0 bg-secondary border-b border-zinc-400 h-fit z-10 py-1">
+		<nav className="fixed top-0 inset-x-0 bg-secondary border-b border-zinc-400 h-fit z-10 py-1">
 			<div className="container max-w-6xl h-full mx-auto flex items-center justify-between gap-2 font-serif">
 				<Link href="/" className="flex gap-2 items-center flex-1">
 					<Icons.logo className="h-8 w-8 sm:h-6 sm:w-6" />

@@ -4,7 +4,7 @@
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FC, useState } from "react";
+import { useState } from "react";
 import React from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Heading from "./Heading";

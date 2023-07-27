@@ -10,16 +10,16 @@ import UserAvatar from "./UserAvatar";
 import Link from "next/link";
 import { buttonVariants } from "./ui/Button";
 import { CalendarIcon } from "@radix-ui/react-icons";
+import { HoverCardProps } from "@radix-ui/react-hover-card";
 
 
-interface UserCardProps {
-	user: Pick<User, "id" | "image" | "name" | "bio" | "username" | "createdAt">
-
+interface UserCardProps extends HoverCardProps {
+	user: Pick<User, "id" | "image" | "name" | "bio" | "username" | "createdAt">;
 }
 
-const UserCard: FC<UserCardProps> = ({user}) => {
+const UserCard: FC<UserCardProps> = ({user, ...props}) => {
 	return (
-		<HoverCard>
+		<HoverCard {...props}>
 			<HoverCardTrigger asChild>
 				<Link className={buttonVariants({variant: "link"})} href={`profile/${user.id}`}>@{user.username}</Link>
 			</HoverCardTrigger>
@@ -29,7 +29,7 @@ const UserCard: FC<UserCardProps> = ({user}) => {
 						user={user}
 					/>
 					<div className="space-y-1">
-						<h4 className="text-sm font-semibold">{user.username}</h4>
+						<h4 className="text font-semibold">{user.username}</h4>
 						<p className="text-sm">
 							{user.bio}
 						</p>

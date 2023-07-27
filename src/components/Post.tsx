@@ -1,16 +1,14 @@
-import ReactMarkdown  from "react-markdown";
 import React from "react";
-import remarkGfm from "remark-gfm";
+import MarkdownRenderer from "./MarkdownRenderer";
 import Tag from "@src/components/Tag";
 import Link from "next/link";
-import UserCard from "@src/components/UserCard";
-import { formatTimeToNow } from "@src/lib/utils";
 import { useRef } from "react";
-import { ChatBubbleIcon, Share2Icon } from "@radix-ui/react-icons";
+import { Share2Icon } from "@radix-ui/react-icons";
 import { Separator } from "@src/components/ui/Separator";
 import  LikeButton  from "@src/components/Buttons/LikeButton";
 import { Category, PostLike, User } from "@prisma/client";
-import UserAvatar from "./UserAvatar";
+import Authored from "./Authored";
+import CommentButton from "./Buttons/CommentButton";
 
 interface PostProps {
 	postId: number;
@@ -39,8 +37,8 @@ const Post: React.FC<PostProps> = ({
 
 	return (
 		// base container
-		<div className="shadow-xl prose w-full
-		hover:cursor-pointer  rounded-md
+		<div className="shadow-lg w-full
+		hover:cursor-pointer rounded-md
 		transition-all duration-500 ease-in-out container
 		hover:shadow-2xl">
 			<div
@@ -48,29 +46,22 @@ const Post: React.FC<PostProps> = ({
 			>
 				<div className='max-h-40 mt-1 text-xs w-full text-slate-500'>
 					{/* header */}
-					<div className="flex flex-row items-center">
-						<UserAvatar
-							user={author}
-							className="h-5 w-5 mr-1"
-						/>
-						<UserCard
-							user={author}
-						/>
-						{" "}
-						<span className="text-muted-foreground">{formatTimeToNow(new Date(createdAt))}</span>
-					</div>
+					<Authored
+						user={author}
+						createdAt={new Date(createdAt)}
+					/>
 				</div>
-				<Link href={`post/${postId}`} className="no-underline" >
+				<Link href={`post/${postId}`} className="no-underline prose" >
 					{/* content */}
-					<h1 className='text-lg font-semibold py-2 leading-6 text-gray-900'>
+					<h1 className='text-lg font-semibold py-2 leading-6 text-gray-900 mb-0'>
 						{title}
 					</h1>
 					<div
 						className="relative text-sm max-h-40 w-full overflow-y-clip flex-1"
 						ref={pRef}>
-						<ReactMarkdown remarkPlugins={[remarkGfm]}>
-							{content}
-						</ReactMarkdown>
+						<MarkdownRenderer
+							content={content}
+						/>
 						{pRef.current?.clientHeight === 160 ? (
 						// blur bottom if content is too long
 							<div className='absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-white to-transparent'></div>
@@ -87,12 +78,11 @@ const Post: React.FC<PostProps> = ({
 				</div>
 				{/* like comment count etc footer */}
 				<div
-					className="flex flex-row justify-evenly items-center mt-2 text-xs text-slate-500 text-center"
+					className="flex flex-row justify-evenly items-center mt-2 text-xs text-center"
 				>
-					<span className="w-fit align-middle overflow-auto flex flex-row items-center justify-center gap-2">
-						<ChatBubbleIcon className="h-5 w-5 text-slate-500" />
-						{_count.comments}
-					</span>
+					<CommentButton
+						label={_count.comments.toString()}
+					/>
 					<Separator orientation="vertical" />
 					<LikeButton
 						className="h-5 w-fit"

@@ -39,7 +39,14 @@ const LoginModal = () => {
 		setIsLoading(true);
 		console.log(data);
 		signIn("credentials", { redirect: false, ...data })
-			.then(() => {
+			.then(res => {
+				if (res?.error) {
+					toast({
+						title: "Invalid Login",
+						description: "There was an error logging you in, please recheck your inputs and try again.",
+						variant: "destructive"
+					});
+				}
 				router.back();
 			})
 			.catch((err) => {
