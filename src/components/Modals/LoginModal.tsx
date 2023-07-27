@@ -4,11 +4,7 @@ import React from "react";
 import { useState } from "react";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import Modal from "@src/components/Modals/Modal";
-import {
-	FieldValues,
-	SubmitHandler,
-	useForm,
-} from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Heading from "@src/components/Heading";
 import Input from "@src/components/Inputs/Input";
 import { Button } from "@src/components/ui/Button";
@@ -18,41 +14,48 @@ import Link from "next/link";
 import { Icons } from "../Icons";
 import { useToast } from "@src/hooks/use-toast";
 
-
 const LoginModal = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		formState: { errors }
 	} = useForm<FieldValues>({
 		defaultValues: {
 			username: "",
 			email: "",
-			password: "",
-		},
+			password: ""
+		}
 	});
 	const router = useRouter();
 	const { toast } = useToast();
 
-	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+	const onSubmit: SubmitHandler<FieldValues> = async data => {
 		setIsLoading(true);
 		console.log(data);
 		signIn("credentials", { redirect: false, ...data })
 			.then(res => {
+				console.log("res", res);
 				if (res?.error) {
 					toast({
 						title: "Invalid Login",
-						description: "There was an error logging you in, please recheck your inputs and try again.",
+						description:
+							"There was an error logging you in, please recheck your inputs and try again.",
 						variant: "destructive"
 					});
 				}
 				router.back();
 			})
-			.catch((err) => {
+			.catch(err => {
+				//
+				if (err instanceof TypeError) {
+					router.back();
+					setIsLoading(false);
+					return;
+				}
 				toast({
 					title: "There was an error logging you in",
-					description: err.response.data.error,
+					description: err.message,
 					variant: "destructive"
 				});
 			})
@@ -62,9 +65,7 @@ const LoginModal = () => {
 	};
 
 	const bodyContent = (
-		<div
-			className="flex flex-col justify-center w-full h-full gap-4"
-		>
+		<div className="flex flex-col justify-center w-full h-full gap-4">
 			<Heading
 				title="Welcome to Obelisk"
 				subtitle="Welcome back! Login to your account to continue"
@@ -99,7 +100,7 @@ const LoginModal = () => {
 				onClick={() => signIn("google", { callbackUrl: "/" })}
 			>
 				<Icons.google className="mr-2 h-4 w-4" />
-					Log in with Google
+				Log in with Google
 			</Button>
 
 			<Button
@@ -108,7 +109,7 @@ const LoginModal = () => {
 				onClick={() => signIn("github", { callbackUrl: "/" })}
 			>
 				<GitHubLogoIcon className="mr-2 h-4 w-4" />
-					Log in with GitHub
+				Log in with GitHub
 			</Button>
 
 			<div
@@ -127,7 +128,8 @@ const LoginModal = () => {
 					"
 				>
 					<div>Don&apos;t have an account?</div>
-					<Link href="/register"
+					<Link
+						href="/register"
 						className="
 						text-blue-500
 						cursor-pointer
@@ -137,10 +139,9 @@ const LoginModal = () => {
 						duration-200
 						"
 					>
-					Sign Up
+						Sign Up
 					</Link>
 				</div>
-
 			</div>
 		</div>
 	);

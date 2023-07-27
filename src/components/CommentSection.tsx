@@ -2,7 +2,6 @@
 
 import { FC } from "react";
 import React from "react";
-import { useSession } from "next-auth/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import CommentTree from "./CommentTree";
@@ -10,11 +9,10 @@ import { CommentTree as CommentTreeType } from "@src/types";
 
 interface CommentSectionProps {
 	postId: number;
-	session: ReturnType<typeof useSession>["data"];
 }
 
 // 1@ts-expect-error react server components are new
-const CommentSection: FC<CommentSectionProps> = ({ postId, session }) => {
+const CommentSection: FC<CommentSectionProps> = ({ postId }) => {
 	const getCommentTree = async (postId: number) => {
 		const comments = await axios
 			.get(`/api/comment/${postId}`)
@@ -35,7 +33,7 @@ const CommentSection: FC<CommentSectionProps> = ({ postId, session }) => {
 	}, []);
 
 	return (
-		<div className="flex flex-col items-center w-full h-full">
+		<section className="flex flex-col items-center w-full h-full">
 			{commentTree.map((comment, index) => (
 				<CommentTree
 					id={comment.id}
@@ -51,7 +49,7 @@ const CommentSection: FC<CommentSectionProps> = ({ postId, session }) => {
 					key={index}
 				/>
 			))}
-		</div>
+		</section>
 	);
 };
 

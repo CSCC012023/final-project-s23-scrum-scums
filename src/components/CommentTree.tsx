@@ -27,7 +27,7 @@ const CommentTree: FC<CommentTreeType> = ({
 		<Collapsible
 			open={isOpen}
 			onOpenChange={setIsOpen}
-			className="flex flex-col items-center w-full
+			className="flex flex-col items-center w-full rounded-md
 			max-w-2xl transition-all duration-500 ease-in-out
 			relative bg-zinc-50
 			"
@@ -35,14 +35,14 @@ const CommentTree: FC<CommentTreeType> = ({
 			<div className="flex flex-row items-stretch w-full">
 				<CollapsibleTrigger
 					asChild
-					className="hover:cursor-pointer hover:bg-gray-200"
+					className="hover:cursor-pointer hover:bg-blue-600"
 				>
 					<div className="w-fit flex flex-col">
 						<ViewGridIcon
 							className="h-2 w-1 stroke-gray-400
 					align-middle"
 						/>
-						<div className="rounded-full bg-gray-400 w-1 flex-grow transition-all hover:bg-gray-200 duration-150 min-h-4"></div>
+						<div className="rounded-full bg-gray-400 w-1 flex-grow transition-all hover:bg-blue-600 duration-150 min-h-4"></div>
 					</div>
 				</CollapsibleTrigger>
 				<div className="flex-grow w-full min-w-full">
@@ -59,7 +59,7 @@ const CommentTree: FC<CommentTreeType> = ({
 							parentId={parentId}
 						/>
 						<div
-							className="flex flex-col items-center max-w-2xl px-4
+							className="flex flex-col items-center max-w-2xl px-4 w-full
 					bg-zinc-50 transition-all duration-500 ease-in-out relative"
 						>
 							{replies.map((child, index) => (

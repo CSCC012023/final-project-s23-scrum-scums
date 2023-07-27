@@ -19,7 +19,7 @@ const Authored: FC<AuthoredProps> = ({ user, createdAt, ...props }) => {
 			className={cn`${props.className} flex flex-row items-center text-sm`}
 		>
 			<UserAvatar user={user} className="h-5 w-5" />
-			<UserCard user={user} className="pl-0.5" />{" "}
+			<UserCard user={user} />{" "}
 			<span className="text-muted-foreground">
 				{formatTimeToNow(new Date(createdAt))}
 			</span>

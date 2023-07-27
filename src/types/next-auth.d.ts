@@ -1,4 +1,5 @@
 import NextAuth from "next-auth/next";
+import { PostLike, CommentLike } from "@prisma/client";
 
 declare module "next-auth" {
 	/*
@@ -9,6 +10,10 @@ declare module "next-auth" {
 			name: string;
 			username: string | undefined;
 			image: string | undefined;
+			likes: {
+				postLikes: PostLike[];
+				commentLikes: CommentLike[];
+			};
 			id: string;
 		};
 	}

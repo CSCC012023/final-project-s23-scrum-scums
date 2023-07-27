@@ -5,10 +5,11 @@ import Link from "next/link";
 import { useRef } from "react";
 import { Share2Icon } from "@radix-ui/react-icons";
 import { Separator } from "@src/components/ui/Separator";
-import  LikeButton  from "@src/components/Buttons/LikeButton";
+import LikeButton from "@src/components/Buttons/LikeButton";
 import { Category, PostLike, User } from "@prisma/client";
 import Authored from "./Authored";
 import CommentButton from "./Buttons/CommentButton";
+import { useSession } from "next-auth/react";
 
 interface PostProps {
 	postId: number;
@@ -20,7 +21,7 @@ interface PostProps {
 	likes: PostLike[];
 	_count: {
 		comments: number;
-	}
+	};
 }
 
 const Post: React.FC<PostProps> = ({
@@ -34,66 +35,60 @@ const Post: React.FC<PostProps> = ({
 	_count
 }) => {
 	const pRef = useRef<HTMLParagraphElement>(null);
+	const { data: session } = useSession();
 
 	return (
 		// base container
-		<div className="shadow-lg w-full
+		<div
+			className="shadow-lg w-full
 		hover:cursor-pointer rounded-md
 		transition-all duration-500 ease-in-out container
-		hover:shadow-2xl">
-			<div
-				className="px-4 py-2 flex flex-col justify-between"
-			>
-				<div className='max-h-40 mt-1 text-xs w-full text-slate-500'>
+		hover:shadow-2xl"
+		>
+			<div className="px-4 py-2 flex flex-col justify-between">
+				<div className="max-h-40 mt-1 text-xs w-full text-slate-500">
 					{/* header */}
-					<Authored
-						user={author}
-						createdAt={new Date(createdAt)}
-					/>
+					<Authored user={author} createdAt={new Date(createdAt)} />
 				</div>
-				<Link href={`post/${postId}`} className="no-underline prose" >
+				<Link href={`post/${postId}`} className="no-underline prose">
 					{/* content */}
-					<h1 className='text-lg font-semibold py-2 leading-6 text-gray-900 mb-0'>
+					<h1 className="text-lg font-semibold py-2 leading-6 text-gray-900 mb-0">
 						{title}
 					</h1>
 					<div
 						className="relative text-sm max-h-40 w-full overflow-y-clip flex-1"
-						ref={pRef}>
-						<MarkdownRenderer
-							content={content}
-						/>
+						ref={pRef}
+					>
+						<MarkdownRenderer content={content} />
 						{pRef.current?.clientHeight === 160 ? (
-						// blur bottom if content is too long
-							<div className='absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-white to-transparent'></div>
+							// blur bottom if content is too long
+							<div className="absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-white to-transparent"></div>
 						) : null}
 					</div>
 				</Link>
 				<div className="flex flex-row flex-wrap">
 					{categories.map((category, index) => (
-						<Tag
-							key={index}
-							name={category.name}
-						/>
+						<Tag key={index} name={category.name} />
 					))}
 				</div>
 				{/* like comment count etc footer */}
-				<div
-					className="flex flex-row justify-evenly items-center mt-2 text-xs text-center"
-				>
-					<CommentButton
-						label={_count.comments.toString()}
-					/>
+				<div className="flex flex-row justify-evenly items-center mt-2 text-xs text-center w-full">
+					<CommentButton label={_count.comments.toString()} />
 					<Separator orientation="vertical" />
 					<LikeButton
 						className="h-5 w-fit"
 						label={likes.length}
 						kind="post"
 						postId={postId}
-						// ! this is using the posters likes, we'll have to get session to check if the user has liked the post
-						isLiked={likes.some((like) => like.userId === author.id)}
-						// userId={post.authorId}
+						isLiked={
+							session?.user?.likes.postLikes.some(
+								like => like.postId === postId
+							) || false
+						}
+						disabled={!session}
+						userId={session?.user?.id}
 					/>
-					<Separator orientation="vertical"/>
+					<Separator orientation="vertical" />
 					<Share2Icon className="h-5 w-5" />
 				</div>
 			</div>

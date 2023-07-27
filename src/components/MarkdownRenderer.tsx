@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+"use client";
 import { FC } from "react";
 import React from "react";
 import ReactMarkdown from "react-markdown";
@@ -43,17 +44,13 @@ SyntaxHighlighter.registerLanguage("tsx", tsx);
 SyntaxHighlighter.registerLanguage("typescript", typescript);
 SyntaxHighlighter.registerLanguage("sql", sql);
 
-
 interface MarkdownRendererProps {
 	content?: string;
-
 }
 
 /// from https://amirardalan.com/blog/syntax-highlight-code-in-markdown
 
-const MarkdownRenderer: FC<MarkdownRendererProps> = ({
-	content
-}) => {
+const MarkdownRenderer: FC<MarkdownRendererProps> = ({ content }) => {
 	const syntaxTheme = oneDark;
 
 	const MarkdownComponents: object = {
@@ -66,8 +63,8 @@ const MarkdownRenderer: FC<MarkdownRendererProps> = ({
 					const RE = /{([\d,-]+)}/;
 					const metadata = node.data.meta?.replace(/\s/g, "");
 					const strlineNumbers = RE?.test(metadata)
-						// @ts-expect-error can't tell meta isn't null if we enter
-						? RE?.exec(metadata)[1]
+						? // @ts-expect-error can't tell meta isn't null if we enter
+						  RE?.exec(metadata)[1]
 						: "0";
 					const highlightLines = rangeParser(strlineNumbers);
 					const highlight = highlightLines;
@@ -100,7 +97,10 @@ const MarkdownRenderer: FC<MarkdownRendererProps> = ({
 	};
 
 	return (
-		<ReactMarkdown remarkPlugins={[remarkGfm]} components={MarkdownComponents}>
+		<ReactMarkdown
+			remarkPlugins={[remarkGfm]}
+			components={MarkdownComponents}
+		>
 			{content!}
 		</ReactMarkdown>
 	);

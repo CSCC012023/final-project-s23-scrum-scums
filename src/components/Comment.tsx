@@ -24,8 +24,7 @@ const Comment: React.FC<CommentProps> = ({
 	return (
 		<div
 			className="flex flex-col container items-stretch justify-between
-			h-fit p-4
-		"
+			h-fit p-4 w-full"
 		>
 			<Authored user={author} createdAt={new Date(createdAt)} />
 			<MarkdownRenderer content={content} />

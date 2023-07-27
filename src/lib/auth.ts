@@ -6,6 +6,7 @@ import prisma from "@src/lib/prisma";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { nanoid } from "nanoid";
+import { CommentLike, PostLike } from "@prisma/client";
 
 interface ObeliskToken {
 	// the user name
@@ -26,6 +27,10 @@ interface ObeliskToken {
 	iat: number;
 	// the user access token unique id
 	jti: string;
+	likes: {
+		postLikes: PostLike[];
+		commentLikes: CommentLike[];
+	};
 }
 
 export const authConfig: NextAuthOptions = {
@@ -82,7 +87,7 @@ export const authConfig: NextAuthOptions = {
 					return null;
 				}
 
-				console.log("Logged in as ", credentials?.name);
+				console.log("Logged in as ", user?.name);
 				return user;
 			}
 		})
@@ -92,9 +97,13 @@ export const authConfig: NextAuthOptions = {
 	},
 	callbacks: {
 		async jwt({ token, account }) {
-			const user = await prisma.user.findFirst({
+			const user = await prisma.user.findUnique({
 				where: {
-					email: token.email
+					email: token.email as string
+				},
+				include: {
+					postLikes: true,
+					commentLikes: true
 				}
 			});
 			if (!user) {
@@ -121,7 +130,11 @@ export const authConfig: NextAuthOptions = {
 				name: user?.name,
 				email: user?.email,
 				picture: user?.image,
-				username: user?.username
+				username: user?.username,
+				likes: {
+					postLikes: user?.postLikes,
+					commentLikes: user?.commentLikes
+				}
 			};
 		},
 		// Name, imageURL, username, id
@@ -131,6 +144,7 @@ export const authConfig: NextAuthOptions = {
 			session.user.name = tok.name;
 			session.user.image = tok.picture;
 			session.user.username = tok.username;
+			session.user.likes = tok.likes;
 			// console.log("session", session);
 			return session;
 		},
