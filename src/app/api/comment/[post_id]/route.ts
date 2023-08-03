@@ -1,6 +1,6 @@
 // Retrieves all comments for a given post along with the comments' replies and replies' replies and the replies' replies' replies and ...
 // prisma doesn't support recursive queries, so we'll have to do this manually
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@src/lib/prisma";
 import { CommentTree } from "@src/types/";
 
@@ -13,7 +13,7 @@ export const GET = async (
 	/*
 	 * Get all comments and replies (henceforth reply) for a given post
 	 * First name the Common Table Expression all_replies.
-	 * We want to select all columns of the reply and the user who authored it that we need.
+	 * We want to select all columns of the reply and the user who authored, and the likes of the comment.
 	 * So we join this data for everyone who's done a top level reply to the post (parent_id is null).
 	 * That's the base case of the recursive query.
 	 * For each reply we check if it's parent is in the all_replies CTE.
@@ -26,21 +26,49 @@ export const GET = async (
 		select "Comment".id, "postId", "parentId", "Comment"."updatedAt",
 		"content", "Comment"."createdAt" as "commentCreatedAt", "User"."name",
 		"User"."image", "User"."username", "User"."bio",
-		"User"."createdAt", "User".id as "userId"
+		"User"."createdAt", "User".id as "userId",
+		"CommentLike"."userId" as "likedByUser", "CommentLike"."commentId"
 		from "Comment"
 		left join "User" on "User".id = "Comment"."authorId"
 		and "Comment"."postId" = ${postId}
+		inner join "CommentLike" on "CommentLike"."commentId" = "Comment".id
 		where "Comment"."postId" = ${postId} and "Comment"."parentId" is null
 		union all
 		select reply.id, reply."postId", reply."parentId", reply."updatedAt",
 		reply."content", reply."createdAt" as "commentCreatedAt", "User"."name",
 		"User"."image", "User"."username", "User"."bio",
-		"User"."createdAt", "User".id as "userId"
+		"User"."createdAt", "User".id as "userId",
+		"CommentLike"."userId" as "likedByUser", "CommentLike"."commentId"
 		from "Comment" as reply
 		inner join all_replies on all_replies.id = reply."parentId"
 		left join "User" on "User".id = reply."authorId"
+		inner join "CommentLike" on "CommentLike"."commentId" = reply.id
 	)
-	select json_agg(all_replies order by all_replies."commentCreatedAt" desc) from all_replies;
+	select json_build_object(
+		'id', id,
+		'postId', "postId",
+		'parentId', "parentId",
+		'content', "content",
+		'createdAt', "commentCreatedAt",
+		'updatedAt', "updatedAt",
+		'author', json_build_object(
+			'id', "userId",
+			'name', "name",
+			'image', "image",
+			'username', "username",
+			'bio', "bio",
+			'createdAt', "createdAt"
+		),
+		'likes', json_agg(
+			json_build_object(
+				'userId', "likedByUser",
+				'commentId', "commentId"
+			)
+		)
+	)
+	from all_replies
+	group by id, "postId", "parentId", "content", "commentCreatedAt", "updatedAt", "userId", "name", "image", "username", "bio", "createdAt"
+	order by all_replies."commentCreatedAt" desc;
 	`;
 
 	// note the comments are sorted by createdAt desc
@@ -49,42 +77,37 @@ export const GET = async (
 	// this way we build the response in reverse where we finish each bottom most reply
 	// and put it in the children array of its parent and so on
 
-	const listReplies = sqlResponse[0].json_agg;
+	const listReplies = sqlResponse[0].json_build_object;
+	// if no replies, return empty array
+	if (!listReplies) {
+		return new Response(JSON.stringify([]), { status: 200 });
+	}
+
 	const childrenTable: { [key: string]: CommentTree[] } = {};
 
 	const topLevels: CommentTree[] = [];
-	for (const reply of listReplies) {
+	for (const reply of sqlResponse) {
 		const {
 			id,
 			postId,
 			parentId,
 			content,
 			createdAt,
-			commentCreatedAt,
 			updatedAt,
-			name,
-			image,
-			username,
-			bio,
-			userId
-		} = reply;
+			author,
+			likes
+		} = reply.json_build_object;
 		const replyObj: CommentTree = {
-			author: {
-				id: userId,
-				name,
-				image,
-				username,
-				bio,
-				createdAt
-			},
+			author,
 			id,
 			postId,
 			parentId,
 			content,
-			createdAt: commentCreatedAt,
+			createdAt,
 			updatedAt,
-			authorId: userId,
-			replies: childrenTable[id] || []
+			authorId: author.id,
+			replies: childrenTable[id] || [],
+			likes
 		};
 		if (parentId) {
 			if (childrenTable[parentId]) {

@@ -12,7 +12,7 @@ import { cn } from "@src/lib/utils";
 const nunitoSans = Nunito_Sans({
 	subsets: ["latin-ext"],
 	display: "swap",
-	variable: "--font-nunito-sans",
+	variable: "--font-nunito-sans"
 });
 
 const warnockPro = localFont({
@@ -20,60 +20,64 @@ const warnockPro = localFont({
 		{
 			path: "../../../public/warnock-pro/WarnockPro-Light.otf",
 			weight: "300",
-			style: "normal",
+			style: "normal"
 		},
 		{
 			path: "../../../public/warnock-pro/WarnockPro-LightIt.otf",
 			weight: "300",
-			style: "italic",
+			style: "italic"
 		},
 		{
 			path: "../../../public/warnock-pro/WarnockPro-Regular.otf",
 			weight: "400",
-			style: "normal",
+			style: "normal"
 		},
 		{
 			path: "../../../public/warnock-pro/WarnockPro-Semibold.otf",
 			weight: "600",
-			style: "normal",
+			style: "normal"
 		},
 		{
 			path: "../../../public/warnock-pro/WarnockPro-SemiboldIt.otf",
 			weight: "600",
-			style: "italic",
+			style: "italic"
 		},
 		{
 			path: "../../../public/warnock-pro/WarnockPro-Bold.otf",
 			weight: "700",
-			style: "normal",
+			style: "normal"
 		}
 	],
-	variable: "--font-warnock-pro",
+	variable: "--font-warnock-pro"
 });
-
 
 export const metadata = {
 	title: "Obelisk",
-	description: "Get on the internet's pulse"
+	description: "Get on the internet's pulse."
 };
-
 
 const RootLayout = ({
 	children,
 	authModal
-}: 	{
-	children: React.ReactNode,
-	authModal: React.ReactNode,
-
+}: {
+	children: React.ReactNode;
+	authModal: React.ReactNode;
 }) => {
 	return (
 		<AuthProvider>
-			<html lang="en" className={cn("antialiased text-primary-foreground", nunitoSans.variable, warnockPro.variable)}>
+			<html
+				lang="en"
+				className={cn(
+					"antialiased text-primary-foreground",
+					nunitoSans.variable,
+					warnockPro.variable
+				)}
+			>
 				<body>
 					<Navbar />
 					<main className="w-full h-full mt-12" id="main">
-						<ToasterProvider/>
-						<Toaster/>
+						<ToasterProvider />
+						<Toaster />
 						{authModal}
 						<div className="container max-w-8xl mx-auto h-full">
 							{children}

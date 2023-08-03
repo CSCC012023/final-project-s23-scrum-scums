@@ -16,4 +16,5 @@ export interface CommentTree extends Comment {
 		"username" | "image" | "name" | "id" | "createdAt" | "bio"
 	>;
 	replies: CommentTree[];
+	likes: CommentLike[];
 }

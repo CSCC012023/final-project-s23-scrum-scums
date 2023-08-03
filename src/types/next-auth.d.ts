@@ -1,5 +1,5 @@
 import NextAuth from "next-auth/next";
-import { PostLike, CommentLike } from "@prisma/client";
+import { PostLike, CommentLike, User } from "@prisma/client";
 
 declare module "next-auth" {
 	/*
@@ -7,14 +7,20 @@ declare module "next-auth" {
 	 */
 	interface Session {
 		user: {
+			id: string;
 			name: string;
-			username: string | undefined;
-			image: string | undefined;
+			email: string;
+			username?: string;
+			image?: string;
+			createdAt: Date;
 			likes: {
 				postLikes: PostLike[];
 				commentLikes: CommentLike[];
 			};
-			id: string;
+			follows: {
+				following: User[];
+				followers: User[];
+			};
 		};
 	}
 }

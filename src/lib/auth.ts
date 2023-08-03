@@ -6,19 +6,11 @@ import prisma from "@src/lib/prisma";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { nanoid } from "nanoid";
-import { CommentLike, PostLike } from "@prisma/client";
+import { CommentLike, PostLike, User } from "@prisma/client";
 
 interface ObeliskToken {
-	// the user name
-	name: string;
-	// the user email
-	email: string;
-	// the user profile image url
-	picture?: string;
-	// the user username
-	username?: string;
-	// the user id
-	id: string;
+	// the user's id
+	sub: string;
 	// the user access token
 	accessToken: string;
 	// the user access token expiration date
@@ -27,9 +19,21 @@ interface ObeliskToken {
 	iat: number;
 	// the user access token unique id
 	jti: string;
-	likes: {
-		postLikes: PostLike[];
-		commentLikes: CommentLike[];
+	user: {
+		id: string;
+		name: string;
+		email: string;
+		username?: string;
+		image?: string;
+		createdAt: Date;
+		likes: {
+			postLikes: PostLike[];
+			commentLikes: CommentLike[];
+		};
+		follows: {
+			following: User[];
+			followers: User[];
+		};
 	};
 }
 
@@ -87,7 +91,7 @@ export const authConfig: NextAuthOptions = {
 					return null;
 				}
 
-				console.log("Logged in as ", user?.name);
+				console.log(`Logged in as ${user?.name}`);
 				return user;
 			}
 		})
@@ -96,24 +100,31 @@ export const authConfig: NextAuthOptions = {
 		strategy: "jwt"
 	},
 	callbacks: {
-		async jwt({ token, account }) {
-			const user = await prisma.user.findUnique({
+		async jwt({ token, account, trigger, user }) {
+			// console.log("token", token);
+			// console.log("account", account);
+			// console.log("trigger", trigger);
+			// console.log("user", user);
+
+			const userData = await prisma.user.findUnique({
 				where: {
-					email: token.email as string
+					id: token.sub
 				},
 				include: {
 					postLikes: true,
-					commentLikes: true
+					commentLikes: true,
+					following: true,
+					followedBy: true
 				}
 			});
-			if (!user) {
+			if (!userData) {
 				return token;
 			}
 
-			if (!user.username) {
+			if (!userData.username) {
 				await prisma.user.update({
 					where: {
-						id: user.id
+						id: userData.id
 					},
 					data: {
 						username: nanoid(10)
@@ -124,27 +135,33 @@ export const authConfig: NextAuthOptions = {
 			if (account) {
 				token.accessToken = account.access_token;
 			}
-			// console.log("token", token);
 			return {
-				id: user?.id,
-				name: user?.name,
-				email: user?.email,
-				picture: user?.image,
-				username: user?.username,
-				likes: {
-					postLikes: user?.postLikes,
-					commentLikes: user?.commentLikes
+				sub: token.sub,
+				iat: token.iat,
+				exp: token.exp,
+				jti: token.jti,
+				user: {
+					id: userData.id,
+					name: userData.name,
+					email: userData.email,
+					username: userData.username,
+					image: userData.image,
+					createdAt: userData.createdAt,
+					likes: {
+						postLikes: userData.postLikes,
+						commentLikes: userData.commentLikes
+					},
+					follows: {
+						following: userData.following,
+						followers: userData.followedBy
+					}
 				}
 			};
 		},
 		// Name, imageURL, username, id
 		async session({ session, token }) {
 			const tok = token as unknown as ObeliskToken;
-			session.user.id = tok.id;
-			session.user.name = tok.name;
-			session.user.image = tok.picture;
-			session.user.username = tok.username;
-			session.user.likes = tok.likes;
+			session.user = tok.user;
 			// console.log("session", session);
 			return session;
 		},

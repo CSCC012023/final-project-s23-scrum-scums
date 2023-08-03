@@ -7,7 +7,8 @@ body,
 :root {
 	height: 100%;
 }
-/* these are the light mode variables for color */
+
+/* these are the light and dark mode variables for color */
 /* to see and edit them in the vscode editor install color info extension and put hsl around one*/
 @layer base {
 	:root {

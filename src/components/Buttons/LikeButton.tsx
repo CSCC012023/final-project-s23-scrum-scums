@@ -2,12 +2,13 @@
 
 import { HeartIcon, HeartFilledIcon } from "@radix-ui/react-icons";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useToast } from "@src/hooks/use-toast";
 import React from "react";
 import { Button, ButtonProps } from "@src/components/ui/Button";
 import { CommentLike, PostLike } from "@prisma/client";
 import { cn } from "@src/lib/utils";
+import { useSession } from "next-auth/react";
 
 interface LikeButtonProps extends ButtonProps {
 	label: number; // of likes
@@ -16,6 +17,7 @@ interface LikeButtonProps extends ButtonProps {
 	isLiked: boolean;
 	disabled?: boolean;
 	userId?: string;
+	update: ReturnType<typeof useSession>["update"];
 }
 
 interface Response {
@@ -29,14 +31,20 @@ const LikeButton: React.FC<LikeButtonProps> = ({
 	isLiked,
 	disabled,
 	userId,
+	update,
 	...props
 }) => {
 	const [numLikes, setNumLikes] = useState(label);
 	const [liked, setLiked] = useState(isLiked);
 	const { toast } = useToast();
 
+	let display: string = label == 0 ? "Like" : String(numLikes);
+	useEffect(() => {
+		display = label == 0 ? "Like" : String(numLikes);
+	}, [numLikes]);
+
 	function like() {
-		if (!userId) {
+		if (!userId || disabled) {
 			return toast({
 				title: "You must be logged in to like this",
 				variant: "destructive"
@@ -57,8 +65,10 @@ const LikeButton: React.FC<LikeButtonProps> = ({
 			})
 			.then(res => {
 				const data: Response = res.data;
+				console.log("res", data);
 				setLiked(data.likes.some(like => like.userId === userId));
 				setNumLikes(data.likes.length);
+				update();
 			})
 			.catch(err => {
 				toast({
@@ -88,7 +98,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({
 				) : (
 					<HeartIcon className="mr-2 h-5 w-5" />
 				)}
-				{label == 0 ? "Like" : String(numLikes)}
+				{display}
 			</span>
 		</Button>
 	);

@@ -32,7 +32,6 @@ const LoginModal = () => {
 
 	const onSubmit: SubmitHandler<FieldValues> = async data => {
 		setIsLoading(true);
-		console.log(data);
 		signIn("credentials", { redirect: false, ...data })
 			.then(res => {
 				console.log("res", res);
@@ -45,13 +44,13 @@ const LoginModal = () => {
 					});
 				}
 				router.back();
+				router.refresh();
 			})
 			.catch(err => {
 				//
 				if (err instanceof TypeError) {
 					router.back();
 					setIsLoading(false);
-					return;
 				}
 				toast({
 					title: "There was an error logging you in",

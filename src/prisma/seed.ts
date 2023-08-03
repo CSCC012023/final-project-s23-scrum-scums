@@ -2,7 +2,6 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 import bcrypt from "bcryptjs";
-import { hi } from "date-fns/locale";
 
 async function main() {
 	// clear the database
@@ -16,13 +15,16 @@ async function main() {
 		"Session",
 		"VerificationToken",
 		"_CategoryToPost",
-		"_UserFollows"
+		"_UserFollows",
+		"Recommendation"
 	];
+
 	// make sure to keep this in sync with the schema
-	for (const tableName of tableNames)
-		await prisma.$queryRawUnsafe(
+	for (const tableName of tableNames) {
+		await prisma.$executeRawUnsafe(
 			`Truncate "${tableName}" restart identity cascade;`
 		);
+	}
 
 	// some example users
 
@@ -121,6 +123,8 @@ async function main() {
 	});
 	console.log("Botvinnik Created!");
 
+	const dijkstra_pw = await bcrypt.hash("dijkstraisgod", 10);
+
 	const dijkstra = await prisma.user.upsert({
 		where: {
 			email: "aloken1309u8!@swedemail.com"
@@ -129,6 +133,7 @@ async function main() {
 		create: {
 			name: "Dijkstra",
 			username: "dijkstra",
+			password: dijkstra_pw,
 			email: "aloken1309u8!@swedemail.com",
 			bio: `I'm interested in the boundary between tech and society, and how it affects the forces that shape our world.
 			Current Focus: AI, Working Remotely, EVs.

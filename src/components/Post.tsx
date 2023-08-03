@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import MarkdownRenderer from "./MarkdownRenderer";
 import Tag from "@src/components/Tag";
@@ -10,6 +12,7 @@ import { Category, PostLike, User } from "@prisma/client";
 import Authored from "./Authored";
 import CommentButton from "./Buttons/CommentButton";
 import { useSession } from "next-auth/react";
+import ShareButton from "./Buttons/ShareButton";
 
 interface PostProps {
 	postId: number;
@@ -22,6 +25,8 @@ interface PostProps {
 	_count: {
 		comments: number;
 	};
+	session?: ReturnType<typeof useSession>["data"];
+	update: ReturnType<typeof useSession>["update"];
 }
 
 const Post: React.FC<PostProps> = ({
@@ -32,10 +37,11 @@ const Post: React.FC<PostProps> = ({
 	author,
 	categories,
 	likes,
-	_count
+	_count,
+	session,
+	update
 }) => {
 	const pRef = useRef<HTMLParagraphElement>(null);
-	const { data: session } = useSession();
 
 	return (
 		// base container
@@ -76,7 +82,6 @@ const Post: React.FC<PostProps> = ({
 					<CommentButton label={_count.comments.toString()} />
 					<Separator orientation="vertical" />
 					<LikeButton
-						className="h-5 w-fit"
 						label={likes.length}
 						kind="post"
 						postId={postId}
@@ -87,9 +92,12 @@ const Post: React.FC<PostProps> = ({
 						}
 						disabled={!session}
 						userId={session?.user?.id}
+						update={update}
 					/>
 					<Separator orientation="vertical" />
-					<Share2Icon className="h-5 w-5" />
+					<ShareButton
+						href={`${window.location.origin}/post/${postId}`}
+					/>
 				</div>
 			</div>
 		</div>

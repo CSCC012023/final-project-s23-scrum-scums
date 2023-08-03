@@ -9,36 +9,43 @@ import LikeButton from "@src/components/Buttons/LikeButton";
 import { PostData } from "@src/types";
 import { useSession } from "next-auth/react";
 import { Separator } from "@src/components/ui/Separator";
-import { formatTimeToNow } from "@src/lib/utils";
 import UserAvatar from "./UserAvatar";
 import UserCard from "./UserCard";
 import CommentButton from "./Buttons/CommentButton";
 import { Share2Icon } from "@radix-ui/react-icons";
 import FollowButton from "./Buttons/FollowButton";
+import { useToast } from "@src/hooks/use-toast";
 
 interface PostSectionProps {
 	id: number;
 }
 
 async function fetchPost(id: number): Promise<PostData> {
-	try {
-		const res = await axios.get(`/api/post/${id}`);
-		res.data.createdAt = new Date(res.data.createdAt);
-		return res.data;
-	} catch (err) {
-		console.log("error fetching post", err);
-		throw new Error("Error fetching post");
-	}
+	const res = await axios.get(`/api/post/${id}`);
+	res.data.createdAt = new Date(res.data.createdAt);
+	return res.data;
 }
 
 const PostSection: FC<PostSectionProps> = async ({ id }) => {
-	const { data: session } = useSession();
 	const [post, setPost] = useState<PostData | null>(null);
+	const { toast } = useToast();
+	const { data: session, update } = useSession();
+
 	useEffect(() => {
-		fetchPost(id).then(post => {
-			setPost(post);
-		});
+		fetchPost(id)
+			.then(post => {
+				setPost(post);
+			})
+			.catch(err => {
+				console.log("error fetching post", err);
+				toast({
+					title: "Failed to get post",
+					description: "Please try again later",
+					variant: "destructive"
+				});
+			});
 	}, []);
+
 	return (
 		<section className="content w-full pt-4 flex flex-col items-center">
 			<div className="prose w-3/5">
@@ -53,10 +60,11 @@ const PostSection: FC<PostSectionProps> = async ({ id }) => {
 								user={post?.author}
 								className="h-5 w-5"
 							/>
-							<UserCard user={post?.author} />
+							<UserCard user={post?.author} update={update} />
 							<FollowButton
-								userId={post?.author.id}
+								userToFollowId={post?.author.id}
 								disabled={!session}
+								update={update}
 							/>
 						</span>
 					)}
@@ -89,6 +97,7 @@ const PostSection: FC<PostSectionProps> = async ({ id }) => {
 								)}
 								disabled={!session}
 								userId={session?.user?.id}
+								update={update}
 								className="justify-self-start"
 							/>
 							<Separator orientation="vertical" />

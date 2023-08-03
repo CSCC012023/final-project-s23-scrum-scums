@@ -5,6 +5,7 @@ import MarkdownRenderer from "./MarkdownRenderer";
 import CommentButton from "./Buttons/CommentButton";
 import LikeButton from "./Buttons/LikeButton";
 import { Share2Icon } from "@radix-ui/react-icons";
+import { useSession } from "next-auth/react";
 
 interface CommentProps extends CommentType {
 	author: Pick<
@@ -12,14 +13,21 @@ interface CommentProps extends CommentType {
 		"username" | "image" | "name" | "id" | "createdAt" | "bio"
 	>;
 	userId?: string; // the id of the user viewing the comment
+	likes: number;
+	session?: ReturnType<typeof useSession>["data"];
+	update: ReturnType<typeof useSession>["update"];
 }
 
 const Comment: React.FC<CommentProps> = ({
+	id,
 	author,
 	content,
 	createdAt,
 	postId,
-	userId
+	userId,
+	likes,
+	session,
+	update
 }) => {
 	return (
 		<div
@@ -37,10 +45,16 @@ const Comment: React.FC<CommentProps> = ({
 				<LikeButton
 					className="h-4 w-4"
 					kind="comment"
-					isLiked={false}
+					isLiked={
+						session?.user.likes.commentLikes.some(
+							like => like.commentId == id
+						) || false
+					}
 					postId={postId}
-					label={2}
+					label={likes}
 					userId={userId}
+					disabled={!session}
+					update={update}
 				/>
 				<Share2Icon className="h-5 w-5" />
 			</div>

@@ -11,8 +11,14 @@ import {
 	CollapsibleTrigger
 } from "./ui/Collapsible";
 import Authored from "./Authored";
+import { useSession } from "next-auth/react";
 
-const CommentTree: FC<CommentTreeType> = ({
+interface CommentTreeProps extends CommentTreeType {
+	session?: ReturnType<typeof useSession>["data"];
+	update: ReturnType<typeof useSession>["update"];
+}
+
+const CommentTree: FC<CommentTreeProps> = ({
 	id,
 	author,
 	content,
@@ -20,7 +26,10 @@ const CommentTree: FC<CommentTreeType> = ({
 	postId,
 	updatedAt,
 	parentId,
-	replies
+	replies,
+	likes,
+	session,
+	update
 }) => {
 	const [isOpen, setIsOpen] = React.useState(true);
 	return (
@@ -57,6 +66,9 @@ const CommentTree: FC<CommentTreeType> = ({
 							// userId={session?.user?.id}
 							updatedAt={updatedAt}
 							parentId={parentId}
+							likes={likes.length}
+							session={session}
+							update={update}
 						/>
 						<div
 							className="flex flex-col items-center max-w-2xl px-4 w-full
@@ -75,6 +87,9 @@ const CommentTree: FC<CommentTreeType> = ({
 									parentId={child.parentId}
 									key={index}
 									replies={child.replies}
+									likes={child.likes}
+									session={session}
+									update={update}
 								/>
 							))}
 						</div>

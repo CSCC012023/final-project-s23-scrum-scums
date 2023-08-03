@@ -1,30 +1,10 @@
 import PostSection from "@src/components/PostSection";
 import CommentSection from "@src/components/CommentSection";
 import React from "react";
+import { Separator } from "@src/components/ui/Separator";
 
 const Post = ({ params }: { params: { id: string } }) => {
 	const id = parseInt(params.id);
-	// const [post, setPost] = useState<PostData | null>(null);
-	// // const [content, setContent] = useState("");
-	// const [loading, setLoading] = useState(true);
-	// const id = parseInt(params.id);
-
-	// const { data: session } = useSession();
-
-	// const fetchPost = async () => {
-	// 	try {
-	// 		const { data } = await axios.get(`/api/post/${id}`);
-	// 		data.createdAt = new Date(data.createdAt);
-	// 		setPost(data);
-	// 		setLoading(false);
-	// 	} catch (err) {
-	// 		console.log(err);
-	// 	}
-	// };
-
-	// useEffect(() => {
-	// 	fetchPost();
-	// }, []);
 
 	// const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 	// 	e.preventDefault();
@@ -37,8 +17,7 @@ const Post = ({ params }: { params: { id: string } }) => {
 		<div className="h-full w-full">
 			<div className="flex flex-col items-center justify-center">
 				<PostSection id={id} />
-				{/* <Suspense></Suspense> */}
-				<div className="divider"></div>
+				<Separator />
 				<section className="comment-box w-3/5">
 					{/* <form
 						onSubmit={handleSubmit}

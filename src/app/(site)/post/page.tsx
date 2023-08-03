@@ -6,6 +6,9 @@ import Editor from "@src/components/Editor";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import TitleInput from "@src/components/Inputs/TitleInput";
+import CategoryInput from "@src/components/Inputs/CategoryInput";
+import { Button } from "@src/components/ui/Button";
 
 const EditPost = () => {
 	const [post_title, setTitle] = useState("");
@@ -37,16 +40,33 @@ const EditPost = () => {
 				placeholder="Title"
 			></textarea>
 			<Editor type="post" text={text} onTextChange={setText} />
+			<CategoryInput disabled={session ? false : true} />
 			<form
 				onSubmit={handleSubmit}
 				className="flex flex-col items-center justify-center mt-4"
 			>
-				<button type="submit" className="btn btn-primary">
-					Submit
-				</button>
+				<Button type="submit">Submit</Button>
 			</form>
 		</div>
 	);
 };
 
 export default EditPost;
+
+/*
+client component submit post
+[ title ]
+
+<child> as prop
+
+[ tags]
+[ button ]
+
+
+page:
+<SubmitPost>
+	<Editor>
+</SubmitPost>
+
+
+*/
