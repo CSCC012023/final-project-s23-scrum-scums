@@ -33,12 +33,10 @@ const Recommended = () => {
         const arr = recommened_posts.map((post: PostProps) => post.id);
         const result = await axios.get("/api/topRecommended", { params: { recommended: arr } });
 		const recommendedPostData: PostProps = result.data;
-        console.log("getTOp" ,recommendedPostData  );
 		setTopRecommended(recommendedPostData);
 	};
 
     useEffect(() => {
-        console.log("user_id", user_id);
         const loadRecommended = async () => {
             const recommened_posts: PostProps[] = await getRecommended(user_id);
             await getTopRecommended(recommened_posts);

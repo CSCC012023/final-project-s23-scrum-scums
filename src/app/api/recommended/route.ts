@@ -14,6 +14,14 @@ export const GET = async (req: NextRequest) => {
         recommendedMatrix.push(split);
     }
     
+    // All posts user has liked
+    let user_recommend: number[] = [];
+    for (let i = 0; i < recommendedMatrix[user_id].length; i++) {
+        if (recommendedMatrix[user_id][i] == 1) {
+            user_recommend.push(i + 1);
+        }
+    }
+
     // Create vector database
     await prisma.$executeRaw`TRUNCATE TABLE "Recommendation";`
     for (let i = 0; i < recommendedMatrix.length; i++) {
@@ -21,11 +29,10 @@ export const GET = async (req: NextRequest) => {
         await prisma.$executeRaw`INSERT INTO "Recommendation" (id, embedding) VALUES (${i}, ${embedding}::vector);`;
     }
     const r_embedding = pgvector.toSql(recommendedMatrix[user_id]);
-    const result: any = await prisma.$queryRaw`SELECT embedding::text FROM "Recommendation" WHERE id != ${user_id} ORDER BY embedding <-> ${r_embedding}::vector LIMIT 3;`;
+    const result: any = await prisma.$queryRaw`SELECT embedding::text FROM "Recommendation" WHERE id != ${user_id} ORDER BY embedding <-> ${r_embedding}::vector LIMIT 5;`;
 
     // Get recommended posts
     let userLikes: number[] = [];           
-    let user_recommend: number[] = [];      // All current user likes
     for (let i = 0; i < result.length; i++) {
         let count = 1;
         const userLike: number[] = [];
@@ -39,16 +46,6 @@ export const GET = async (req: NextRequest) => {
                 }
                 count++;
             });
-        if (i == user_id) {
-            count = 1;
-            recommendedMatrix[i].map((x: any) => {
-                if(Number(x) == 1)
-                {
-                    user_recommend.push(count);
-                }
-                count++;
-            });
-        }
         userLikes = userLikes.concat(userLike)
     }
     const uniqueUserLikes = userLikes.filter((v, i, a) => a.indexOf(v) === i); // Set of all recommended posts

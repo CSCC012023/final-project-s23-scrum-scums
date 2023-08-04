@@ -6,19 +6,6 @@ export const GET = async (req: NextRequest) => {
     const url = new URL(req.nextUrl);
     const recommended = url.searchParams.getAll("recommended[]");
 
-    console.log(recommended);
-    const test = await prisma.postLike.groupBy({
-        by: ['postId'],
-        _count: {
-            userId: true
-        },
-        orderBy: {
-            _count: {
-                userId: 'desc'
-            }
-        }
-    });
-    console.log(test);
     const topRecommended = await prisma.postLike.groupBy({
         take: 1,
         by: ['postId'],
@@ -36,7 +23,6 @@ export const GET = async (req: NextRequest) => {
             }
         }
     });
-    console.log(topRecommended)
     const topRecommendedPost = await prisma.post.findFirst({
         where: {
             id: topRecommended[0].postId
