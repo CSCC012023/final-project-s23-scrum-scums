@@ -1,7 +1,6 @@
 // Get all recommended posts for a given user
 import prisma from "@src/lib/prisma";
 import pgvector from 'pgvector/utils';
-import { Prisma } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest) => {
