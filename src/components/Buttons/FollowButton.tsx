@@ -61,7 +61,7 @@ const FollowButton: FC<FollowButtonProps> = ({
 	const followed = following?.some(follow => follow.id === userToFollowId);
 	const followingMessage = (
 		<span
-			className={cn`flex items-center text-green-500 h-fit rounded-full  ${props.className}`}
+			className={cn`flex items-center text-green-500 h-fit rounded-full text-xs ${props.className}`}
 		>
 			Following
 		</span>

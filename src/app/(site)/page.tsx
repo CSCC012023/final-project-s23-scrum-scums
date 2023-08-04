@@ -29,7 +29,7 @@ const Home = () => {
 						<GeneralFeed />
 					</div>
 
-					<div className="sticky top-1/2 flex flex-col items-center justify-center h-full mt-10">
+					<div className="sticky top-1/2 md:flex flex-col items-center justify-center h-full mt-10 hidden">
 						<div className="flex flex-col justify-center items-center">
 							<h1 className="text-center pb-1">
 								Discover more about topics you love

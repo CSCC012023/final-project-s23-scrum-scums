@@ -15,42 +15,42 @@ import { Button } from "./ui/Button";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { Icons } from "./Icons";
 
-
 const LoginForm: FC = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		formState: { errors }
 	} = useForm<FieldValues>({
 		defaultValues: {
 			username: "",
 			email: "",
-			password: "",
-		},
+			password: ""
+		}
 	});
 
 	const router = useRouter();
 	const { toast } = useToast();
 
-	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+	const onSubmit: SubmitHandler<FieldValues> = async data => {
 		setIsLoading(true);
 		signIn("credentials", { redirect: false, ...data })
 			.then(res => {
 				if (res?.error) {
 					toast({
 						title: "Invalid Login",
-						description: "There was an error logging you in, please recheck your inputs and try again.",
+						description:
+							"There was an error logging you in, please recheck your inputs and try again.",
 						variant: "destructive"
 					});
 				}
 
 				router.push("/");
 			})
-			.catch((err) => {
+			.catch(err => {
 				toast({
 					title: "There was an error logging you in",
-					description: err.response.data.error,
+					description: err?.message,
 					variant: "destructive"
 				});
 			})
@@ -60,9 +60,7 @@ const LoginForm: FC = () => {
 	};
 	return (
 		<>
-			<div
-				className="flex flex-col justify-center w-full h-full gap-4"
-			>
+			<div className="flex flex-col justify-center w-full h-full gap-4">
 				<Heading
 					title="Welcome Back"
 					subtitle="Login to your account to continue"
@@ -90,13 +88,12 @@ const LoginForm: FC = () => {
 			<Button
 				disabled={isLoading}
 				onClick={handleSubmit(onSubmit)}
-
 				className="w-full"
 			>
 				Login
 			</Button>
 
-			<Separator/>
+			<Separator />
 			<div className="flex flex-col justify-center w-full h-full gap-4">
 				<Button
 					variant={"outline"}
@@ -105,7 +102,7 @@ const LoginForm: FC = () => {
 					onClick={() => signIn("google", { callbackUrl: "/" })}
 				>
 					<Icons.google className="mr-2 h-4 w-4" />
-						Log in with Google
+					Log in with Google
 				</Button>
 
 				<Button
@@ -134,7 +131,8 @@ const LoginForm: FC = () => {
 					"
 					>
 						<div>Don&apos;t have an account?</div>
-						<Link href="/register"
+						<Link
+							href="/register"
 							className="
 						text-blue-500
 						cursor-pointer
@@ -144,7 +142,7 @@ const LoginForm: FC = () => {
 						duration-200
 						"
 						>
-					Sign Up
+							Sign Up
 						</Link>
 					</div>
 				</div>

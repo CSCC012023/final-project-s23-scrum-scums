@@ -1,29 +1,24 @@
 "use client";
 
+import { cn } from "@src/lib/utils";
 import React from "react";
 
-interface InputProps {
-	id: string;
+interface TitleInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 	label: string;
-	type?: string;
-	disabled?: boolean;
 	required?: boolean;
+	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input: React.FC<InputProps> = ({
-	id,
+const Input: React.FC<TitleInputProps> = ({
 	label,
-	type = "text",
-	disabled,
-	required
+	required,
+	onChange,
+	...props
 }) => {
 	return (
-		<div className="w-full relative">
+		<div className={cn("relative", props.className)}>
 			<input
-				id={id}
-				disabled={disabled}
 				placeholder=" "
-				type={type}
 				className={`
 				peer
 				w-full
@@ -39,6 +34,8 @@ const Input: React.FC<InputProps> = ({
 				disabled:cursor-not-allowed
 				text-neutral-700
 				`}
+				required={required}
+				onChange={onChange}
 			/>
 			<label
 				className={`
@@ -48,7 +45,7 @@ const Input: React.FC<InputProps> = ({
 				transform
 				-translate-y-3
 				top-5
-				z-10
+				left-2
 				origin-[0]
 				peer-placeholder-shown:scale-100
 				peer-placeholder-shown:translate-y-0

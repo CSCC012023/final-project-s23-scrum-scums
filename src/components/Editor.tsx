@@ -4,7 +4,7 @@ import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 
-interface EditorProps {
+interface EditorProps extends React.HTMLAttributes<HTMLDivElement> {
 	type: "post" | "comment";
 	text: string;
 	onTextChange: (text: string) => void;
@@ -12,7 +12,12 @@ interface EditorProps {
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
-const Editor: React.FC<EditorProps> = ({ type, text, onTextChange }) => {
+const Editor: React.FC<EditorProps> = ({
+	type,
+	text,
+	onTextChange,
+	...props
+}) => {
 	const [height, setHeight] = useState(0);
 	const getWindowsHeight = () => {
 		const { innerHeight: height } = window;
@@ -25,10 +30,10 @@ const Editor: React.FC<EditorProps> = ({ type, text, onTextChange }) => {
 
 	const inputChange = (e: string | undefined) => {
 		const typedText = e;
-		onTextChange(typedText);
+		onTextChange(typedText as string);
 	};
 	return (
-		<div className="h-[80vh]">
+		<div className="h-[80vh]" {...props}>
 			<MDEditor
 				className="w-full"
 				value={text}

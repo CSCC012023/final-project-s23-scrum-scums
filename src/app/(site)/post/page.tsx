@@ -11,16 +11,17 @@ import CategoryInput from "@src/components/Inputs/CategoryInput";
 import { Button } from "@src/components/ui/Button";
 
 const EditPost = () => {
-	const [post_title, setTitle] = useState("");
+	const [postTitle, setTitle] = useState("");
 	const [text, setText] = useState("Start writing here...");
+	const [categories, setCategories] = useState<string[]>([]);
 	const router = useRouter();
 	const { data: session } = useSession();
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		const title = post_title;
+		const title = postTitle;
 		const content = text;
-		const cats: string[] = [];
+		const cats = categories;
 		const authorId = session?.user.id;
 		const result = await axios.post("/api/post", {
 			title,
@@ -33,18 +34,26 @@ const EditPost = () => {
 
 	return (
 		<div className="w-full h-full -z-50">
-			<textarea
-				className="w-1/2 h-12 max-h-72 p-2 border-2 border-gray-300 rounded-md resize-none"
-				value={post_title}
-				onChange={e => setTitle(e.target.value)}
-				placeholder="Title"
-			></textarea>
-			<Editor type="post" text={text} onTextChange={setText} />
-			<CategoryInput disabled={session ? false : true} />
 			<form
 				onSubmit={handleSubmit}
-				className="flex flex-col items-center justify-center mt-4"
+				className="flex flex-col items-center justify-center mt-4 w-full h-full"
 			>
+				<TitleInput
+					label="Title"
+					required
+					onChange={e => setTitle(e.target.value)}
+					value={postTitle}
+					className="w-full mb-2"
+				/>
+				<Editor
+					type="post"
+					text={text}
+					onTextChange={setText}
+					className="w-full h-4/5"
+				/>
+				<CategoryInput
+					setCats={(cats: string[]) => setCategories(cats)}
+				/>
 				<Button type="submit">Submit</Button>
 			</form>
 		</div>
@@ -52,21 +61,3 @@ const EditPost = () => {
 };
 
 export default EditPost;
-
-/*
-client component submit post
-[ title ]
-
-<child> as prop
-
-[ tags]
-[ button ]
-
-
-page:
-<SubmitPost>
-	<Editor>
-</SubmitPost>
-
-
-*/

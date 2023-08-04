@@ -43,15 +43,15 @@ const LoginModal = () => {
 						variant: "destructive"
 					});
 				}
-				router.back();
-				router.refresh();
+				// router.back();
+				// router.refresh();
 			})
 			.catch(err => {
-				//
 				if (err instanceof TypeError) {
 					router.back();
 					setIsLoading(false);
 				}
+				console.log("err", err);
 				toast({
 					title: "There was an error logging you in",
 					description: err.message,
