@@ -7,6 +7,8 @@ import toast from "react-hot-toast";
 import Editable from "@src/components/Editable";
 import {Comment, PostLike } from "@prisma/client";
 import Image from "next/image";
+import UploadImageButton from "@src/components/Buttons/UploadImageButton";
+import UserProfilePicture from "@src/components/UserProfilePicture";
 
 interface User {
 	id: string
@@ -140,7 +142,7 @@ const Profile = ({ params }: { params: { id: string } }) => {
 			categories={postLike.post.categories}
 			mediaUrl={null}
 			likes={[]}
-			/>
+		/>
 	})
 			
 
@@ -154,6 +156,7 @@ const Profile = ({ params }: { params: { id: string } }) => {
 				<input id="my-drawer" type="checkbox" className="drawer-toggle" />
 				<div className="drawer-content flex flex-col items-center justify-center [&>div]:my-4">
 					{/* Page content here */}
+					{<UploadImageButton	/>}
 					{ posts
 					}
 				</div>
@@ -164,11 +167,12 @@ const Profile = ({ params }: { params: { id: string } }) => {
 						{ user &&
 						<div className="w-full h-full">
 							<div className="avatar h-20 w-20 self-center">
-								{<Image
+								{/* {<Image
 									src="/assets/icons/random_avatars/panda.png"
 									fill
 									alt="User avatar"
-								/>}
+								/>} */}
+								{<UserProfilePicture	/>}
 							</div>
 							<div className="font-semibold text-center w-full font-sans text-lg">
 								{<Editable
@@ -181,11 +185,11 @@ const Profile = ({ params }: { params: { id: string } }) => {
 								{user._count && user._count.followedBy} follower{user._count.followedBy > 0 ? "s" : ""}
 							</div>
 							<div className="w-full h-full mt-10">
-									<b>My Bio:</b>
-									{<Editable
-										content={user.bio ? user.bio : "Write something about yourself..."}
-										submit={bioSubmit}
-									/>}
+								<b>My Bio:</b>
+								{<Editable
+									content={user.bio ? user.bio : "Write something about yourself..."}
+									submit={bioSubmit}
+								/>}
 							</div>
 						</div>
 						}

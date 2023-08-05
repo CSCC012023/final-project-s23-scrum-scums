@@ -13,9 +13,12 @@ export default removeImportsFun({
 		domains: [
 			"res.cloudinary.com", 
 			"avatars.githubusercontent.com",
-			"lh3.googleusercontent.com"
+			"lh3.googleusercontent.com",
+			"utfs.io",
 		]
 	},
 	reactStrictMode: true
 	
 });
+
+
