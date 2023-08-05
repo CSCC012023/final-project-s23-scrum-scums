@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 
 import useRegisterModal from "@src/hooks/useRegisterModal";
+import ProfileImage from "./ProfileImage";
 
 const Navbar = () => {
 	const searches = useSearchParams();
@@ -64,11 +65,13 @@ const Navbar = () => {
 				{status==="authenticated" ?
 					(
 						<div className="dropdown dropdown-end">
-							<label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-								<div className="w-10 rounded-full">
-							({session?.user?.image !== null ? <Image src={session.user.image} fill alt="profile" className="rounded-full" referrerPolicy="no-referrer"/> :
+							<label tabIndex={0} className="btn btn-ghost btn-circle avatar mt-1.5">
+								<div className="relative w-full h-full rounded-full p-0.5">
+									{session?.user?.image !== null ?
+										// <Image src={session.user.image }  fill alt="profile" className="rounded-full" referrerPolicy="no-referrer" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"/> :
+										<ProfileImage	/> :
 										<span className="avatar text-sm"> {session.user.name} </span>
-									})
+									}
 								</div>
 							</label>
 							<ul tabIndex={0} className="mt-3 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">

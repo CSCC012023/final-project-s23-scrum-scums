@@ -8,7 +8,7 @@ import Editable from "@src/components/Editable";
 import {Comment, PostLike } from "@prisma/client";
 import Image from "next/image";
 import UploadImageButton from "@src/components/Buttons/UploadImageButton";
-import UserProfilePicture from "@src/components/UserProfilePicture";
+import ProfileImage from "@src/components/ProfileImage";
 
 interface User {
 	id: string
@@ -165,15 +165,14 @@ const Profile = ({ params }: { params: { id: string } }) => {
 					<ul className="menu p-4 w-80 h-full bg-base-200 text-base-content font-serif">
 						{/* Sidebar content here */}
 						{ user &&
-						<div className="w-full h-full">
-							<div className="avatar h-20 w-20 self-center">
-								{/* {<Image
-									src="/assets/icons/random_avatars/panda.png"
-									fill
-									alt="User avatar"
-								/>} */}
-								{<UserProfilePicture	/>}
+						<div className="w-full h-full ">
+							
+							<div className="relative w-64 h-64 ml-4 group">
+								<div className="w-full h-full avatar">
+									<ProfileImage />
+								</div>
 							</div>
+
 							<div className="font-semibold text-center w-full font-sans text-lg">
 								{<Editable
 									content={user.name ? user.name : "How should we call you?"}
