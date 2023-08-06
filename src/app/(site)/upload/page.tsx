@@ -7,8 +7,9 @@ import { OurFileRouter } from "../api/uploadthing/core";
 import Link from "next/link";
 import ProfileImage from "@src/components/ProfileImage";
 import axios from "axios";
+import MyDialog from "@src/components/Modals/UploadPhotoModal";
  
-export default function Home() {
+export default function Upload() {
 	const [images, setImages] = useState<{fileUrl: string; fileKey: string;}[]>([]);
 	const [fileUrl, setfileUrl] = useState("");
 
@@ -25,7 +26,6 @@ export default function Home() {
 				console.log(fileUrl);
 				const { data } =  await axios.patch("/api/profileimage", {"imageUrl": fileUrl});
 				console.log(data.message);
-				window.location.reload();
 			}
 		}
 		catch (err) {
@@ -74,8 +74,9 @@ export default function Home() {
 					alert(`ERROR! ${error.message}`);
 				}}
 			/>
-			{imgList}
+			{/* {imgList} */}
 			{/* {<ProfileImage key={fileUrl}/>} */}
+			{/* {<MyDialog />} */}
 		</div>
 	);
 }

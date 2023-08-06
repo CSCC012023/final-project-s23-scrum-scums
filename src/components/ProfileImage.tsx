@@ -1,45 +1,33 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
-import Image from "next/legacy/image";	
+import useSWR from "swr";
 import axios from "axios";
+import React from "react";
+import Image from "next/legacy/image";
+
+async function fetcher(url) {
+	const res = await axios.get(url);
+	if (res.status !== 200) {
+		throw new Error("Failed to load");
+	}
+	return res.data.message;
+}
 
 export default function ProfileImage() {
-	const [data, setData] = useState(null);
-	const [isLoading, setLoading] = useState(true);
-
-	const fetchImage	= async () => {
-		try {
-			const { data } =  await axios.get("/api/profileimage");
-			setData(data.message);
-			setLoading(false);
-			console.log(data.message);
-		}
-		catch (err) {
-			console.log(err);
-		}
-	};
-
-	useEffect(() => {
-		fetchImage();
-	}, []);
-
-	if (isLoading) return;
-	if (!data) return <p>No profile Image</p>;
-
-	return	(
+	const { data, error } = useSWR("/api/profileimage", fetcher, { refreshInterval: 1 });
+	
+	if (error) return <p>An error has occurred.</p>;
+	if (!data) return <p></p>;
+	
+	return (
 		<div className="relative w-full h-full rounded-full overflow-hidden mx-auto">
-			{<Image
+			<Image
 				src={data ? data : "/assets/icons/random_avatars/panda.png"}
 				alt="User avatar"
-				// width="600"
-				// height="600"
 				layout="fill"
 				sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 				objectFit="cover"
 				objectPosition="center"
-				priority={true} // {false} | {true}
-			/>}
+				priority={true}
+			/>
 		</div>
 	);
 }

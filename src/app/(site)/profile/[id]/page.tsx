@@ -9,6 +9,7 @@ import {Comment, PostLike } from "@prisma/client";
 import Image from "next/image";
 import UploadImageButton from "@src/components/Buttons/UploadImageButton";
 import ProfileImage from "@src/components/ProfileImage";
+import UploadPhotoModal from "@src/components/Modals/UploadPhotoModal";
 
 interface User {
 	id: string
@@ -150,13 +151,15 @@ const Profile = ({ params }: { params: { id: string } }) => {
 		getUserData();
 	}, []);
 
+	const [isOpen, setIsOpen] = useState(false);
+
 	return (
 		<>
 			<div className="drawer drawer-open">
 				<input id="my-drawer" type="checkbox" className="drawer-toggle" />
 				<div className="drawer-content flex flex-col items-center justify-center [&>div]:my-4">
 					{/* Page content here */}
-					{<UploadImageButton	/>}
+					{/* {<UploadImageButton	/>} */}
 					{ posts
 					}
 				</div>
@@ -167,11 +170,21 @@ const Profile = ({ params }: { params: { id: string } }) => {
 						{ user &&
 						<div className="w-full h-full ">
 							
-							<div className="relative w-64 h-64 ml-4 group">
-								<div className="w-full h-full avatar">
-									<ProfileImage />
-								</div>
+							{/* <div className="relative w-32 h-32 ml-20 mb-5 group w-full h-full avatar">
+								<ProfileImage />
+							</div> */}
+
+							<div className="relative w-32 h-32 ml-20 mb-5">
+								<ProfileImage className="absolute w-full h-full z-0"/>
+								<button onClick={() => setIsOpen(true)} className="rounded-full absolute inset-0 bg-black text-white text-center flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+									Edit Profile
+								</button>
+								{isOpen && <UploadPhotoModal isOpen={isOpen} setIsOpen={setIsOpen} />}
 							</div>
+							{/* <MyDialog isOpen={isDialogOpen} onClose={() => setIsDialogOpen(false)} /> */}
+
+
+
 
 							<div className="font-semibold text-center w-full font-sans text-lg">
 								{<Editable

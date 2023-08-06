@@ -25,7 +25,6 @@ export default function UploadImageButton() {
 				console.log(fileUrl);
 				const { data } =  await axios.patch("/api/profileimage", {"imageUrl": fileUrl});
 				console.log(data.message);
-				window.location.reload();
 			}
 		}
 		catch (err) {
@@ -53,10 +52,14 @@ export default function UploadImageButton() {
 		</>
 	);
 
+	const onUploadButtonClick = () => {
+		const uploadButtonElement = document.getElementById('uploadButton');
+		uploadButtonElement?.click();
+	};
 
 
 	return (
-		<div className="flex min-h-screen flex-col items-center justify-start p-24">
+		<div className="">
 			<UploadButton<OurFileRouter>
 				endpoint="profilePicture"
 				onClientUploadComplete={(res) => {
@@ -74,8 +77,9 @@ export default function UploadImageButton() {
 					alert(`ERROR! ${error.message}`);
 				}}
 			/>
-			{imgList}
-			{<ProfileImage key={fileUrl}/>}
+			{/* {imgList} */}
+			{/* {<ProfileImage key={fileUrl}/>} */}
+			{/* {<ProfileImage/>} */}
 		</div>
 	);
 }
