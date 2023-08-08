@@ -4,8 +4,6 @@ import React from "react";
 import UploadImageButton from '../Buttons/UploadImageButton';
 
 export default function UploadPhotoModal ({ isOpen, setIsOpen }) {
-	// The open/closed state lives outside of the Dialog and is managed by you
-	// let [isOpen, setIsOpen] = useState(false); // initial state set to false
 
 	function closeModal() {
 		setIsOpen(false);
@@ -54,10 +52,9 @@ export default function UploadPhotoModal ({ isOpen, setIsOpen }) {
 									<button
 										type="button"
 										className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-										// onClick={closeModal}
 									>
 										{/* Got it, thanks! */}
-										{<UploadImageButton	/>}
+										{<UploadImageButton	onComplete={closeModal}/>}
 									</button>
 								</div>
 							</Dialog.Panel>

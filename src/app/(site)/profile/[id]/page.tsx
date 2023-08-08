@@ -169,22 +169,14 @@ const Profile = ({ params }: { params: { id: string } }) => {
 						{/* Sidebar content here */}
 						{ user &&
 						<div className="w-full h-full ">
-							
-							{/* <div className="relative w-32 h-32 ml-20 mb-5 group w-full h-full avatar">
-								<ProfileImage />
-							</div> */}
 
 							<div className="relative w-32 h-32 ml-20 mb-5">
 								<ProfileImage className="absolute w-full h-full z-0"/>
-								<button onClick={() => setIsOpen(true)} className="rounded-full absolute inset-0 bg-black text-white text-center flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+								<button onClick={() => setIsOpen(true)} className="font-sans rounded-full absolute inset-0 bg-black text-white text-center flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
 									Edit Profile
 								</button>
 								{isOpen && <UploadPhotoModal isOpen={isOpen} setIsOpen={setIsOpen} />}
 							</div>
-							{/* <MyDialog isOpen={isDialogOpen} onClose={() => setIsDialogOpen(false)} /> */}
-
-
-
 
 							<div className="font-semibold text-center w-full font-sans text-lg">
 								{<Editable

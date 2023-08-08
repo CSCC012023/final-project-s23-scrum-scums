@@ -8,7 +8,7 @@ import Link from "next/link";
 import ProfileImage from "@src/components/ProfileImage";
 import axios from "axios";
  
-export default function UploadImageButton() {
+export default function UploadImageButton({ onComplete }) {
 	const [images, setImages] = useState<{fileUrl: string; fileKey: string;}[]>([]);
 	const [fileUrl, setfileUrl] = useState("");
 
@@ -25,6 +25,7 @@ export default function UploadImageButton() {
 				console.log(fileUrl);
 				const { data } =  await axios.patch("/api/profileimage", {"imageUrl": fileUrl});
 				console.log(data.message);
+				onComplete();
 			}
 		}
 		catch (err) {
@@ -51,11 +52,6 @@ export default function UploadImageButton() {
 			</ul>
 		</>
 	);
-
-	const onUploadButtonClick = () => {
-		const uploadButtonElement = document.getElementById('uploadButton');
-		uploadButtonElement?.click();
-	};
 
 
 	return (
