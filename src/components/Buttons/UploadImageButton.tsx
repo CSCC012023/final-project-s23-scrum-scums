@@ -22,9 +22,9 @@ export default function UploadImageButton({ onComplete }) {
 		try {
 			if	(fileUrl	=== "") return;
 			else{
-				console.log(fileUrl);
+				// console.log(fileUrl);
 				const { data } =  await axios.patch("/api/profileimage", {"imageUrl": fileUrl});
-				console.log(data.message);
+				// console.log(data.message);
 				onComplete();
 			}
 		}
@@ -63,7 +63,7 @@ export default function UploadImageButton({ onComplete }) {
 						setImages(res);
 						const fileKey = JSON.parse(JSON.stringify(res[0].fileKey));
 						const fileUrl = "https://utfs.io/f/" + fileKey;
-						console.log(fileUrl);
+						// console.log(fileUrl);
 						setfileUrl(fileUrl);
 					}
 					// alert("Upload Completed");

@@ -3,16 +3,20 @@ import axios from "axios";
 import React from "react";
 import Image from "next/legacy/image";
 
-async function fetcher(url) {
-	const res = await axios.get(url);
+const fetchSessionImage = async (url: string, userId: any)=>{
+	const res = await axios.get(url, { params: { userId } });
 	if (res.status !== 200) {
 		throw new Error("Failed to load");
 	}
 	return res.data.message;
 }
 
-export default function ProfileImage() {
-	const { data, error } = useSWR("/api/profileimage", fetcher, { refreshInterval: 1 });
+export default function ProfileImage({userId}) {
+	// console.log("userids is " + userId);
+	// const userId	= "clkugs4dw0002tts4uoc0kfq5";
+	// const userId=null;
+	// console.log("userid is " + userId);
+	const { data, error } = useSWR(["/api/profileimage", userId], ([url, userId]) => fetchSessionImage(url, userId), { refreshInterval: 1 });
 	
 	if (error) return <p>An error has occurred.</p>;
 	if (!data) return <p></p>;

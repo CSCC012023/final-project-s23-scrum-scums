@@ -1,34 +1,50 @@
-// Retrieves all comments for a given post
 import { NextRequest, NextResponse} from "next/server";
 import { getServerSession } from "next-auth";
 import { PrismaClient } from "@prisma/client";
 
-
-
-// reference to the user's profile picture
 export async function GET(request: NextRequest) {
 	try	{
 		const session = await getServerSession();
-
-		if (!session) {
-			return new Response(JSON.stringify({ message: "Unauthorized" }), {
-				status: 401
-			});
-		}
+		const userId = request.nextUrl.searchParams.get("userId");
+		
+		// if (!session) {
+		// 	return new Response(JSON.stringify({ message: "Unauthorized" }), {
+		// 		status: 401
+		// 	});
+		// }
 
 		const prisma = new PrismaClient();
-		const user = await prisma.user.findUnique({
-			where: {
-				email: session.user.email
-			},
-			select: {
-				image: true,
-			}
-		});
 
+		let query;
+		// profile page
+		if	(userId !== null) {
+			query = await prisma.user.findUnique({
+				where: {
+					id: userId,
+				},
+				select: {
+					image: true,
+				}
+			});
+		}
+		// navbar
+		else{
+			query = await prisma.user.findUnique({
+				where: {
+					email: session.user.email
+				},
+				select: {
+					image: true,
+				}
+			});}
+
+		// const user = userId !== null ? idQuery : emailQuery;
+		const user = query;
+		
+		// api post man testing
 		let imageUrl;
 		if (user == null){
-			return new Response(JSON.stringify({ message: "Unauthorized Email" }), {status: 401});
+			// return new Response(JSON.stringify({ message: "Unauthorized Email" }), {status: 401});
 		}
 		else if (user.image == null) {
 			imageUrl = "/assets/icons/random_avatars/panda.png";
@@ -48,9 +64,9 @@ export	async function PATCH(req: NextRequest) {
 	try	{
 		const session = await getServerSession();
 		const request = await req.json();
-		console.log("hello");
-		console.log(request);
-		console.log(request.imageUrl);
+		// console.log("hello");
+		// console.log(request);
+		// console.log(request.imageUrl);
 
 		if (!session) {
 			return new Response(JSON.stringify({ message: "Unauthorized" }), {status: 401});

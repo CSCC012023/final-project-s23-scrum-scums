@@ -10,6 +10,7 @@ import Image from "next/image";
 import UploadImageButton from "@src/components/Buttons/UploadImageButton";
 import ProfileImage from "@src/components/ProfileImage";
 import UploadPhotoModal from "@src/components/Modals/UploadPhotoModal";
+import { useSession } from "next-auth/react";
 
 interface User {
 	id: string
@@ -27,6 +28,11 @@ interface User {
 }
 
 const Profile = ({ params }: { params: { id: string } }) => {
+	const { data: session, status } = useSession()
+	const sessionId = session?.user?.id;
+	// console.log(session);
+	// console.log(sessionId);
+
 	const { id } = params;
 
 	const [user, setUser] = useState<User>({
@@ -87,7 +93,7 @@ const Profile = ({ params }: { params: { id: string } }) => {
 				const fixedDate = new Date(response.data.createdAt);
 				const res: User = response.data;
 				res.createdAt = fixedDate;
-				console.log("res", res);
+				// console.log("res", res);
 				if (!res.id) {
 					toast.error("User not found");
 					return;
@@ -171,10 +177,13 @@ const Profile = ({ params }: { params: { id: string } }) => {
 						<div className="w-full h-full ">
 
 							<div className="relative w-32 h-32 ml-20 mb-5">
-								<ProfileImage className="absolute w-full h-full z-0"/>
-								<button onClick={() => setIsOpen(true)} className="font-sans rounded-full absolute inset-0 bg-black text-white text-center flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
-									Edit Profile
-								</button>
+								<ProfileImage userId={user.id}/>
+								{/* { user.id == sessionId ? 
+									<ProfileImage className="absolute w-full h-full z-0"/> : <ProfileImage userId={user.id} className="absolute w-full h-full z-0"/>} */}
+								{ user.id == sessionId ? 
+									<button onClick={() => setIsOpen(true)} className="font-sans rounded-full absolute inset-0 bg-black text-white text-center flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+										Edit Profile
+									</button> : null }
 								{isOpen && <UploadPhotoModal isOpen={isOpen} setIsOpen={setIsOpen} />}
 							</div>
 
