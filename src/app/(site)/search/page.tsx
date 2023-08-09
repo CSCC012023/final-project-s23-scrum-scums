@@ -7,6 +7,7 @@ import { Post, User } from "@prisma/client";
 import Link from "next/link";
 import { buttonVariants } from "@src/components/ui/Button";
 import { cn } from "@src/lib/utils";
+import ProfileImage from "@src/components/ProfileImage";
 
 type Response = {
 	posts: Post & { author: User }[];
@@ -115,19 +116,9 @@ const SearchPage = () => {
 							href={`/profile/${User.id}`}
 						>
 							<div className="flex items-center">
-								<img
-									src={
-										avatarURLs[
-											(User.author.username.charCodeAt(
-												0
-											) -
-												"a".charCodeAt(0)) %
-												avatarURLs.length
-										]
-									}
-									alt="author's avatar"
-									className="rounded-full h-12 w-12 mr-4"
-								/>
+								<div	className="rounded-full h-12 w-12 mr-4">
+									<ProfileImage	userId={User.author.id}/>
+								</div>
 								<div>
 									<div className="text-sm text-gray-700">
 										{User.author.username}
@@ -148,7 +139,10 @@ const SearchPage = () => {
 						href={`/post/${Post.id}`}
 					>
 						<div className="flex items-center">
-							<img
+							<div	className="rounded-full h-12 w-12 mr-4">
+								<ProfileImage	userId={Post.author.id}/>
+							</div>
+							{/* <img
 								src={
 									avatarURLs[
 										(Post.author.username.charCodeAt(0) -
@@ -158,7 +152,7 @@ const SearchPage = () => {
 								}
 								alt="author's avatar"
 								className="rounded-full h-12 w-12 mr-4"
-							/>
+							/> */}
 							<div>
 								<div className="text-sm text-gray-700">
 									{Post.author.username}

@@ -9,6 +9,8 @@ import axios from "axios";
 import { Separator } from "./ui/Separator";
 import { useSession } from "next-auth/react";
 import FollowButton from "./Buttons/FollowButton";
+import ProfileImage from "./ProfileImage";
+import UploadPhotoModal from "./Modals/UploadPhotoModal";
 
 interface UserProfileProps {
 	profile: Profile;
@@ -35,6 +37,7 @@ const UserProfile: FC<UserProfileProps> = ({
 	const id = user.id;
 
 	const { data: session, update } = useSession();
+	const sessionId = session?.user?.id;
 
 	const { toast } = useToast();
 
@@ -102,10 +105,20 @@ const UserProfile: FC<UserProfileProps> = ({
 			<p>{user.bio}</p>
 		);
 
+	const [isOpen, setIsOpen] = useState(false);
 	return (
 		<div className="w-full h-1/3 flex flex-col items-center justify-center font-sans ml-64 mr-64">
 			<div className="flex flex-row w-full container">
-				<UserAvatar user={user} className="h-full" />
+		
+				<div className='relative aspect-square h-40 w-40'>
+					<ProfileImage userId={user.id}/>
+					{ user.id == sessionId ? 
+						<button onClick={() => setIsOpen(true)} className="font-sans rounded-full absolute inset-0 bg-black text-white text-center flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+							Edit Profile
+						</button> : null }
+					{isOpen && <UploadPhotoModal isOpen={isOpen} setIsOpen={setIsOpen} />}
+				</div>
+				
 				<div className="font-semibold text-center w-full text-lg flex flex-col items-center justify-center">
 					@{username}
 					<span className="text-muted-foreground text-sm">

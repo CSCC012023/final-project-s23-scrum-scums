@@ -4,23 +4,32 @@ import React, { FC } from "react";
 import { Icons } from "@src/components/Icons";
 import { Avatar, AvatarFallback } from "@src/components/ui/Avatar";
 import Image from "next/image";
+import ProfileImage from "./ProfileImage";
 
 interface UserAvatarProps extends AvatarProps {
   user: Pick<User, "image" | "name">
 }
+
+// const reloadSession = () => {
+// 	const event = new Event("visibilitychange");
+// 	document.dispatchEvent(event);
+// };
+
+// reloadSession();
 
 const UserAvatar: FC<UserAvatarProps> = ({ user, ...props }) => {
 	return (
 		<Avatar {...props}>
 			{user && user.image ? (
 				<div className='relative aspect-square h-full w-full'>
-					<Image
+					{/* <Image
 						fill
 						src={user.image}
 						sizes="100%"
 						alt='profile picture'
 						referrerPolicy='no-referrer'
-					/>
+					/> */}
+					<ProfileImage userId={user.id}/>
 				</div>
 			) : (
 				<AvatarFallback>
