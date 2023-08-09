@@ -6,7 +6,6 @@ import { Comment, PostLike } from "@prisma/client";
 import UserProfile from "@src/components/UserProfile";
 import ProfileTabs from "@src/components/ProfileTabs";
 
-
 interface User {
 	id: string;
 	name: string;
@@ -64,17 +63,13 @@ const Profile = async ({ params }: { params: { id: string } }) => {
 	};
 
 	return (
-		<div className="w-full container flex flex-col items-center justify-left">
-			<div className="pr-80">
-				<UserProfile profile={profile} />
-			</div>
-			<div className="">
-				<ProfileTabs
-					posts={userData.posts}
-					comments={userData.comments}
-					postLikes={userData.postLikes}
-				/>
-			</div>
+		<div className="w-3/5 container flex flex-col items-center justify-center">
+			<UserProfile profile={profile} />
+			<ProfileTabs
+				posts={userData.posts}
+				comments={userData.comments}
+				postLikes={userData.postLikes}
+			/>
 		</div>
 	);
 };

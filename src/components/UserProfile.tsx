@@ -98,32 +98,46 @@ const UserProfile: FC<UserProfileProps> = ({
 		<p>{user.username}</p>
 	);
 
-	const bio =
-		userSame && user.bio ? (
+	const bioEditable =
+		user.bio != null ? (
 			<Editable content={user.bio} submit={bioSubmit} />
 		) : (
-			<p>{user.bio}</p>
+			<Editable content="Add a bio" submit={bioSubmit} />
 		);
+
+	const bio = userSame && user.bio ? bioEditable : <p>{user.bio}</p>;
 
 	const [isOpen, setIsOpen] = useState(false);
 	return (
-		<div className="w-full h-1/3 flex flex-col items-center justify-center font-sans ml-64 mr-64">
-			<div className="flex flex-row w-full container">
-		
-				<div className='relative aspect-square h-40 w-40'>
-					<ProfileImage userId={user.id}/>
-					{ user.id == sessionId ? 
-						<button onClick={() => setIsOpen(true)} className="font-sans rounded-full absolute inset-0 bg-black text-white text-center flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+		<div className="w-full h-1/3 flex flex-col items-center justify-center font-sans inset-0 mx-auto">
+			<div className="flex flex-row w-full container items-center">
+				<div className="relative aspect-square h-36 w-36">
+					<ProfileImage userId={user.id} />
+					{user.id == sessionId ? (
+						<button
+							onClick={() => setIsOpen(true)}
+							className="font-sans rounded-full absolute inset-0 bg-black text-white text-center flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300"
+						>
 							Edit Profile
-						</button> : null }
-					{isOpen && <UploadPhotoModal isOpen={isOpen} setIsOpen={setIsOpen} />}
+						</button>
+					) : null}
+					{isOpen && (
+						<UploadPhotoModal
+							isOpen={isOpen}
+							setIsOpen={setIsOpen}
+						/>
+					)}
 				</div>
-				
+
 				<div className="font-semibold text-center w-full text-lg flex flex-col items-center justify-center">
-					@{username}
-					<span className="text-muted-foreground text-sm">
-						{user.name}
-					</span>
+					<div className="flex flex-col items-start justify-center">
+						<span className="inline-block flex flex-row ">
+							@{username}
+						</span>
+						<span className="text-muted-foreground text-sm">
+							{user.name}
+						</span>
+					</div>
 				</div>
 				<div className="h-full w-full flex-1 spacer"></div>
 				<div className="flex flex-row items-center justify-center container">

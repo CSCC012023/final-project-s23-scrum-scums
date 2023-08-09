@@ -40,10 +40,9 @@ const FollowButton: FC<FollowButtonProps> = ({
 				});
 				return;
 			}
-			const res = await axios.post(`/api/user/follow/${userToFollowId}`, {
+			await axios.post(`/api/user/follow/${userToFollowId}`, {
 				userId
 			});
-			console.log("res", res);
 			update();
 		} catch (error) {
 			toast({
