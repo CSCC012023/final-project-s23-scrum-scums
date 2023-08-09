@@ -8,7 +8,6 @@ interface Request {
 		authorId: string;
 	}>;
 }
-
 export const POST = async (req: Request) => {
 	const { title, content, cats, authorId } = await req.json();
 	const post = await prisma.post.create({

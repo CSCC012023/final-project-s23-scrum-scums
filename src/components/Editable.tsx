@@ -10,11 +10,7 @@ interface EditableProps {
 	submit: (bio: string) => Promise<void>;
 }
 
-
-const Editable: React.FC<EditableProps> = ({
-	content,
-	submit
-}) => {
+const Editable: React.FC<EditableProps> = ({ content, submit }) => {
 	const editableContent = useRef("");
 	const [disabled, setDisabled] = useState(false);
 
@@ -38,6 +34,5 @@ const Editable: React.FC<EditableProps> = ({
 		/>
 	);
 };
-
 
 export default Editable;

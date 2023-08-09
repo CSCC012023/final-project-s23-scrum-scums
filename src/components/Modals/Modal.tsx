@@ -9,16 +9,16 @@ import { Separator } from "../ui/Separator";
 // modelled after https://github.com/AntonioErdeljac/next13-airbnb-clone
 
 interface ModalProps {
-	// isOpen?: boolean;				// whether the modal is open or not
+	// isOpen?: boolean;				// whether the modal is open or not3
 	// onClose: () => void; 			// called when the modal is closed
-	onSubmit: () => void; 			// called when the modal is submitted
-	title?: string; 				// the title of the modal
-	body?: React.ReactElement; 		// the body of the modal
-	footer?: React.ReactElement;	// the footer of the modal
-	actionLabel: string;			// the label of the action button
-	disabled?: boolean;				// whether the action button is disabled or not
-	secondaryAction?: () => void; 	// called when the secondary action button is clicked
-	secondaryActionLabel?: string;	// the label of the secondary action button
+	onSubmit: () => void; // called when the modal is submitted
+	title?: string; // the title of the modal
+	body?: React.ReactElement; // the body of the modal
+	footer?: React.ReactElement; // the footer of the modal
+	actionLabel: string; // the label of the action button
+	disabled?: boolean; // whether the action button is disabled or not
+	secondaryAction?: () => void; // called when the secondary action button is clicked
+	secondaryActionLabel?: string; // the label of the secondary action button
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -31,9 +31,8 @@ const Modal: React.FC<ModalProps> = ({
 	actionLabel,
 	disabled,
 	secondaryAction,
-	secondaryActionLabel,
+	secondaryActionLabel
 }) => {
-
 	const handleSubmit = useCallback(() => {
 		if (disabled) {
 			return;
@@ -47,7 +46,6 @@ const Modal: React.FC<ModalProps> = ({
 		}
 		secondaryAction();
 	}, [disabled, secondaryAction]);
-
 
 	return (
 		<>
@@ -154,8 +152,8 @@ const Modal: React.FC<ModalProps> = ({
 									w-full
 									"
 								>
-									{
-										secondaryAction && secondaryActionLabel && (
+									{secondaryAction &&
+										secondaryActionLabel && (
 											<Button
 												onClick={handleSecondaryAction}
 											>
@@ -170,7 +168,7 @@ const Modal: React.FC<ModalProps> = ({
 										{actionLabel}
 									</Button>
 								</div>
-								{footer && <Separator/>}
+								{footer && <Separator />}
 								{footer}
 							</div>
 						</div>

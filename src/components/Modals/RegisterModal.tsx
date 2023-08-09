@@ -4,11 +4,7 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import Modal from "@src/components/Modals/Modal";
-import {
-	FieldValues,
-	SubmitHandler,
-	useForm,
-} from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useToast } from "@src/hooks/use-toast";
 import Heading from "@src/components/Heading";
 import Input from "@src/components/Inputs/Input";
@@ -19,30 +15,29 @@ import Link from "next/link";
 import { Icons } from "../Icons";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
-
 const RegisterModal = () => {
-
 	const [isLoading, setIsLoading] = useState(false);
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		formState: { errors }
 	} = useForm<FieldValues>({
 		defaultValues: {
 			username: "",
 			email: "",
-			password: "",
-		},
+			password: ""
+		}
 	});
 	const router = useRouter();
 	const { toast } = useToast();
 
-	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+	const onSubmit: SubmitHandler<FieldValues> = async data => {
 		setIsLoading(true);
-		await axios.post("api/register", data)
-			.then((response) => {
-			// console.log(response);
-				if (response.data.error)  {
+		await axios
+			.post("api/register", data)
+			.then(response => {
+				// console.log(response);
+				if (response.data.error) {
 					toast({
 						title: "There was an error logging you in",
 						description: response.data.error,
@@ -53,7 +48,7 @@ const RegisterModal = () => {
 					router.push("/");
 				}
 			})
-			.catch((err) => {
+			.catch(err => {
 				toast({
 					title: "There was an error logging you in",
 					description: err,
@@ -66,9 +61,7 @@ const RegisterModal = () => {
 	};
 
 	const bodyContent = (
-		<div
-			className="flex flex-col justify-center w-full h-full gap-4"
-		>
+		<div className="flex flex-col justify-center w-full h-full gap-4">
 			<Heading
 				title="Hello There"
 				subtitle="Create an account to get started"
@@ -111,7 +104,7 @@ const RegisterModal = () => {
 				onClick={() => signIn("google", { callbackUrl: "/" })}
 			>
 				<Icons.google className="mr-2 h-4 w-4" />
-					Register with Google
+				Register with Google
 			</Button>
 
 			<Button
@@ -121,7 +114,7 @@ const RegisterModal = () => {
 				onClick={() => signIn("github", { callbackUrl: "/" })}
 			>
 				<GitHubLogoIcon className="mr-2 h-4 w-4" />
-					Register with GitHub
+				Register with GitHub
 			</Button>
 			<div
 				className="
@@ -139,7 +132,8 @@ const RegisterModal = () => {
 					"
 				>
 					<div>Already have an account?</div>
-					<Link href="/login"
+					<Link
+						href="/login"
 						className="
 						text-blue-500
 						cursor-pointer
@@ -149,10 +143,9 @@ const RegisterModal = () => {
 						duration-200
 						"
 					>
-					Sign In
+						Sign In
 					</Link>
 				</div>
-
 			</div>
 		</div>
 	);
