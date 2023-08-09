@@ -22,17 +22,17 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
 		<DropdownMenu>
 			<DropdownMenuTrigger>
 				<UserAvatar
-					user={{ name: user.name || null, image: user.image || null }}
+					user={{ name: user?.name || null, image: user?.image || null }}
 					className='h-8 w-8'
 				/>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className='bg-white' align='end'>
 				<div className='flex items-center justify-start gap-2 p-2'>
 					<div className='flex flex-col space-y-1 leading-none'>
-						{user.name && <p className='font-medium'>{user.name}</p>}
-						{user.email && (
+						{user?.name && <p className='font-medium'>{user?.name}</p>}
+						{user?.email && (
 							<p className='w-18 truncate text-sm text-muted-foreground'>
-								{user.email}
+								{user?.email}
 							</p>
 						)}
 					</div>
@@ -43,12 +43,12 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
 				</DropdownMenuItem>
 
 				<DropdownMenuItem asChild className="cursor-pointer">
-					<Link href={`/profile/${user.id}`}>Profile</Link>
+					<Link href={`/profile/${user?.id}`}>Profile</Link>
 				</DropdownMenuItem>
 
-				<DropdownMenuItem asChild className="cursor-pointer">
+				{/* <DropdownMenuItem asChild className="cursor-pointer">
 					<Link href='/settings'>Settings</Link>
-				</DropdownMenuItem>
+				</DropdownMenuItem> */}
 				<DropdownMenuSeparator />
 				<DropdownMenuItem
 					className='cursor-pointer'

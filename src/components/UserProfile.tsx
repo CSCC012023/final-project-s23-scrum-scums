@@ -103,7 +103,7 @@ const UserProfile: FC<UserProfileProps> = ({
 		);
 
 	return (
-		<div className="w-full h-1/3 flex flex-col items-center justify-center font-sans">
+		<div className="w-full h-1/3 flex flex-col items-center justify-center font-sans ml-64 mr-64">
 			<div className="flex flex-row w-full container">
 				<UserAvatar user={user} className="h-full" />
 				<div className="font-semibold text-center w-full text-lg flex flex-col items-center justify-center">
@@ -115,6 +115,8 @@ const UserProfile: FC<UserProfileProps> = ({
 				<div className="h-full w-full flex-1 spacer"></div>
 				<div className="flex flex-row items-center justify-center container">
 					{followers} follower{followers > 0 ? "s" : ""}
+				</div>
+				<div>
 					<FollowButton
 						userId={session?.user?.id}
 						userToFollowId={user.id}

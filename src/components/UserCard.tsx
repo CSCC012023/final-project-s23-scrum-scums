@@ -40,9 +40,9 @@ const UserCard: FC<UserCardProps> = ({
 					className={cn`${buttonVariants({
 						variant: "link"
 					})}, no-underline hover:underline`}
-					href={`profile/${user.id}`}
+					href={`profile/${user?.id}`}
 				>
-					{user.username}
+					{user?.username}
 				</Link>
 			</HoverCardTrigger>
 			<HoverCardContent className="w-80 flex flex-row items-center">
@@ -51,22 +51,22 @@ const UserCard: FC<UserCardProps> = ({
 					<div className="space-y-1">
 						<span className="flex flex-row items-center">
 							<h4 className="text font-semibold text-muted-foreground m-0 mr-4">
-								@{user.username}
+								@{user?.username}
 							</h4>
 							<FollowButton
 								className="justify-self-end"
-								userToFollowId={user.id}
+								userToFollowId={user?.id}
 								update={update}
 								following={following}
 								userId={viewerId}
 							/>
 						</span>
-						<p className="text-sm m-0">{user.bio}</p>
+						<p className="text-sm m-0">{user?.bio}</p>
 						<div className="flex items-center pt-2 m-0">
 							<CalendarIcon className="mr-2 h-4 w-4 opacity-70" />{" "}
 							<span className="text-xs text-muted-foreground">
 								Joined{" "}
-								{new Date(user.createdAt).toLocaleDateString()}
+								{new Date(user?.createdAt).toLocaleDateString()}
 							</span>
 						</div>
 					</div>

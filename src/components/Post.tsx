@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MarkdownRenderer from "./MarkdownRenderer";
 import Tag from "@src/components/Tag";
 import Link from "next/link";
@@ -43,6 +43,12 @@ const Post: React.FC<PostProps> = ({
 	viewerId
 }) => {
 	const pRef = useRef<HTMLParagraphElement>(null);
+
+	const [url, setUrl] = useState("");
+
+	useEffect(() => {
+		setUrl(`${window.location.origin}/post/${postId}`);
+	}, [postId]);
 
 	return (
 		// base container
@@ -103,7 +109,7 @@ const Post: React.FC<PostProps> = ({
 					/>
 					<Separator orientation="vertical" />
 					<ShareButton
-						href={`${window.location.origin}/post/${postId}`}
+						href={`${url}`}
 					/>
 				</div>
 			</div>

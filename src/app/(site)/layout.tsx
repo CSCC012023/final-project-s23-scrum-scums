@@ -74,7 +74,9 @@ const RootLayout = ({
 				)}
 			>
 				<body>
-					<Navbar />
+					<div className="mb-16">
+						<Navbar />
+					</div>
 					<main className="w-full h-full mt-12" id="main">
 						<ToasterProvider />
 						<Toaster />

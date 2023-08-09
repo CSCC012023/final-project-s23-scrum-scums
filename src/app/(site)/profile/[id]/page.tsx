@@ -6,6 +6,7 @@ import { Comment, PostLike } from "@prisma/client";
 import UserProfile from "@src/components/UserProfile";
 import ProfileTabs from "@src/components/ProfileTabs";
 
+
 interface User {
 	id: string;
 	name: string;
@@ -21,9 +22,12 @@ interface User {
 	};
 }
 
-const getUserData = async (id: number) => {
+axios.defaults.baseURL = "http://localhost:3000";
+
+const getUserData = async (id: any) => {
 	try {
-		const response = await axios.get(`/api/user/${id}`);
+		// console.log("my new new id is :" + id);
+		const response = await axios.get("/api/user/" + id);
 		const res: User = response.data;
 		res.createdAt = new Date(res.createdAt);
 		return res;
@@ -35,7 +39,7 @@ const getUserData = async (id: number) => {
 
 const Profile = async ({ params }: { params: { id: string } }) => {
 	const { id } = params;
-	const userData = await getUserData(parseInt(id));
+	const userData = await getUserData(id);
 	if (!userData)
 		return (
 			<div className="w-full h-full text-xl text-muted-foreground flex flex-col items-center justify-center">
@@ -60,13 +64,17 @@ const Profile = async ({ params }: { params: { id: string } }) => {
 	};
 
 	return (
-		<div className="w-full h-full container flex flex-col items-center justify-center">
-			<UserProfile profile={profile} />
-			<ProfileTabs
-				posts={userData.posts}
-				comments={userData.comments}
-				postLikes={userData.postLikes}
-			/>
+		<div className="w-full container flex flex-col items-center justify-left">
+			<div className="pr-80">
+				<UserProfile profile={profile} />
+			</div>
+			<div className="">
+				<ProfileTabs
+					posts={userData.posts}
+					comments={userData.comments}
+					postLikes={userData.postLikes}
+				/>
+			</div>
 		</div>
 	);
 };
