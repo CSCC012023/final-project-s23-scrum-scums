@@ -1,12 +1,15 @@
 // Get all recommended posts for a given user
 import prisma from "@src/lib/prisma";
+
 import pgvector from 'pgvector/utils';
+
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest) => {
-    const url = new URL(req.nextUrl);
-    const recommended = url.searchParams.getAll("recommended[]");
-    const user_id = Number(url.searchParams.get("user_id"));
+	const url = new URL(req.nextUrl);
+	const recommended = url.searchParams.getAll("recommended[]");
+	const user_id = Number(url.searchParams.get("user_id"));
+
 
     let recommendedMatrix: number[][] = [];
     for (let i = 0; i < recommended.length; i++) {
@@ -68,3 +71,4 @@ export const GET = async (req: NextRequest) => {
     });
     return NextResponse.json(recommendedPosts);
 };
+

@@ -1,29 +1,29 @@
 "use client";
 // a generic higher order component for modals
 
-import React, { useCallback, useEffect, useState } from "react";
-import Button from "@src/components/Buttons/Button";
-import { IoMdClose } from "react-icons/io";
-
+import React, { useCallback } from "react";
+import { Button } from "@src/components/ui/Button";
+import CloseModal from "./CloseModal";
+import { Separator } from "../ui/Separator";
 
 // modelled after https://github.com/AntonioErdeljac/next13-airbnb-clone
 
 interface ModalProps {
-	isOpen?: boolean;				// whether the modal is open or not
-	onClose: () => void; 			// called when the modal is closed
-	onSubmit: () => void; 			// called when the modal is submitted
-	title?: string; 				// the title of the modal
-	body?: React.ReactElement; 		// the body of the modal
-	footer?: React.ReactElement;	// the footer of the modal
-	actionLabel: string;			// the label of the action button
-	disabled?: boolean;				// whether the action button is disabled or not
-	secondaryAction?: () => void; 	// called when the secondary action button is clicked
-	secondaryActionLabel?: string;	// the label of the secondary action button
+	// isOpen?: boolean;				// whether the modal is open or not3
+	// onClose: () => void; 			// called when the modal is closed
+	onSubmit: () => void; // called when the modal is submitted
+	title?: string; // the title of the modal
+	body?: React.ReactElement; // the body of the modal
+	footer?: React.ReactElement; // the footer of the modal
+	actionLabel: string; // the label of the action button
+	disabled?: boolean; // whether the action button is disabled or not
+	secondaryAction?: () => void; // called when the secondary action button is clicked
+	secondaryActionLabel?: string; // the label of the secondary action button
 }
 
 const Modal: React.FC<ModalProps> = ({
-	isOpen,
-	onClose,
+	// isOpen,
+	// onClose,
 	onSubmit,
 	title,
 	body,
@@ -31,23 +31,8 @@ const Modal: React.FC<ModalProps> = ({
 	actionLabel,
 	disabled,
 	secondaryAction,
-	secondaryActionLabel,
+	secondaryActionLabel
 }) => {
-	const [showModal, setShowModal] = useState(isOpen);
-	useEffect(() => {
-		setShowModal(isOpen);
-	}, [isOpen]);
-
-	const handleClose = useCallback(() => {
-		if (disabled) {
-			return;
-		}
-		setShowModal(false);
-		setTimeout(() => {
-			onClose();
-		}, 300);
-	}, [disabled, onClose]);
-
 	const handleSubmit = useCallback(() => {
 		if (disabled) {
 			return;
@@ -61,10 +46,6 @@ const Modal: React.FC<ModalProps> = ({
 		}
 		secondaryAction();
 	}, [disabled, secondaryAction]);
-
-	if (!showModal) {
-		return null;
-	}
 
 	return (
 		<>
@@ -104,8 +85,6 @@ const Modal: React.FC<ModalProps> = ({
 						transition-all
 						h-full
 						animate-[slide-up 0.3s]
-						${showModal ? "opacity-100" : "opacity-0"}
-						${showModal ? "translate-y-0" : "translate-y-full"}
 						`}
 					>
 						<div
@@ -117,10 +96,9 @@ const Modal: React.FC<ModalProps> = ({
 							shadow-lg
 							relative
 							flex flex-col
-							bg-base-100
+							bg-zinc-50
 							outline-none
 							focus:outline-none
-							join join-vertical
 							font-sans
 							"
 						>
@@ -129,32 +107,19 @@ const Modal: React.FC<ModalProps> = ({
 								className="
 								flex items-center justify-center
 								p-6
-								join-item
 								relative
 								"
 							>
-								<button
-									className="
-									btn btn-ghost
-									absolute
-									left-9
-									rounded-full
-									"
-									onClick={handleClose}
-
-								>
-									<IoMdClose
-										size={18}
-									/>
-								</button>
 								<div
 									className="
 									font-semibold
 									text-lg
+									flex-1
 									"
 								>
 									{title}
 								</div>
+								<CloseModal />
 							</div>
 
 							<div className="divider"></div>
@@ -164,7 +129,6 @@ const Modal: React.FC<ModalProps> = ({
 								relative
 								flex-auto
 								p-6
-								join-item
 								"
 							>
 								{body}
@@ -177,30 +141,34 @@ const Modal: React.FC<ModalProps> = ({
 								justify-end
 								gap-2
 								p-6
-								join-item
 								"
 							>
 								<div
 									className="
 									flex
 									items-center
+									justify-center
 									gap-4
 									w-full
 									"
 								>
-									{
-										secondaryAction && secondaryActionLabel && (
-											<Button label={secondaryActionLabel} disabled={disabled}
+									{secondaryAction &&
+										secondaryActionLabel && (
+											<Button
 												onClick={handleSecondaryAction}
-												outline secondary
-											/>
-										)
-									}
-									<Button label={actionLabel} disabled={disabled}
+											>
+												{secondaryActionLabel}
+											</Button>
+										)}
+									<Button
 										onClick={handleSubmit}
-									/>
+										disabled={disabled}
+										className="w-full"
+									>
+										{actionLabel}
+									</Button>
 								</div>
-								{footer && <div className="divider"></div>}
+								{footer && <Separator />}
 								{footer}
 							</div>
 						</div>

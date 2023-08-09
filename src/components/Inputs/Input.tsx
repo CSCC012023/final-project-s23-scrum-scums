@@ -1,23 +1,18 @@
 "use client";
 
 import React from "react";
-import {
-	FieldErrors,
-	FieldValues,
-	UseFormRegister
-} from "react-hook-form";
+import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import { BiDollar } from "react-icons/bi";
 
-
 interface InputProps {
-  id: string;
-  label: string;
-  type?: string;
-  disabled?: boolean;
-  formatPrice?: boolean;
-  required?: boolean;
-  register: UseFormRegister<FieldValues>,
-  errors: FieldErrors
+	id: string;
+	label: string;
+	type?: string;
+	disabled?: boolean;
+	formatPrice?: boolean;
+	required?: boolean;
+	register: UseFormRegister<FieldValues>;
+	errors: FieldErrors;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -28,7 +23,7 @@ const Input: React.FC<InputProps> = ({
 	formatPrice,
 	register,
 	required,
-	errors,
+	errors
 }) => {
 	return (
 		<div className="w-full relative">

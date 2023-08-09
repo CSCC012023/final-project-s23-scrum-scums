@@ -1,6 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
-  previewFeatures = ["postgresqlExtensions", "fullTextSearch"]  // Enable the postgresqlExtensions
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions", "fullTextSearch"] // Enable the postgresqlExtensions
 }
 
 datasource db {
@@ -8,8 +8,9 @@ datasource db {
   url               = env("DATABASE_URL")
   // prisma tracks a shadow database to check if schemas drift
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
-  extensions = [vector]
+  extensions        = [vector]
 }
+
 // if a user signs in in multiple ways a unique acount is created for each of those methods
 model Account {
   id                String  @id @default(cuid())
@@ -40,7 +41,6 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-
 model VerificationToken {
   identifier String
   token      String   @unique
@@ -49,75 +49,74 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-
 model User {
-  id            String    @id @default(cuid())
+  id String @id @default(cuid())
 
   // the underlying account name
-  name          String?
-  
+  name String?
+
   // email is either manually provided by user or provided by oauth
   email         String?   @unique
   emailVerified DateTime?
 
   // if they use a password for credentials
-  password      String?
+  password String?
 
   // a canonical url to the users profile picture
-  image         String?
+  image String?
 
-  accounts      Account[]
-  sessions      Session[]
-  
+  accounts Account[]
+  sessions Session[]
+
   // this creates a shadow table that is just key matches
-  followedBy    User[]    @relation("UserFollows")
-  following     User[]    @relation("UserFollows")
+  followedBy User[] @relation("UserFollows")
+  following  User[] @relation("UserFollows")
 
-  // a username / display name the user can change at will 
-  username      String?
+  // a username / display name the user can change at will as long as it's not taken
+  username String? @unique
 
   // the users posts and comments
-  posts         Post[]
-  comments      Comment[]
+  posts    Post[]
+  comments Comment[]
 
   // the posts and comments they've liked
-  postLikes     PostLike[]
-  commentLikes  CommentLike[]
+  postLikes    PostLike[]
+  commentLikes CommentLike[]
 
   // User-written bio
-  bio           String?  @db.VarChar(200)
+  bio String? @db.VarChar(200)
 
   // when the user joined
-  createdAt    DateTime  @default(now())
+  createdAt DateTime @default(now())
 }
 
 // a post on obelisk by a user
 model Post {
-  id          Int     @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
   // the title of the post
-  title       String
-  
-  // a canonical url to the post's image/video
-  mediaUrl    String?
-  
-  // the text content of the post
-  content     String
-  
-  // the tags the post has been assigned
-  categories  Category[]
+  title String
 
-  createdAt   DateTime   @default(now())
+  // a canonical url to the post's image/video
+  mediaUrl String?
+
+  // the text content of the post
+  content String
+
+  // the tags the post has been assigned
+  categories Category[]
+
+  createdAt DateTime @default(now())
 
   // the comments on the post
-  comments    Comment[]
+  comments Comment[]
 
   // the owner of the post
-  authorId    String
-  author      User       @relation(fields: [authorId], references: [id])
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id])
 
-  // the likes the post has recieved 
-  likes       PostLike[]
+  // the likes the post has recieved
+  likes PostLike[]
 
   @@unique([id, createdAt(sort: Desc)], name: "id_createdAt")
 }
@@ -131,29 +130,29 @@ model Category {
 
 // a comment on an obelisk post
 model Comment {
-  id        Int        @id @default(autoincrement())
-  
-  // the content of the comment
-  content   String
+  id Int @id @default(autoincrement())
 
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
+  // the content of the comment
+  content String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // the author of the comment
-  authorId  String
-  author    User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   // the underlying post under which the comment is made
-  postId    Int
-  post      Post          @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId Int
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   // comments can be child comments or top-level and its a n - 1 relationship respectively
-  parentId  Int?
-  parent    Comment?      @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
-  children  Comment[]     @relation("ParentChild")
+  parentId Int?
+  parent   Comment?  @relation("ParentChild", fields: [parentId], references: [id], onDelete: NoAction)
+  children Comment[] @relation("ParentChild")
 
   // the like a comment has recieved
-  likes     CommentLike[]
+  likes CommentLike[]
 }
 
 // a like given by a user to a comment
@@ -163,9 +162,9 @@ model CommentLike {
   comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
 
   // the user who gave the like
-  userId    String
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   // a user can't like the same comment more than once
   @@id([userId, commentId])
 }
@@ -174,18 +173,18 @@ model CommentLike {
 model PostLike {
   // the post it was given to
   postId Int
-  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
-  
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
   // the user who gave the like
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+
   // a user can't like the same post more than once
   @@id([userId, postId])
 }
 
 model Recommendation {
-  id        Int                       @id @default(autoincrement())
+  id        Int                    @id @default(autoincrement())
   embedding Unsupported("vector")?
 }
 

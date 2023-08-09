@@ -7,15 +7,14 @@ const removeImportsFun = removeImports({
 	// matchImports: "\\.(less|css|scss|sass|styl)$"
 });
 
-export default removeImportsFun({
+export default {
 	// webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
 	images: {
 		domains: [
-			"res.cloudinary.com", 
+			"res.cloudinary.com",
 			"avatars.githubusercontent.com",
 			"lh3.googleusercontent.com"
 		]
 	},
 	reactStrictMode: true
-	
-});
+};
