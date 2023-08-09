@@ -53,6 +53,8 @@ const CommentSection: FC<CommentSectionProps> = ({ postId }) => {
 					session={session}
 					key={index}
 					update={update}
+					viewerId={session?.user?.id}
+					following={session?.user?.follows.following}
 				/>
 			))}
 		</section>

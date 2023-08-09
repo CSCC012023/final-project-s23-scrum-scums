@@ -8,6 +8,37 @@ body,
 	height: 100%;
 }
 
+/* const sage = {
+const mauve = {
+  mauve1: 'hsl(300, 26.0%, 99.0%)',
+  mauve2: 'hsl(270, 20.0%, 98.0%)',
+  mauve3: 'hsl(267, 13.8%, 95.3%)',
+  mauve4: 'hsl(265, 12.2%, 92.7%)',
+  mauve5: 'hsl(263, 11.6%, 90.3%)',
+  mauve6: 'hsl()',
+  mauve7: 'hsl(257, 10.8%, 84.3%)',
+  mauve8: 'hsl()',
+  mauve9: 'hsl(252, 6.0%, 57.3%)',
+  mauve10: 'hsl(250, 5.0%, 52.3%)',
+  mauve11: 'hsl(252, 5.0%, 40.7%)',
+  mauve12: 'hsl(260, 10.0%, 13.5%)',
+}
+} */
+
+/* const oliveDark = {
+  olive1: 'hsl(110, 5.0%, 9.2%)',
+  olive2: 'hsl()',
+  olive3: 'hsl(120, 4.3%, 15.4%)',
+  olive4: 'hsl(120, 3.9%, 18.5%)',
+  olive5: 'hsl(120, 3.6%, 21.2%)',
+  olive6: 'hsl(120, 3.3%, 24.3%)',
+  olive7: 'hsl(120, 3.0%, 28.7%)',
+  olive8: 'hsl(120, 2.6%, 37.1%)',
+  olive9: 'hsl(110, 6.0%, 41.5%)',
+  olive10: 'hsl()',
+  olive11: 'hsl(110, 5.0%, 68.8%)',
+  olive12: 'hsl(110, 7.0%, 93.0%)',
+} */
 /* these are the light and dark mode variables for color */
 /* to see and edit them in the vscode editor install color info extension and put hsl around one*/
 @layer base {
@@ -21,19 +52,19 @@ body,
 		--popover: 0 0% 100%;
 		--popover-foreground: 240 10% 3.9%;
 
-		--card: 0 0% 100%;
+		--card: 261 11.1% 87.7%;
 		--card-foreground: 240 10% 3.9%;
 
 		--border: 240 5.9% 90%;
 		--input: 240 5.9% 90%;
 
-		--primary: 240 5.9% 10%;
+		--primary: 120 5.7% 10.4%;
 		--primary-foreground: 0 0% 98%;
 
-		--secondary: 240 4.8% 95.9%;
-		--secondary-foreground: 240 100% 25.1%;
+		--secondary: 150 15% 89%;
+		--secondary-foreground: 150 14.3% 97.3%;
 
-		--accent: 240 4.8% 95.9%;
+		--accent: 104 40% 65%;
 		--accent-foreground: 240 5.9% 10%;
 
 		--destructive: 0 84.2% 60.2%;

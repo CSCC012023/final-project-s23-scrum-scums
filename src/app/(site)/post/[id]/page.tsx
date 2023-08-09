@@ -1,7 +1,6 @@
 import PostSection from "@src/components/PostSection";
 import CommentSection from "@src/components/CommentSection";
 import React from "react";
-import { Separator } from "@src/components/ui/Separator";
 
 const Post = ({ params }: { params: { id: string } }) => {
 	const id = parseInt(params.id);
@@ -17,7 +16,6 @@ const Post = ({ params }: { params: { id: string } }) => {
 		<div className="h-full w-full">
 			<div className="flex flex-col items-center justify-center">
 				<PostSection id={id} />
-				<Separator />
 				<section className="comment-box w-3/5">
 					{/* <form
 						onSubmit={handleSubmit}
@@ -38,7 +36,7 @@ const Post = ({ params }: { params: { id: string } }) => {
 					*/}
 					<div
 						className="flex flex-col items-center w-full
-							p-6 bg-secondary rounded-md my-4"
+							p-6 bg-card rounded-md my-4"
 					>
 						<CommentSection postId={id} />
 					</div>

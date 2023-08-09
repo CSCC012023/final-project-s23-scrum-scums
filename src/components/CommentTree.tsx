@@ -12,10 +12,13 @@ import {
 } from "./ui/Collapsible";
 import Authored from "./Authored";
 import { useSession } from "next-auth/react";
+import { User } from "@prisma/client";
 
 interface CommentTreeProps extends CommentTreeType {
 	session?: ReturnType<typeof useSession>["data"];
 	update: ReturnType<typeof useSession>["update"];
+	viewerId: string | undefined;
+	following?: User[];
 }
 
 const CommentTree: FC<CommentTreeProps> = ({
@@ -29,14 +32,16 @@ const CommentTree: FC<CommentTreeProps> = ({
 	replies,
 	likes,
 	session,
-	update
+	update,
+	viewerId,
+	following
 }) => {
 	const [isOpen, setIsOpen] = React.useState(true);
 	return (
 		<Collapsible
 			open={isOpen}
 			onOpenChange={setIsOpen}
-			className="flex flex-col items-center w-full rounded-md
+			className="flex flex-col items-center w-full rounded-md overflow-hidden
 			max-w-2xl transition-all duration-500 ease-in-out
 			relative bg-zinc-50
 			"
@@ -90,6 +95,8 @@ const CommentTree: FC<CommentTreeProps> = ({
 									likes={child.likes}
 									session={session}
 									update={update}
+									viewerId={viewerId}
+									following={following}
 								/>
 							))}
 						</div>
@@ -99,6 +106,9 @@ const CommentTree: FC<CommentTreeProps> = ({
 							createdAt={createdAt}
 							user={author}
 							className="ml-4"
+							update={update}
+							viewerId={viewerId}
+							following={following}
 						/>
 					)}
 				</div>

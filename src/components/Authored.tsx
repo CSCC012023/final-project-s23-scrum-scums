@@ -13,9 +13,9 @@ interface AuthoredProps extends React.HTMLAttributes<HTMLDivElement> {
 	>;
 	createdAt: Date;
 	originalDate?: boolean;
-	following?: User[];
+	following: User[] | undefined;
 	update: ReturnType<typeof useSession>["update"];
-	viewerId?: string;
+	viewerId: string | undefined;
 }
 
 const Authored: FC<AuthoredProps> = ({

@@ -12,8 +12,8 @@ import { Separator } from "@src/components/ui/Separator";
 import UserAvatar from "./UserAvatar";
 import UserCard from "./UserCard";
 import CommentButton from "./Buttons/CommentButton";
-import { Share2Icon } from "@radix-ui/react-icons";
 import FollowButton from "./Buttons/FollowButton";
+import ShareButton from "./Buttons/ShareButton";
 import { useToast } from "@src/hooks/use-toast";
 
 interface PostSectionProps {
@@ -65,6 +65,8 @@ const PostSection: FC<PostSectionProps> = async ({ id }) => {
 								userToFollowId={post?.author.id}
 								disabled={!session}
 								update={update}
+								following={session?.user?.follows.following}
+								userId={session?.user?.id}
 							/>
 						</span>
 					)}
@@ -101,10 +103,13 @@ const PostSection: FC<PostSectionProps> = async ({ id }) => {
 								className="justify-self-start"
 							/>
 							<Separator orientation="vertical" />
-							<Share2Icon className="h-5 w-5" />
+							<ShareButton
+								href={`${window.location.origin}/post/${id}`}
+							/>
 						</>
 					)}
 				</div>
+				<Separator />
 			</div>
 		</section>
 	);

@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 import { User } from "@prisma/client";
 
 interface FollowButtonProps extends ButtonProps {
-	userId?: string; // the id of the user who is following
+	userId: string | undefined; // the id of the user who is following
 	userToFollowId: string; // the id of the user to follow
 	disabled?: boolean;
 	update: ReturnType<typeof useSession>["update"];
@@ -56,7 +56,7 @@ const FollowButton: FC<FollowButtonProps> = ({
 
 	const button = (
 		<Button
-			className={cn`flex items-center text-secondary h-fit bg-green-500 rounded-full  ${props.className}`}
+			className={cn`flex items-center text-secondary h-fit bg-accent rounded-full  ${props.className}`}
 			onClick={() => follow(userToFollowId, userId, update)}
 			disabled={disabled}
 			variant={"ghost"}
@@ -70,7 +70,7 @@ const FollowButton: FC<FollowButtonProps> = ({
 	const followed = following?.some(follow => follow.id === userToFollowId);
 	const followingMessage = (
 		<span
-			className={cn`flex items-center text-green-500 h-fit rounded-full text-xs ${props.className}`}
+			className={cn`flex items-center text-accent h-fit rounded-md text-xs ${props.className}`}
 		>
 			Following
 		</span>
