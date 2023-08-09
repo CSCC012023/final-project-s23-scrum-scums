@@ -30,7 +30,10 @@ export const GET = async (req: NextRequest) => {
         include: {
             author: true,
             categories: true,
-            likes: true
+            likes: true,
+            _count: {
+                select: { comments: true }
+            }
         }
     });
 

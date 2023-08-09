@@ -10,7 +10,6 @@ export const GET = async (req: NextRequest) => {
 	const recommended = url.searchParams.getAll("recommended[]");
 	const user_id = Number(url.searchParams.get("user_id"));
 
-
     let recommendedMatrix: number[][] = [];
     for (let i = 0; i < recommended.length; i++) {
         let split = recommended[i].split(",").map((x) => parseInt(x));
@@ -66,7 +65,10 @@ export const GET = async (req: NextRequest) => {
         include: {
             author: true,
             categories: true,
-            likes: true
+            likes: true,
+            _count: {
+                select: { comments: true }
+            }
         }
     });
     return NextResponse.json(recommendedPosts);

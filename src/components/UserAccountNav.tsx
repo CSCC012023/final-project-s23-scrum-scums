@@ -46,6 +46,10 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
 					<Link href={`/profile/${user?.id}`}>Profile</Link>
 				</DropdownMenuItem>
 
+				<DropdownMenuItem asChild className="cursor-pointer">
+					<Link href={`/recommended/`}>Recommended</Link>
+				</DropdownMenuItem>
+
 				{/* <DropdownMenuItem asChild className="cursor-pointer">
 					<Link href='/settings'>Settings</Link>
 				</DropdownMenuItem> */}
