@@ -113,7 +113,7 @@ const SearchPage = () => {
 								`${buttonVariants({ variant: "ghost" })}`,
 								"flex flex-col items-start h-full w-full overflow-hidden"
 							)}
-							href={`/profile/${User.id}`}
+							href={`/profile/${User.author.id}`}
 						>
 							<div className="flex items-center">
 								<div	className="rounded-full h-12 w-12 mr-4">

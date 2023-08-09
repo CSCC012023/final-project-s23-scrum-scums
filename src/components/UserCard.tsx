@@ -40,7 +40,7 @@ const UserCard: FC<UserCardProps> = ({
 					className={cn`${buttonVariants({
 						variant: "link"
 					})}, no-underline hover:underline`}
-					href={`profile/${user?.id}`}
+					href={`/profile/${user?.id}`}
 				>
 					{user?.username}
 				</Link>
