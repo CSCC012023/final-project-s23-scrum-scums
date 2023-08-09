@@ -22,7 +22,9 @@ const EditPost = () => {
 		const title = postTitle;
 		const content = text;
 		const cats = categories;
+		console.log("session", session);
 		const authorId = session?.user.id;
+		console.log(title, content, cats, authorId);
 		const result = await axios.post("/api/post", {
 			title,
 			content,
