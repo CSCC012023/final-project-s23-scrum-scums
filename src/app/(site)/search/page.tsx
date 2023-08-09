@@ -61,7 +61,7 @@ const SearchPage = () => {
 	];
 
 	return (
-		<div className="divide-y divide-gray-200 bg-white rounded-md shadow pl-3 pr-3">
+		<div className="divide-y divide-gray-200 bg-white rounded-md shadow p-2">
 			{/* search metadata */}
 			<div className="text-gray-700 py-4 mb-3">
 				<div className="pl-3">

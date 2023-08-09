@@ -8,6 +8,7 @@ import UserAvatar from "./UserAvatar";
 import axios from "axios";
 import { Separator } from "./ui/Separator";
 import { useSession } from "next-auth/react";
+import FollowButton from "./Buttons/FollowButton";
 
 interface UserProfileProps {
 	profile: Profile;
@@ -56,14 +57,13 @@ const UserProfile: FC<UserProfileProps> = ({
 				console.log("patch: ", err);
 				toast({
 					title: "Something went wrong",
-					description: `(${err.response.status})`
+					description: `(${err.response.status})`,
+					variant: "destructive"
 				});
 			});
 	};
 
 	const bioSubmit = async (text: string) => {
-		// This is a temporary fix
-		// See route.ts in profile for more info
 		if (user.bio != text) {
 			setEdUser({ ...user, bio: text });
 		}
@@ -89,6 +89,12 @@ const UserProfile: FC<UserProfileProps> = ({
 
 	const userSame = session?.user?.id === user.id;
 
+	const username = userSame ? (
+		<Editable content={user.username as string} submit={nameSubmit} />
+	) : (
+		<p>{user.username}</p>
+	);
+
 	const bio =
 		userSame && user.bio ? (
 			<Editable content={user.bio} submit={bioSubmit} />
@@ -97,20 +103,29 @@ const UserProfile: FC<UserProfileProps> = ({
 		);
 
 	return (
-		<div className="w-full h-1/3 flex flex-col items-center justify-center">
+		<div className="w-full h-1/3 flex flex-col items-center justify-center font-sans">
 			<div className="flex flex-row w-full container">
-				<UserAvatar user={user} />
-				<div className="font-semibold text-center w-full font-sans text-lg">
-					{<Editable content={user.username} submit={nameSubmit} />}
+				<UserAvatar user={user} className="h-full" />
+				<div className="font-semibold text-center w-full text-lg flex flex-col items-center justify-center">
+					@{username}
+					<span className="text-muted-foreground text-sm">
+						{user.name}
+					</span>
+				</div>
+				<div className="h-full w-full flex-1 spacer"></div>
+				<div className="flex flex-row items-center justify-center container">
+					{followers} follower{followers > 0 ? "s" : ""}
+					<FollowButton
+						userId={session?.user?.id}
+						userToFollowId={user.id}
+						following={session?.user?.follows.following}
+						update={update}
+						onClick={() => setFollowers(followers + 1)}
+					/>
 				</div>
 			</div>
 			<Separator />
-			<div className="flex flex-row w-full container">
-				<div className="text-neutral-700 text-center">
-					{followers} follower {followers > 0 ? "s" : ""}{" "}
-				</div>
-				<div className="w-full h-full mt-10">{bio}</div>
-			</div>
+			<div className="w-full h-full my-2">{bio}</div>
 		</div>
 	);
 };

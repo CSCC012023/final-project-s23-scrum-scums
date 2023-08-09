@@ -43,7 +43,7 @@ const EditPost = () => {
 					required
 					onChange={e => setTitle(e.target.value)}
 					value={postTitle}
-					className="w-full mb-2"
+					className="w-full mb-2 h-fit"
 				/>
 				<Editor
 					type="post"
@@ -54,7 +54,9 @@ const EditPost = () => {
 				<CategoryInput
 					setCats={(cats: string[]) => setCategories(cats)}
 				/>
-				<Button type="submit">Submit</Button>
+				<Button type="submit" className="mt-2">
+					Submit
+				</Button>
 			</form>
 		</div>
 	);

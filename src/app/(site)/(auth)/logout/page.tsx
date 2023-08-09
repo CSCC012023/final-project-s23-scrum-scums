@@ -3,13 +3,13 @@
 import React, { useEffect } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Button from "@src/components/Button";
+import { Button } from "@src/components/ui/Button";
 
 const Logout = () => {
 	const router = useRouter();
 	const { data: session } = useSession();
 
-	if	(!session){
+	if (!session) {
 		useEffect(() => {
 			setTimeout(() => {
 				router.push("/login"); // replace with your logout URL
@@ -17,26 +17,25 @@ const Logout = () => {
 		}, []);
 
 		return (
-			<div className="flex flex-col items-center justify-center h-screen">Did you mean to login? Redirecting you to the login page...</div>
+			<div className="flex flex-col items-center justify-center h-screen">
+				Did you mean to login? Redirecting you to the login page...
+			</div>
 		);
 	}
 
 	return (
 		<div className="flex flex-col items-center justify-center h-full w-full">
-			<p className="mb-4 text-xl font-bold text-center">Are you sure you want to logout?</p>
-			<div
-				className="flex flex-row gap-4 items-center justify-center"
-			>
-				<Button
-					onClick={() => router.back()}
-					secondary
-					label="Go Back"
-				/>
-				<Button
-					onClick={() => signOut({ callbackUrl: "/" })}
-					label="Sign out"
-				/>
+			<p className="mb-4 text-xl font-bold text-center">
+				Are you sure you want to logout?
+			</p>
+			<div className="flex flex-row gap-4 items-center justify-center">
+				<Button onClick={() => router.back()}>Go back</Button>
+				<Button onClick={() => signOut({ callbackUrl: "/" })}>
+					Sign out
+				</Button>
 			</div>
 		</div>
 	);
 };
+
+export default Logout;

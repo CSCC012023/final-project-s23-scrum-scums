@@ -26,7 +26,7 @@ interface PostProps {
 	};
 	session?: ReturnType<typeof useSession>["data"];
 	update: ReturnType<typeof useSession>["update"];
-	viewerId?: string;
+	viewerId: string | undefined;
 }
 
 const Post: React.FC<PostProps> = ({

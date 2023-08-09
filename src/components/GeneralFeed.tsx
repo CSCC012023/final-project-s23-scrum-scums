@@ -82,6 +82,7 @@ const GeneralFeed = () => {
 						_count={post._count}
 						session={session}
 						update={update}
+						viewerId={session?.user?.id}
 					/>
 				))}
 			</div>

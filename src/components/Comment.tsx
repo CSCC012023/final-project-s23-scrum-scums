@@ -34,7 +34,13 @@ const Comment: React.FC<CommentProps> = ({
 			className="flex flex-col container items-stretch justify-between
 			h-fit p-4 w-full"
 		>
-			<Authored user={author} createdAt={new Date(createdAt)} />
+			<Authored
+				user={author}
+				createdAt={new Date(createdAt)}
+				update={update}
+				viewerId={session?.user?.id}
+				following={session?.user?.follows.following}
+			/>
 			<MarkdownRenderer content={content} />
 			<div
 				className="flex flex-row items-center text-xs text-center

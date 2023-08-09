@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@src/lib/prisma";
+import { getAuthSession } from "@src/lib/auth";
 
 // you need req imported to destructure dynamic params
 export const GET = async (
@@ -23,7 +24,12 @@ export const GET = async (
 					post: {
 						include: {
 							categories: true,
-							likes: true
+							likes: true,
+							_count: {
+								select: {
+									comments: true
+								}
+							}
 						}
 					}
 				},
@@ -37,7 +43,12 @@ export const GET = async (
 				},
 				include: {
 					categories: true,
-					likes: true
+					likes: true,
+					_count: {
+						select: {
+							comments: true
+						}
+					}
 				}
 			},
 			postLikes: {
@@ -45,7 +56,12 @@ export const GET = async (
 					post: {
 						include: {
 							categories: true,
-							likes: true
+							likes: true,
+							_count: {
+								select: {
+									comments: true
+								}
+							}
 						}
 					}
 				}
@@ -61,14 +77,18 @@ export const GET = async (
 	return NextResponse.json(user_data);
 };
 
-// patch request to update the users bio
+// patch request to update the users bio or name
 export const PATCH = async (
 	req: NextRequest,
 	{ params }: { params: { id: string } }
 ) => {
 	const { id } = params;
+	const session = await getAuthSession();
+	if (!session) {
+		return NextResponse.json({ error: "Not authorized" }, { status: 401 });
+	}
+
 	const reqJson = await req.json();
-	console.log(reqJson);
 	const key = Object.keys(reqJson)[0];
 
 	let user_data;

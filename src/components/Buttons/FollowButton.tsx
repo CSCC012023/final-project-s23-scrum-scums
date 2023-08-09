@@ -61,7 +61,7 @@ const FollowButton: FC<FollowButtonProps> = ({
 			disabled={disabled}
 			variant={"ghost"}
 		>
-			<span className="flex flex-row items-center text-xs justify-center">
+			<span className="flex flex-row items-center text-xs justify-center text-secondary-foreground">
 				Follow
 			</span>
 		</Button>

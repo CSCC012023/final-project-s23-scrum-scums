@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import AsyncCreatableSelect from "react-select/async-creatable";
 import { Category } from "@prisma/client";
 import axios from "axios";
+import Tag from "../Tag";
 
 interface CategoryOptions {
 	label: string;
@@ -49,6 +50,9 @@ const CategoryInput: React.FC<CategoryInputProps> = ({ setCats }) => {
 				setCats(normalized);
 			}}
 			className="w-full mt-2"
+			formatOptionLabel={option => {
+				return <Tag name={option.label} fixed />;
+			}}
 		/>
 	);
 };

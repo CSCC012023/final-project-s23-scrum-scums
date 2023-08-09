@@ -15,15 +15,15 @@ const Input: React.FC<TitleInputProps> = ({
 	onChange,
 	...props
 }) => {
+	const [title, setTitle] = React.useState("");
 	return (
 		<div className={cn("relative", props.className)}>
 			<input
 				placeholder=" "
-				className={`
+				className="
 				peer
 				w-full
-				p-4
-				pt-6
+				p-2
 				font-light
 				bg-white
 				border-2
@@ -32,10 +32,13 @@ const Input: React.FC<TitleInputProps> = ({
 				transition
 				disabled:opacity-70
 				disabled:cursor-not-allowed
-				text-neutral-700
-				`}
+				text-primary
+				"
 				required={required}
-				onChange={onChange}
+				onChange={e => {
+					setTitle(e.target.value);
+					onChange(e);
+				}}
 			/>
 			<label
 				className={`
@@ -44,7 +47,7 @@ const Input: React.FC<TitleInputProps> = ({
 				duration-150
 				transform
 				-translate-y-3
-				top-5
+				top-3
 				left-2
 				origin-[0]
 				peer-placeholder-shown:scale-100
@@ -53,7 +56,7 @@ const Input: React.FC<TitleInputProps> = ({
 				peer-focus:-translate-y-4
 				`}
 			>
-				{label}
+				{title === "" ? label : ""}
 			</label>
 		</div>
 	);

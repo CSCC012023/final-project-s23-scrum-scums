@@ -34,7 +34,6 @@ const LoginModal = () => {
 		setIsLoading(true);
 		signIn("credentials", { redirect: false, ...data })
 			.then(res => {
-				console.log("res", res);
 				if (res?.error) {
 					toast({
 						title: "Invalid Login",
@@ -43,15 +42,15 @@ const LoginModal = () => {
 						variant: "destructive"
 					});
 				}
-				// router.back();
-				// router.refresh();
+				router.back();
+				router.refresh();
 			})
 			.catch(err => {
-				if (err instanceof TypeError) {
+				if (err instanceof Error) {
 					router.back();
+					router.refresh();
 					setIsLoading(false);
 				}
-				console.log("err", err);
 				toast({
 					title: "There was an error logging you in",
 					description: err.message,

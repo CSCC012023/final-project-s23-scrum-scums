@@ -28,7 +28,7 @@ const Navbar = async () => {
 						)}
 						href="/post"
 					>
-						<Icons.post className="h-8 w-8 sm:h-4 sm:w-4" />
+						<Icons.post className="h-8 w-8 sm:h-4 sm:w-4 mr-1" />
 					</Link>
 					{session ? (
 						<UserAccountNav user={session.user} />

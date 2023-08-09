@@ -5,7 +5,7 @@ import Typewriter from "typewriter-effect";
 
 const Typer: FC = () => {
 	return (
-		<span className="text-secondary-foreground inline-block ml-2">
+		<span className="text-[#aaaaee] inline-block ml-2">
 			<Typewriter
 				options={{
 					strings: [

@@ -15,7 +15,7 @@ const LoginPage: FC = () => {
 					href="/"
 					className={cn(
 						buttonVariants({ variant: "ghost" }),
-						"self-start -mt-28"
+						"self-start -mt-32 relative"
 					)}
 				>
 					<ChevronLeftIcon className="mr-2 h-4 w-4" />
