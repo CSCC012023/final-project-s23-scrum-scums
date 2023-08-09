@@ -26,3 +26,15 @@ export const POST = async (req: Request) => {
 	});
 	return new Response(JSON.stringify(post), { status: 201 });
 };
+
+export const GET = async () => {
+	const post = await prisma.post.findMany({
+		include: {
+            author: true,
+            categories: true,
+            likes: true
+		}
+	});
+	return new Response(JSON.stringify(post), { status: 200 });
+};
+
