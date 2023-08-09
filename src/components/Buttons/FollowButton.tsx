@@ -10,45 +10,54 @@ import { useSession } from "next-auth/react";
 import { User } from "@prisma/client";
 
 interface FollowButtonProps extends ButtonProps {
+	userId?: string; // the id of the user who is following
 	userToFollowId: string; // the id of the user to follow
 	disabled?: boolean;
 	update: ReturnType<typeof useSession>["update"];
 	following?: User[];
 }
 
-const follow = async (
-	userToFollowId: string,
-	userFollowerId: string,
-	update: FollowButtonProps["update"]
-) => {
-	try {
-		const res = await axios.post(`/api/user/follow/${userToFollowId}`, {
-			userFollowerId
-		});
-		console.log("res", res);
-		update();
-	} catch (error) {
-		const { toast } = useToast();
-		toast({
-			title: "Failed to follow user",
-			description: "Please try again later",
-			variant: "destructive"
-		});
-		console.log("error", error);
-	}
-};
-
 const FollowButton: FC<FollowButtonProps> = ({
+	userId,
 	userToFollowId,
 	disabled,
 	update,
 	following,
 	...props
 }) => {
+	const { toast } = useToast();
+
+	const follow = async (
+		userToFollowId: string,
+		userId: string | undefined,
+		update: FollowButtonProps["update"]
+	) => {
+		try {
+			if (!userId) {
+				toast({
+					title: "You must be logged in to follow a user",
+					variant: "destructive"
+				});
+				return;
+			}
+			const res = await axios.post(`/api/user/follow/${userToFollowId}`, {
+				userId
+			});
+			console.log("res", res);
+			update();
+		} catch (error) {
+			toast({
+				title: "Failed to follow user",
+				description: "Please try again later",
+				variant: "destructive"
+			});
+		}
+	};
+
 	const button = (
 		<Button
 			className={cn`flex items-center text-secondary h-fit bg-green-500 rounded-full  ${props.className}`}
-			onClick={() => follow(userToFollowId, "userFollowerId", update)}
+			onClick={() => follow(userToFollowId, userId, update)}
 			disabled={disabled}
 			variant={"ghost"}
 		>

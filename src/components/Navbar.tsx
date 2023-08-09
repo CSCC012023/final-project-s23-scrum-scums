@@ -19,6 +19,7 @@ const Navbar = async () => {
 						Obelisk
 					</p>
 				</Link>
+				<Searchbar />
 				<div className="flex flex-row items-center justify-center">
 					<Link
 						className={cn(
@@ -38,7 +39,6 @@ const Navbar = async () => {
 					)}
 				</div>
 			</div>
-			<Searchbar />
 		</nav>
 	);
 };

@@ -23,9 +23,16 @@ interface UserCardProps extends HoverCardProps {
 	// who the user follows:
 	following?: User[];
 	update: ReturnType<typeof useSession>["update"];
+	viewerId?: string;
 }
 
-const UserCard: FC<UserCardProps> = ({ user, following, update, ...props }) => {
+const UserCard: FC<UserCardProps> = ({
+	user,
+	following,
+	update,
+	viewerId,
+	...props
+}) => {
 	return (
 		<HoverCard {...props}>
 			<HoverCardTrigger asChild>
@@ -51,6 +58,7 @@ const UserCard: FC<UserCardProps> = ({ user, following, update, ...props }) => {
 								userToFollowId={user.id}
 								update={update}
 								following={following}
+								userId={viewerId}
 							/>
 						</span>
 						<p className="text-sm m-0">{user.bio}</p>

@@ -5,7 +5,6 @@ import MarkdownRenderer from "./MarkdownRenderer";
 import Tag from "@src/components/Tag";
 import Link from "next/link";
 import { useRef } from "react";
-import { Share2Icon } from "@radix-ui/react-icons";
 import { Separator } from "@src/components/ui/Separator";
 import LikeButton from "@src/components/Buttons/LikeButton";
 import { Category, PostLike, User } from "@prisma/client";
@@ -27,6 +26,7 @@ interface PostProps {
 	};
 	session?: ReturnType<typeof useSession>["data"];
 	update: ReturnType<typeof useSession>["update"];
+	viewerId?: string;
 }
 
 const Post: React.FC<PostProps> = ({
@@ -39,7 +39,8 @@ const Post: React.FC<PostProps> = ({
 	likes,
 	_count,
 	session,
-	update
+	update,
+	viewerId
 }) => {
 	const pRef = useRef<HTMLParagraphElement>(null);
 
@@ -54,7 +55,13 @@ const Post: React.FC<PostProps> = ({
 			<div className="px-4 py-2 flex flex-col justify-between">
 				<div className="max-h-40 mt-1 text-xs w-full text-slate-500">
 					{/* header */}
-					<Authored user={author} createdAt={new Date(createdAt)} />
+					<Authored
+						user={author}
+						createdAt={new Date(createdAt)}
+						following={session?.user?.follows.following}
+						update={update}
+						viewerId={viewerId}
+					/>
 				</div>
 				<Link href={`post/${postId}`} className="no-underline prose">
 					{/* content */}

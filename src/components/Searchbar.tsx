@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -20,12 +22,12 @@ const Searchbar = () => {
 	};
 
 	return (
-		<div className="form-control">
-			<form onSubmit={onSearch}>
+		<div className="form-control w-full h-full px-4 font-sans flex flex-row items-center justify-center">
+			<form onSubmit={onSearch} className="w-3/4">
 				<input
 					type="text"
-					placeholder="Search"
-					className="input input-bordered input-accent w-24 md:w-auto"
+					placeholder="Search 🔎"
+					className="w-full h-full border-1 rounded-full border-secondary px-2"
 					onChange={e => setSearch(e.target.value)}
 					value={search || ""}
 				/>
