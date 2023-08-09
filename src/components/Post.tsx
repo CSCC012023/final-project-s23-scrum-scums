@@ -69,7 +69,7 @@ const Post: React.FC<PostProps> = ({
 						viewerId={viewerId}
 					/>
 				</div>
-				<Link href={`post/${postId}`} className="no-underline prose">
+				<Link href={`/post/${postId}`} className="no-underline prose">
 					{/* content */}
 					<h1 className="text-lg font-semibold py-2 leading-6 text-gray-900 mb-0">
 						{title}
