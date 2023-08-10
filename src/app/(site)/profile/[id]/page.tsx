@@ -61,7 +61,9 @@ const Profile = async ({ params }: { params: { id: string } }) => {
 			followedBy: userData._count.followedBy
 		}
 	};
-
+	console.log("posts data:" + JSON.stringify(userData.posts,null,2));
+	// console.log("comment data:" + JSON.stringify(userData.comments,null,2));
+	// console.log("likes data:" + JSON.stringify(userData.postLikes,null,2));
 	return (
 		<div className="w-3/5 container flex flex-col items-center justify-center">
 			<UserProfile profile={profile} />

@@ -25,7 +25,7 @@ const ProfileImage: React.FC<ProfileImageProps> = ({ userId }) => {
 	const { data, error } = useSWR(
 		["/api/profileimage", userId],
 		([url, userId]) => fetchSessionImage(url, userId),
-		{ refreshInterval: 1 }
+		{ refreshInterval: 30000 }
 	);
 
 	const fallback = (
