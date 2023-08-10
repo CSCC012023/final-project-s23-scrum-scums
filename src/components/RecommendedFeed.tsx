@@ -9,6 +9,7 @@ import PostSkeleton from "./PostSkeleton";
 import { useSession } from "next-auth/react";
 import getRecommended from "@src/utils/recommended";
 import { set } from "date-fns";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 interface Response {
 	posts: PostData[];
@@ -18,30 +19,37 @@ interface Response {
 
 const RecommendedFeed = () => {
 	const [posts, setPosts] = useState<PostData[]>([]);
-	const [topRecommended, setTopRecommended] = useState<PostData>({} as PostData);
-	const [loading, setLoading] = useState(true);
 	const [loadingTop, setLoadingTop] = useState(true);
+	const [topRecommended, setTopRecommended] = useState<PostData>({} as PostData);
+	const [lastCursor, setLastCursor] = useState<number | null>(null);
+	const [hasMore, setHasMore] = useState(true);
 	const { data: session, update } = useSession();
-	const user_id = session?.user?.id as string;
 
-    const getTopRecommended = async (recommened_posts: PostData[]) => {
-        const arr = recommened_posts.map((post: PostData) => post.id);
-        const result = await axios.get("/api/topRecommended", { params: { recommended: arr } });
-		const recommendedPostData: PostData = result.data;
-		return recommendedPostData;
+	const fetchPosts = async () => {
+		try {
+			const data = await axios.get("/api/trending", {
+				params: {
+					lastCursor: lastCursor
+				}
+			});
+			const typed = parseInt(data.data.lastCursor);
+			const res: Response = data.data;
+
+			res.lastCursor = typed;
+			if (res.end) {
+				setHasMore(false);
+			}
+			setLastCursor(res.lastCursor);
+			setPosts([...posts, ...res.posts]);
+			setTopRecommended(posts[0]);
+			setLoadingTop(false);
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	useEffect(() => {
-		const loadRecommended = async () => {
-			const recommendedPostData = await getRecommended(user_id);
-			const recTopPostData = await getTopRecommended(recommendedPostData);
-			setTopRecommended(recTopPostData);
-			setLoadingTop(false);
-			setPosts(recommendedPostData);
-			setLoading(false);
-		};
-
-		loadRecommended();
+		fetchPosts();
 	}, []);
 
 	const loader = (
@@ -56,52 +64,39 @@ const RecommendedFeed = () => {
 	return (
 		<>	
             <div className="pl-6 w-full">
-                <h1 className="text-6xl font-bold font-serif my-4 ">
-                    Today's Top Post
-                </h1>
-				{loadingTop ? <PostSkeleton /> :
-				<div className="flex flex-col space-y-4 w-full items-center">
-					<Post
-						key={topRecommended.id}
-						postId={topRecommended.id}
-						content={topRecommended.content}
-						title={topRecommended.title}
-						createdAt={topRecommended.createdAt}
-						author={topRecommended.author}
-						categories={topRecommended.categories}
-						likes={topRecommended.likes}
-						_count={topRecommended._count}
-						session={session}
-						update={update}
-						viewerId={session?.user?.id}
-					/>
-				</div>
-				}
-				<h1 className="text-6xl font-bold font-serif my-4 ">
-					You may also like:
-				</h1>
-				{ loading ? loader :
-				<div className="flex flex-col space-y-4 w-full items-center">	
-					{posts.map((post, index) => (
-						<Post
-							key={index}
-							postId={post.id}
-							content={post.content}
-							title={post.title}
-							createdAt={post.createdAt}
-							author={post.author}
-							categories={post.categories}
-							likes={post.likes}
-							_count={post._count}
-							session={session}
-							update={update}
-							viewerId={session?.user?.id}
-						/>
-					))}
-				</div>
-				}
-			</div>
-		</>
+					<InfiniteScroll
+						dataLength={posts.length}
+						next={fetchPosts}
+						hasMore={hasMore}
+						loader={loader}
+						endMessage={
+							<p className="font-bold text-center my-12">
+								No more posts. Go touch some grass ...
+							</p>
+						}
+						className="self-center w-full h-full container flex flex-col justify-center items-center"
+						>
+						<div className="flex flex-col space-y-4 w-full items-center">
+							{posts.map((post, index) => (
+								<Post
+								key={index}
+								postId={post.id}
+								content={post.content}
+								title={post.title}
+								createdAt={post.createdAt}
+								author={post.author}
+								categories={post.categories}
+								likes={post.likes}
+								_count={post._count}
+								session={session}
+								update={update}
+								viewerId={session?.user?.id}
+								/>
+								))}
+						</div>
+					</InfiniteScroll>
+				</div>			
+			</>
 	);
 };
 

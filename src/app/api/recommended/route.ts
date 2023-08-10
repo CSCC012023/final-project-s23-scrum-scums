@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from "next/server";
 export const GET = async (req: NextRequest) => {
 	const url = new URL(req.nextUrl);
 	const recommended = url.searchParams.getAll("recommended[]");
-	const user_id = Number(url.searchParams.get("user_id"));
+	const user_id = Number(url.searchParams.get("user_id"));D
 
     let recommendedMatrix: number[][] = [];
     for (let i = 0; i < recommended.length; i++) {
